@@ -27,3 +27,17 @@
 8. [Datatype Qualifiers](code/2.2.8.c)
 9. [Signed and Unsigned Qualifiers](code/2.2.9.c)
 10. [Qualifiers with Floating-Point Types](code/2.2.10.c)
+
+## Type Casting
+
+### Solutions
+1. [Implicit Type Conversion](code/2.3.1.c)
+2. [Explicit Type Conversion](code/2.3.1.c)
+3. [Char to int](code/2.3.1.c)
+4. [With and without Type Casting](code/2.3.1.c)
+5. [Long to int](code/2.3.1.c)
+6. [Mixed Expressions](code/2.3.1.c)
+7. [Division Operations](code/2.3.7.c)
+8. [Double to int](code/2.3.1.c)
+9. [Float and double.](code/2.3.1.c)
+10. [Advanced Type Casting and Data Interpretation](code/2.3.1.c)
