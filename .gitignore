@@ -74,4 +74,5 @@ dkms.conf
 .history
 .ionide
 
+*.sh
 # End of https://www.toptal.com/developers/gitignore/api/c,visualstudiocode
