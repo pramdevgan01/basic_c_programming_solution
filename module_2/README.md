@@ -89,6 +89,6 @@
 ## Module Test
 
 ### Solution:
-1. [Discount Calculator using const Keyword]()
-2. [Precise Division Using Type Casting]()
-3. [Arithmetic and Assignment Operator Evaluation]()
+1. [Discount Calculator using const Keyword](./code/2.7.1.c)
+2. [Precise Division Using Type Casting](./code/2.7.2.c)
+3. [Arithmetic and Assignment Operator Evaluation](./code/2.7.3.c)
