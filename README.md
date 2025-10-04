@@ -20,3 +20,4 @@ It emphasizes **practical C programming concepts**, **logic-building exercises**
 
 1. [Module 1](./module_1/README.md)
 2. [Module 2](./module_2/README.md)
+3. [Module 3](./module_3/README.md)
