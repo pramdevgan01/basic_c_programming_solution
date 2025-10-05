@@ -58,6 +58,16 @@
 
 ## **Nested Loops**
 ### Solution
+1. [Printing a Pattern of Asterisk](./code/3.5.1.c)
+2. [Decreasing Star Pattern](./code/3.5.2.c)
+3. [Pyramid Pattern of Asterisks](./code/3.5.3.c)
+4. [Number Triangle Pattern](./code/3.5.4.c)
+5. [Number Pattern Using Incremental Numbers](./code/3.5.5.c)
+6. [Hollow Rectangle Pattern](./code/3.5.6.c)
+7. [Right-Angled Triangle Pattern](./code/3.5.7.c)
+8. [Diamond Star Pattern](./code/3.5.8.c)
+9. [Center-Aligned Number Triangle Pattern](./code/3.5.9.c)
+10. [Center-aligned Pascal's triangle pattern](./code/3.5.10.c)
 
 ## **Loop Control Statements**
 ### Solution
