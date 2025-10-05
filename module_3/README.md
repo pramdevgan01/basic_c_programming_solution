@@ -25,15 +25,36 @@
 5. [Factorial](./code/3.2.5.c)
 6. [Fibonacci series](./code/3.2.6.c)
 7. [Reverse number](./code/3.2.7.c)
-8. [Whether a Number is Prime or Not](./code/3.2.7.c)
+8. [Whether a Number is Prime or Not](./code/3.2.8.c)
 9. [Palindrome or not](./code/3.2.9.c)
 10. [Length of a String without using strlen()](./code/3.2.10.c)
 
 ## **Loops in C: while Loop**
 ### Solution
 
+1. [Sum of Digits Using while Loop](./code/3.3.1.c)
+2. [Check Whether a Number is Even or Odd](./code/3.3.2.c)
+3. [Check Whether a Number is Prime or Not](./code/3.3.3.c)
+4. [Reverse a Number](./code/3.3.4.c)
+5. [Fibonacci Sequence](./code/3.3.5.c)
+6. [Counting the Number of Digits](./code/3.3.6.c)
+7. [Finding the Factorial](./code/3.3.7.c)
+8. [Armstrong Number](./code/3.3.8.c)
+9. [Power of a Number](./code/3.3.9.c)
+10. [GCD](./code/3.3.10.c)
+
 ## **Loops in C: do-while Loops**
 ### Solution
+1. [Print "Hello World" Five Times](./code/3.4.1.c)
+2. [Using do-while Loop](./code/3.4.2.c)
+3. [Until the User Enters Zero](./code/3.4.3.c)
+4. [Factorial Calculation](./code/3.4.4.c)
+5. [Sum of Natural Numbers](./code/3.4.5.c)
+6. [Reverse a Number](./code/3.4.6.c)
+7. [Count Digits](./code/3.4.7.c)
+8. [Sum of Even and Odd Numbers](./code/3.4.8.c)
+9. [Until Negative Input](./code/3.4.9.c)
+10. [Menu-Driven Calculator](./code/3.4.10.c)
 
 ## **Nested Loops**
 ### Solution
