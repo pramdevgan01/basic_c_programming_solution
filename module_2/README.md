@@ -32,14 +32,14 @@
 
 ### Solutions
 1. [Implicit Type Conversion](code/2.3.1.c)
-2. [Explicit Type Conversion](code/2.3.1.c)
-3. [Char to int](code/2.3.1.c)
-4. [With and without Type Casting](code/2.3.1.c)
-5. [Long to int](code/2.3.1.c)
-6. [Mixed Expressions](code/2.3.1.c)
+2. [Explicit Type Conversion](code/2.3.2.c)
+3. [Char to int](code/2.3.3.c)
+4. [With and without Type Casting](code/2.3.4.c)
+5. [Long to int](code/2.3.5.c)
+6. [Mixed Expressions](code/2.3.6.c)
 7. [Division Operations](code/2.3.7.c)
-8. [Double to int](code/2.3.1.c)
-9. [Float and double.](code/2.3.1.c)
+8. [Double to int](code/2.3.8.c)
+9. [Float and double.](code/2.3.9.c)
 10. [Advanced Type Casting and Data Interpretation](code/2.3.10.c)
 
 ## Arithmetic and Assignment Operators
