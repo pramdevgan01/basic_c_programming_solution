@@ -71,6 +71,19 @@
 
 ## **Loop Control Statements**
 ### Solution
+1. [Vowel Encounter()](./code/3.6.1.c)
+2. [Break Statement in a For Loop](./code/3.6.2.c)
+3. [While(1) Loop](./code/3.6.3.c)
+4. [Prompting User](./code/3.6.4.c)
+5. [Continue Input](./code/3.6.5.c)
+6. [Skip Even Numbers](./code/3.6.6.c)
+7. [Goto - Sum and Difference](./code/3.6.7.c)
+8. [Continue - Prime Numbers](./code/3.6.8.c)
+9. [Continue in do-while Loop](./code/3.6.9.c)
+10. [Goto in nested `for`](./code/3.6.10.c)
 
 ## **Module Test**
 ### Solution
+1. [Determine Even or Odd Using if-else](./code/3.7.1.c)
+2. [Count Down with while Loop](./code/3.7.2.c)
+3. [Print Prime Numbers in Range Using Nested Loops and continue](./code/3.7.3.c)
