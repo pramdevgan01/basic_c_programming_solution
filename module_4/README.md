@@ -28,6 +28,16 @@
 
 ## Multi Dimensional Arrays
 ### Solutions
+1. [Access Array Without Loops](./code/4.3.1.c)
+2. [Access Array Using Loops](./code/4.3.2.c)
+3. [Accessing 2D Array Elements Using For-Loop](./code/4.3.3.c)
+4. [Sum of Two 2x2 Matrices](./code/4.3.4.c)
+5. [Transpose of a Matrix](./code/4.3.5.c)
+6. [Matrix Addition](./code/4.3.6.c)
+7. [Upper Triangular Matrix](./code/4.3.7.c)
+8. [Check Symmetric Matrix](./code/4.3.8.c)
+9. [Diagonal Sum of a Square Matrix](./code/4.3.9.c)
+10. [Zeros in the Lower Triangular of a Matrix](./code/4.3.10.c)
 
 ## Introduction to Strings
 ### Solutions
