@@ -41,8 +41,33 @@
 
 ## Introduction to Strings
 ### Solutions
+1. [Print the First Character](./code/4.4.1.c)
+2. [Changing a Specific Character](./code/4.4.2.c)
+3. [Read and Display Characters](./code/4.4.3.c)
+4. [String Literal without Specifying Size](./code/4.4.4.c)
+5. [String Literal with a Predefined Size](./code/4.4.5.c)
+6. [Print the total number of characters](./code/4.4.6.c)
+7. [String Provided by the User](./code/4.4.7.c)
+8. [Characters Individually with Size](./code/4.4.8.c)
+9. [Remove non alphabets](./code/4.4.9.c)
+10. [Display character occurence](./code/4.4.10.c)
 
 ## Standard String Functions
 ### Solutions
+1. String Equality Checker [Solution 1](./code/4.5.1.1.c) [Solution 2](./code/4.5.1.2.c)
+2. [Manual String Copy Without Library Functions](./code/4.5.2.c)
+3. [Split a String into Words](./code/4.5.3.c)
+4. [Check for isomorphic strings](./code/4.5.4.c)
+5. [Check for anagram strings](./code/4.5.5.c)
+6. [Reverse the vowels](./code/4.5.6.c)
+7. [Index value of a non repeating character](./code/4.5.7.c)
+8. [Length of the final word](./code/4.5.8.c)
+9. [String Length and Concatenation](./code/4.5.9.c)
+10. [Compare Two Strings](./code/4.5.10.c)
+
+
 
 ## Module Test
+1. [Analyze Weekly Temperature Data]()
+2. [Calculate Total and Average Marks for Students]()
+3. [Count Positive Feedback Words in Customer Comments]()

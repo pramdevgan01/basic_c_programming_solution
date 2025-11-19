@@ -22,3 +22,4 @@ It emphasizes **practical C programming concepts**, **logic-building exercises**
 2. [Module 2](./module_2/README.md)
 3. [Module 3](./module_3/README.md)
 4. [Module 4](./module_4/README.md)
+5. [Module 5](./module_5/README.md)
