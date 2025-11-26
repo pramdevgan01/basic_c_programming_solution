@@ -13,7 +13,7 @@
 
 <br>
 
-<!-- Course Stats -->
+<!-- Course Stats Badges -->
 <div style="display: inline-block; padding: 10px 20px; margin: 8px; background: #10b981; color: white; border-radius: 50px; font-weight: bold;">Modules: 7</div>
 <div style="display: inline-block; padding: 10px 20px; margin: 8px; background: #ec4899; color: white; border-radius: 50px; font-weight: bold;">Topics: 49</div>
 <div style="display: inline-block; padding: 10px 20px; margin: 8px; background: #10b981; color: white; border-radius: 50px; font-weight: bold;">Reading Material: 42</div>
@@ -30,15 +30,17 @@
     Master C programming fundamentals, algorithms, problem-solving, and coding techniques to <strong>crack placement interviews in top companies</strong>. Develop <strong>logical thinking, analytical skills</strong>, and <strong>hands-on expertise in structured programming</strong>.
   </p>
   <br>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; text-align: center;">
-    <div style="background: rgba(139,92,246,0.2); padding: 15px; border-radius: 12px; border: 1px solid #8b5cf6;"><strong>Basics of C Programming</strong></div>
-    <div style="background: rgba(236,72,153,0.2); padding: 15px; border-radius: 12px; border: 1px solid #ec4899;"><strong>Arrays & Strings</strong></div>
-    <div style="background: rgba(59,130,246,0.2); padding: 15px; border-radius: 12px; border: 1px solid #3b82f6;"><strong>Pointers & Functions</strong></div>
-    <div style="background: rgba(16,185,129,0.2); padding: 15px; border-radius: 12px; border: 1px solid #10b981;"><strong>Data Structures Basics</strong></div>
-    <div style="background: rgba(249,115,22,0.2); padding: 15px; border-radius: 12px; border: 1px solid #f59e0b;"><strong>Problem-Solving Techniques</strong></div>
-    <div style="background: rgba(6,182,212,0.2); padding: 15px; border-radius: 12px; border: 1px solid #06b6d4;"><strong>Hands-on Coding Practice</strong></div>
-    <div style="background: rgba(239,68,68,0.2); padding: 15px; border-radius: 12px; border: 1px solid #ef4444;"><strong>Control & Conditional Statements</strong></div>
-  </div>
+  <table style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <td style="background: #8b5cf6; color: white; padding: 15px; border-radius: 12px; text-align: center; width: 14%;"><strong>Basics of C Programming</strong></td>
+      <td style="background: #ec4899; color: white; padding: 15px; border-radius: 12px; text-align: center; width: 14%;"><strong>Arrays & Strings</strong></td>
+      <td style="background: #3b82f6; color: white; padding: 15px; border-radius: 12px; text-align: center; width: 14%;"><strong>Pointers & Functions</strong></td>
+      <td style="background: #10b981; color: white; padding: 15px; border-radius: 12px; text-align: center; width: 14%;"><strong>Data Structures Basics</strong></td>
+      <td style="background: #f59e0b; color: white; padding: 15px; border-radius: 12px; text-align: center; width: 14%;"><strong>Problem-Solving Techniques</strong></td>
+      <td style="background: #06b6d4; color: white; padding: 15px; border-radius: 12px; text-align: center; width: 14%;"><strong>Hands-on Coding Practice</strong></td>
+      <td style="background: #ef4444; color: white; padding: 15px; border-radius: 12px; text-align: center; width: 14%;"><strong>Control & Conditional Statements</strong></td>
+    </tr>
+  </table>
 </div>
 
 <br><br>
@@ -47,28 +49,28 @@
 <table>
   <tr>
     <td align="center" width="33%">
-      <div style="background: linear-gradient(135deg, #10b981, #059669); padding: 35px; border-radius: 22px; color: white; box-shadow: 0 15px 35px rgba(16,185,129,0.4);">
-        <h1 style="margin: 0; font-size: 5rem; background: linear-gradient(white, #ecfdf5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">01</h1>
+      <div style="background: #10b981; padding: 35px; border-radius: 22px; color: white; box-shadow: 0 10px 20px #10b981;">
+        <h1 style="margin: 0; font-size: 5rem; color: white;">01</h1>
         <h3 style="margin: 10px 0;">Introduction to C & Setup</h3>
-        <p style="opacity: 0.9;">First Program • I/O • Comments • Errors</p>
+        <p>First Program • I/O • Comments • Errors</p>
         <br>
         <a href="./module_1/README.md" style="background: white; color: #10b981; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">Start Module 1</a>
       </div>
     </td>
     <td align="center" width="33%">
-      <div style="background: linear-gradient(135deg, #3b82f6, #2563eb); padding: 35px; border-radius: 22px; color: white; box-shadow: 0 15px 35px rgba(59,130,246,0.4);">
-        <h1 style="margin: 0; font-size: 5rem; background: linear-gradient(white, #dbeafe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">02</h1>
+      <div style="background: #3b82f6; padding: 35px; border-radius: 22px; color: white; box-shadow: 0 10px 20px #3b82f6;">
+        <h1 style="margin: 0; font-size: 5rem; color: white;">02</h1>
         <h3 style="margin: 10px 0;">Variables & Operators</h3>
-        <p style="opacity: 0.9;">Data Types • Type Casting • Bitwise • const</p>
+        <p>Data Types • Type Casting • Bitwise • const</p>
         <br>
         <a href="./module_2/README.md" style="background: white; color: #3b82f6; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: bold;">Start Module 2</a>
       </div>
     </td>
     <td align="center" width="33%">
-      <div style="background: linear-gradient(135deg, #f59e0b, #f97316); padding: 35px; border-radius: 22px; color: white; box-shadow: 0 15px 35px rgba(245,158,11,0.4);">
-        <h1 style="margin: 0; font-size: 5rem; background: linear-gradient(white, #fef3c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">03</h1>
+      <div style="background: #f59e0b; padding: 35px; border-radius: 22px; color: white; box-shadow: 0 10px 20px #f59e0b;">
+        <h1 style="margin: 0; font-size: 5rem; color: white;">03</h1>
         <h3 style="margin: 10px 0;">Control Statements</h3>
-        <p style="opacity: 0.9;">if-else • Loops • Patterns • break/continue</p>
+        <p>if-else • Loops • Patterns • break/continue</p>
         <br>
         <a href="./module_3/README.md" style="background: white; color: #f59e0b; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: bold;">Start Module 3</a>
       </div>
@@ -76,28 +78,28 @@
   </tr>
   <tr>
     <td align="center" width="33%">
-      <div style="background: linear-gradient(135deg, #06b6d4, #0891b2); padding: 35px; border-radius: 22px; color: white; box-shadow: 0 15px 35px rgba(6,182,212,0.4);">
-        <h1 style="margin: 0; font-size: 5rem; background: linear-gradient(white, #ccfbf1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">04</h1>
+      <div style="background: #06b6d4; padding: 35px; border-radius: 22px; color: white; box-shadow: 0 10px 20px #06b6d4;">
+        <h1 style="margin: 0; font-size: 5rem; color: white;">04</h1>
         <h3 style="margin: 10px 0;">Arrays & Strings</h3>
-        <p style="opacity: 0.9;">1D/2D Arrays • String Functions • Matrix Ops</p>
+        <p>1D/2D Arrays • String Functions • Matrix Ops</p>
         <br>
         <a href="./module_4/README.md" style="background: white; color: #06b6d4; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: bold;">Start Module 4</a>
       </div>
     </td>
     <td align="center" width="33%">
-      <div style="background: linear-gradient(135deg, #ec4899, #e11d48); padding: 35px; border-radius: 22px; color: white; box-shadow: 0 15px 35px rgba(236,72,153,0.4);">
-        <h1 style="margin: 0; font-size: 5rem; background: linear-gradient(white, #fce7f3); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">05</h1>
+      <div style="background: #ec4899; padding: 35px; border-radius: 22px; color: white; box-shadow: 0 10px 20px #ec4899;">
+        <h1 style="margin: 0; font-size: 5rem; color: white;">05</h1>
         <h3 style="margin: 10px 0;">Functions & Recursion</h3>
-        <p style="opacity: 0.9;">Scope • Storage Classes • Header Files</p>
+        <p>Scope • Storage Classes • Header Files</p>
         <br>
         <a href="./module_5/README.md" style="background: white; color: #ec4899; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: bold;">Start Module 5</a>
       </div>
     </td>
     <td align="center" width="33%">
-      <div style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); padding: 35px; border-radius: 22px; color: white; box-shadow: 0 15px 35px rgba(139,92,246,0.4);">
-        <h1 style="margin: 0; font-size: 5rem; background: linear-gradient(white, #f3e8ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">06</h1>
+      <div style="background: #8b5cf6; padding: 35px; border-radius: 22px; color: white; box-shadow: 0 10px 20px #8b5cf6;">
+        <h1 style="margin: 0; font-size: 5rem; color: white;">06</h1>
         <h3 style="margin: 10px 0;">Pointers & Memory</h3>
-        <p style="opacity: 0.9;">Address • Pointer Arithmetic • Dynamic Memory</p>
+        <p>Address • Pointer Arithmetic • Dynamic Memory</p>
         <br>
         <a href="./module_6/README.md" style="background: white; color: #8b5cf6; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: bold;">Start Module 6</a>
       </div>
@@ -105,12 +107,12 @@
   </tr>
   <tr>
     <td colspan="3" align="center">
-      <div style="background: linear-gradient(135deg, #ef4444, #dc2626); padding: 55px; border-radius: 28px; color: white; box-shadow: 0 25px 60px rgba(239,68,68,0.6);">
-        <h1 style="margin: 0; font-size: 7rem; background: linear-gradient(white, #fee2e2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">07</h1>
+      <div style="background: #ef4444; padding: 55px; border-radius: 28px; color: white; box-shadow: 0 15px 30px #ef4444;">
+        <h1 style="margin: 0; font-size: 7rem; color: white;">07</h1>
         <h2 style="margin: 15px 0; font-size: 2.5rem;">Structs, Unions & File I/O</h2>
-        <p style="font-size: 1.5rem; opacity: 0.95;">Custom Data Types • Binary/Text Files • Real-World Data Handling</p>
+        <p style="font-size: 1.5rem;">Custom Data Types • Binary/Text Files • Real-World Data Handling</p>
         <br>
-        <a href="./module_7/README.md" style="background: white; color: #ef4444; padding: 20px 50px; border-radius: 60px; text-decoration: none; font-weight: bold; font-size: 1.5rem; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">Start Final Module – Become a C Master</a>
+        <a href="./module_7/README.md" style="background: white; color: #ef4444; padding: 20px 50px; border-radius: 60px; text-decoration: none; font-weight: bold; font-size: 1.5rem;">Start Final Module – Become a C Master</a>
       </div>
     </td>
   </tr>
@@ -121,10 +123,10 @@
 <!-- Author -->
 <div style="background: #1e293b; padding: 45px; border-radius: 26px; color: white; border: 3px solid #8b5cf6; max-width: 900px; margin: 0 auto;">
   <h2 style="color: #a78bfa; margin-top: 0; font-size: 2rem;">Created & Curated By</h2>
-  <h1 style="margin: 10px 0; font-size: 3rem; background: linear-gradient(90deg, #8b5cf6, #ec4899, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+  <h1 style="margin: 10px 0; font-size: 3rem; color: #8b5cf6;">
     Param Vishwakarma
   </h1>
-  <p style="font-size: 1.3rem; opacity: 0.9;">
+  <p style="font-size: 1.3rem;">
     Lead Mentor • Software Engineer • C Programming Expert<br>
     <strong>byteXL</strong> — Transforming Engineering Education in India
   </p>
