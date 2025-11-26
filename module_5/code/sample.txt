@@ -1,0 +1,5 @@
+Hello world! 
+This is a sample text file. 
+Used for demonstrating 
+line and character counting. 
+Have a great day!
