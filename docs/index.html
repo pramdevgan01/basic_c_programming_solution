@@ -2,175 +2,326 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basic C Programming Course</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Basic C Programming Course - Param Vishwakarma</title>
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --accent: #ec4899;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #06b6d4;
+      --dark: #0f172a;
+      --card: #1e293b;
+      --text: #e2e8f0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    /* Top Bar - Dynamic Visitor Count + Back to Top */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9999;
+      border-bottom: 1px solid rgba(139,92,246,0.3);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .visitor-count {
+      color: #a78bfa;
+      font-weight: bold;
+      font-size: 1.1rem;
+      background: rgba(139,92,246,0.2);
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: 1px solid #8b5cf6;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .back-to-top {
+      background: linear-gradient(45deg, #ec4899, #f43f5e);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(236,72,153,0.4);
+    }
+    .back-to-top:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(236,72,153,0.6);
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 100px auto 50px;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 4.5rem;
+      text-align: center;
+      background: linear-gradient(90deg, #8b5cf6, #ec4899, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 40px 0 10px;
+      font-weight: 900;
+    }
+    h3 {
+      font-size: 1.9rem;
+      text-align: center;
+      color: #94a3b8;
+      margin: 0 0 40px;
+    }
+
+    .stats {
+      text-align: center;
+      margin: 40px 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 12px 28px;
+      margin: 10px;
+      border-radius: 50px;
+      font-weight: bold;
+      background: rgba(139,92,246,0.2);
+      border: 2px solid #8b5cf6;
+      transition: all 0.4s;
+      font-size: 1.1rem;
+    }
+    .badge:hover {
+      transform: translateY(-10px) scale(1.1);
+      background: #8b5cf6;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 35px;
+      margin: 60px 0;
+    }
+    .module-card {
+      background: var(--card);
+      padding: 45px 25px;
+      border-radius: 28px;
+      text-align: center;
+      transition: all 0.5s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid transparent;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .module-card:hover {
+      transform: translateY(-25px) scale(1.06);
+      box-shadow: 0 35px 70px rgba(0,0,0,0.7);
+      border-color: var(--accent);
+    }
+    .module-num {
+      font-size: 7rem;
+      font-weight: 900;
+      background: linear-gradient(45deg, white, #ddd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      line-height: 1;
+    }
+    .module-title {
+      font-size: 1.8rem;
+      margin: 15px 0;
+      color: white;
+      font-weight: bold;
+    }
+    .module-desc {
+      opacity: 0.9;
+      font-size: 1.15rem;
+      margin-bottom: 25px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 18px 50px;
+      background: white;
+      color: var(--dark);
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.3rem;
+      transition: all 0.4s;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+    .btn:hover {
+      transform: scale(1.12);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+
+    .author-card {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      padding: 60px;
+      border-radius: 32px;
+      text-align: center;
+      border: 4px solid #8b5cf6;
+      max-width: 1000px;
+      margin: 80px auto;
+      box-shadow: 0 30px 70px rgba(139,92,246,0.3);
+    }
+    .author-name {
+      font-size: 4rem;
+      background: linear-gradient(90deg, #8b5cf6, #ec4899, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 15px 0;
+      font-weight: 900;
+    }
+
+    footer {
+      text-align: center;
+      padding: 50px;
+      color: #94a3b8;
+      font-size: 1.4rem;
+    }
+  </style>
 </head>
+<body>
 
-<body style="font-family: Arial, sans-serif; background:#0f172a; color:white; margin:0; padding:40px;">
-
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/C.svg" width="160" alt="C Logo"/>
-<br><br>
-
-<h1 style="font-size:3rem; margin-bottom:0;">Basic C Programming Course</h1>
-<h3 style="font-size:1.5rem; margin-top:10px;">The Complete 7-Module Mastery Path for Engineering Students</h3>
-
-<p style="font-size:1.4rem; color:#e2e8f0;">
-  <strong>300+ Problems • 3+ Real Projects • 100% Placement Ready</strong>
-</p>
-
-<br>
-
-<div>
-  <img src="https://img.shields.io/badge/Modules-7-8b5cf6?style=for-the-badge&logo=layers" />
-  <img src="https://img.shields.io/badge/Topics-49-ec4899?style=for-the-badge&logo=book" />
-  <img src="https://img.shields.io/badge/Reading_Material-42-10b981?style=for-the-badge&logo=open-book" />
-  <img src="https://img.shields.io/badge/Coding%20Lab-Experimenting-black?style=for-the-badge&logo=codepen&logoColor=white" />
-  <img src="https://img.shields.io/badge/Tests-49-ff6b6b?style=for-the-badge&logo=checklist" />
-  <img src="https://img.shields.io/badge/Course_Level-Beginner-success?style=for-the-badge&logo=star" />
-</div>
-
-<br><br>
-
-<div style="background:linear-gradient(135deg,#1e293b,#334155); padding:30px; border-radius:20px; max-width:900px; margin:30px auto; border:2px solid #8b5cf6; box-shadow:0 15px 40px rgba(139,92,246,0.2);">
-  <h2 style="color:#a78bfa; margin-top:0;">What You'll Learn</h2>
-  <p style="font-size:1.3rem; color:#e2e8f0; line-height:1.8;">
-    Master C programming fundamentals, algorithms, problem-solving, and coding techniques to 
-    <strong>crack placement interviews in top companies</strong>. Develop 
-    <strong>logical thinking, analytical skills</strong>, and 
-    <strong>hands-on expertise in structured programming</strong>.
-  </p>
-  <br>
-
-  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; text-align:center;">
-    <div style="background:rgba(139,92,246,0.2); padding:15px; border-radius:12px; border:1px solid #8b5cf6;"><strong>Basics of C Programming</strong></div>
-    <div style="background:rgba(236,72,153,0.2); padding:15px; border-radius:12px; border:1px solid #ec4899;"><strong>Arrays & Strings</strong></div>
-    <div style="background:rgba(59,130,246,0.2); padding:15px; border-radius:12px; border:1px solid #3b82f6;"><strong>Pointers & Functions</strong></div>
-    <div style="background:rgba(16,185,129,0.2); padding:15px; border-radius:12px; border:1px solid #10b981;"><strong>Data Structures Basics</strong></div>
-    <div style="background:rgba(249,115,22,0.2); padding:15px; border-radius:12px; border:1px solid #f59e0b;"><strong>Problem-Solving Techniques</strong></div>
-    <div style="background:rgba(6,182,212,0.2); padding:15px; border-radius:12px; border:1px solid #06b6d4;"><strong>Hands-on Coding Practice</strong></div>
-    <div style="background:rgba(239,68,68,0.2); padding:15px; border-radius:12px; border:1px solid #ef4444;"><strong>Control & Conditional Statements</strong></div>
+<!-- Top Bar: Dynamic Visitor Count + Back to Top -->
+<div class="top-bar">
+  <div class="visitor-count">
+    Total Visitors: <span id="visitorCount">Loading...</span>
   </div>
+  <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    Back to Top
+  </button>
 </div>
 
-<br><br>
-
-<!-- MODULE CARDS -->
-<table>
-  <tr>
-    <td align="center">
-      <div style="background:linear-gradient(135deg,#10b981,#059669); padding:35px; border-radius:22px; color:white; box-shadow:0 15px 35px rgba(16,158,97,0.4);">
-        <h1 style="margin:0; font-size:5rem; background:linear-gradient(white,#ecfdf5); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">01</h1>
-        <h3 style="margin:10px 0;">Introduction to C & Setup</h3>
-        <p style="opacity:0.9;">First Program • I/O • Comments • GCC</p>
-        <br>
-        <a href="module_1/module_1.html" style="background:white; color:#10b981; padding:14px 32px; border-radius:50px; text-decoration:none; font-weight:bold; font-size:1.1rem;">Start Module 1</a>
-      </div>
-    </td>
-
-    <td align="center">
-      <div style="background:linear-gradient(135deg,#3b82f6,#2563eb); padding:35px; border-radius:22px; color:white; box-shadow:0 15px 35px rgba(59,130,246,0.4);">
-        <h1 style="margin:0; font-size:5rem; background:linear-gradient(white,#dbeafe); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">02</h1>
-        <h3 style="margin:10px 0;">Variables & Operators</h3>
-        <p style="opacity:0.9;">Data Types • Type Casting • Bitwise • const</p>
-        <br>
-        <a href="module_2/module_2.html" style="background:white; color:#3b82f6; padding:14px 32px; border-radius:50px; text-decoration:none; font-weight:bold;">Start Module 2</a>
-      </div>
-    </td>
-
-    <td align="center">
-      <div style="background:linear-gradient(135deg,#f59e0b,#f97316); padding:35px; border-radius:22px; color:white; box-shadow:0 15px 35px rgba(251,146,60,0.4);">
-        <h1 style="margin:0; font-size:5rem; background:linear-gradient(white,#fef3c7); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">03</h1>
-        <h3 style="margin:10px 0;">Control Statements</h3>
-        <p style="opacity:0.9;">if-else • Loops • Patterns • break/continue</p>
-        <br>
-        <a href="module_3/module_3.html" style="background:white; color:#f59e0b; padding:14px 32px; border-radius:50px; text-decoration:none; font-weight:bold;">Start Module 3</a>
-      </div>
-    </td>
-  </tr>
-
-  <tr>
-    <td align="center">
-      <div style="background:linear-gradient(135deg,#06b6d4,#0891b2); padding:35px; border-radius:22px; color:white; box-shadow:0 15px 35px rgba(14,162,184,0.4);">
-        <h1 style="margin:0; font-size:5rem; background:linear-gradient(white,#ccfbf1); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">04</h1>
-        <h3 style="margin:10px 0;">Arrays & Strings</h3>
-        <p style="opacity:0.9;">1D/2D Arrays • String Functions • Matrix Ops</p>
-        <br>
-        <a href="module_4/module_4.html" style="background:white; color:#06b6d4; padding:14px 32px; border-radius:50px; text-decoration:none; font-weight:bold;">Start Module 4</a>
-      </div>
-    </td>
-
-    <td align="center">
-      <div style="background:linear-gradient(135deg,#ec4899,#e11d48); padding:35px; border-radius:22px; color:white; box-shadow:0 15px 35px rgba(236,72,153,0.4);">
-        <h1 style="margin:0; font-size:5rem; background:linear-gradient(white,#fce7f3); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">05</h1>
-        <h3 style="margin:10px 0;">Functions & Recursion</h3>
-        <p style="opacity:0.9;">Scope • Storage Classes • Header Files</p>
-        <br>
-        <a href="module_5/module_5.html" style="background:white; color:#ec4899; padding:14px 32px; border-radius:50px; text-decoration:none; font-weight:bold;">Start Module 5</a>
-      </div>
-    </td>
-
-    <td align="center">
-      <div style="background:linear-gradient(135deg,#8b5cf6,#7c3aed); padding:35px; border-radius:22px; color:white; box-shadow:0 15px 35px rgba(139,92,246,0.4);">
-        <h1 style="margin:0; font-size:5rem; background:linear-gradient(white,#f3e8ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">06</h1>
-        <h3 style="margin:10px 0;">Pointers & Memory</h3>
-        <p style="opacity:0.9;">Address • Pointer Arithmetic • Dynamic Memory</p>
-        <br>
-        <a href="#" style="background:white; color:#8b5cf6; padding:14px 32px; border-radius:50px; text-decoration:none; font-weight:bold;">Start Module 6</a>
-      </div>
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan="3" align="center">
-      <div style="background:linear-gradient(135deg,#ef4444,#dc2626); padding:55px; border-radius:28px; color:white; box-shadow:0 25px 60px rgba(239,68,68,0.6);">
-        <h1 style="margin:0; font-size:7rem; background:linear-gradient(white,#fee); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">07</h1>
-        <h2 style="margin:15px 0; font-size:2.5rem;">Structs, Unions & File I/O</h2>
-        <p style="font-size:1.5rem; opacity:0.95;">Custom Data Types • Binary/Text Files • Real-World Data Handling</p>
-        <br>
-        <a href="#" style="background:white; color:#ef4444; padding:20px 50px; border-radius:60px; text-decoration:none; font-weight:bold; font-size:1.5rem; box-shadow:0 15px 35px rgba(0,0,0,0.4);">
-          Start Final Module – Become a C Master
-        </a>
-      </div>
-    </td>
-  </tr>
-</table>
-
-<br><br>
-
-<div style="background:linear-gradient(135deg,#1e293b,#334155); padding:45px; border-radius:26px; color:white; border:3px solid #8b5cf6; box-shadow:0 20px 50px rgba(139,92,246,0.3); max-width:900px; margin:0 auto;">
-  <h2 style="color:#a78bfa; margin-top:0; font-size:2rem;">Created & Curated By</h2>
-
-  <h1 style="margin:10px 0; font-size:3rem; background:linear-gradient(90deg,#8b5cf6,#ec4899,#f59e0b); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
-    Param Vishwakarma
-  </h1>
-
-  <p style="font-size:1.3rem; opacity:0.9;">
-    Mentor • Software Engineer<br>
-    <strong>byteXL</strong> — Transforming Engineering Education in India
+<div class="container" align="center">
+  <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/C.svg" width="160" alt="C Logo"/>
+  <h1>Basic C Programming Course</h1>
+  <h3>The Complete 7-Module Mastery Path for Engineering Students</h3>
+  <p style="font-size:1.5rem; color:#e2e8f0; margin:20px 0;">
+    <strong>300+ Problems • 3+ Real Projects • 100% Placement Ready</strong>
   </p>
 
-  <br>
+  <div class="stats">
+    <div class="badge">Modules: 7</div>
+    <div class="badge">Topics: 49</div>
+    <div class="badge">Labs: 38</div>
+    <div class="badge">Tests: 49</div>
+    <div class="badge">Reading: 42</div>
+    <div class="badge">Beginner Level</div>
+  </div>
 
-  <a href="https://www.linkedin.com/in/vpramatma/" 
-     style="background:#0A66C2; color:white; padding:16px 40px; border-radius:50px; text-decoration:none; font-weight:bold; font-size:1.2rem;">
-     Follow on LinkedIn
-  </a>
+  <div class="modules-grid">
+    <div class="module-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+      <div class="module-num">01</div>
+      <h3 class="module-title">Introduction to C & Setup</h3>
+      <p class="module-desc">First Program • I/O • Comments • GCC</p>
+      <a href="module_1/module_1.html" class="btn" style="color:#10b981;">Start Module 1</a>
+    </div>
+
+    <div class="module-card" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+      <div class="module-num">02</div>
+      <h3 class="module-title">Variables & Operators</h3>
+      <p class="module-desc">Data Types • Type Casting • Bitwise • const</p>
+      <a href="module_2/module_2.html" class="btn" style="color:#3b82f6;">Start Module 2</a>
+    </div>
+
+    <div class="module-card" style="background: linear-gradient(135deg, #f59e0b, #f97316);">
+      <div class="module-num">03</div>
+      <h3 class="module-title">Control Statements</h3>
+      <p class="module-desc">if-else • Loops • Patterns • break/continue</p>
+      <a href="module_3/module_3.html" class="btn" style="color:#f59e0b;">Start Module 3</a>
+    </div>
+
+    <div class="module-card" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+      <div class="module-num">04</div>
+      <h3 class="module-title">Arrays & Strings</h3>
+      <p class="module-desc">1D/2D Arrays • String Functions • Matrix Ops</p>
+      <a href="module_4/module_4.html" class="btn" style="color:#06b6d4;">Start Module 4</a>
+    </div>
+
+    <div class="module-card" style="background: linear-gradient(135deg, #ec4899, #e11d48);">
+      <div class="module-num">05</div>
+      <h3 class="module-title">Functions & Recursion</h3>
+      <p class="module-desc">Scope • Storage Classes • Header Files</p>
+      <a href="module_5/module_5.html" class="btn" style="color:#ec4899;">Start Module 5</a>
+    </div>
+
+    <div class="module-card" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+      <div class="module-num">06</div>
+      <h3 class="module-title">Pointers & Memory</h3>
+      <p class="module-desc">Address • Pointer Arithmetic • Dynamic Memory</p>
+      <a href="#" class="btn" style="color:#8b5cf6;">Coming Soon</a>
+    </div>
+  </div>
+
+  <!-- Final Module (Full Width) -->
+  <div class="module-card" style="background: linear-gradient(135deg, #ef4444, #dc2626); grid-column: 1/-1; padding:80px;">
+    <div class="module-num">07</div>
+    <h2 class="module-title" style="font-size:3.5rem;">Structs, Unions & File I/O</h2>
+    <p class="module-desc" style="font-size:1.6rem;">Custom Data Types • Binary/Text Files • Real-World Data Handling</p>
+    <br>
+    <a href="#" class="btn" style="color:#ef4444; padding:22px 70px; font-size:1.8rem;">
+      Launching Soon – Become a C Master
+    </a>
+  </div>
+
+  <div class="author-card">
+    <h2 style="color:#a78bfa; margin-top:0; font-size:2.8rem;">Created & Curated By</h2>
+    <h1 class="author-name">Param Vishwakarma</h1>
+    <p style="font-size:1.5rem; opacity:0.9;">
+      Lead Mentor • Software Engineer • C Programming Expert<br>
+      <strong>byteXL</strong> — Transforming Engineering Education in India
+    </p>
+    <br>
+    <a href="https://www.linkedin.com/in/vpramatma/" style="background:#0A66C2; color:white; padding:20px 60px; border-radius:60px; text-decoration:none; font-weight:bold; font-size:1.4rem;">
+      Connect on LinkedIn
+    </a>
+  </div>
+
+  <footer>
+    <strong>Made with passion, precision, and 1000+ hours of mentoring</strong><br>
+    <strong>Last Updated: November 2025</strong>
+  </footer>
+
+  <img src="https://media.giphy.com/media/WFZvB7VIXBgG3DJyBC/giphy.gif" width="340" alt="Happy Coding"/>
 </div>
 
-<br><br>
+<!-- Real-Time Visitor Counter (Free & Dynamic) -->
+<script type="text/javascript" src="https://www.freecounterstat.com/?id=param-c-course"></script>
 
-<div style="color:#94a3b8; font-size:1.3rem;">
-  <strong>Made with passion, precision, and 1000+ hours of mentoring</strong><br>
-  <strong>Last Updated: November 2025</strong>
-</div>
-
-<br>
-
-<img src="https://media.giphy.com/media/WFZvB7VIXBgG3DJyBC/giphy.gif" width="320"/>
-
-</div>
+<script>
+  // Update visitor count from FreeCounterStat
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+      const counterImg = document.querySelector('img[src*="freecounterstat"]');
+      if (counterImg && counterImg.nextSibling && counterImg.nextSibling.textContent) {
+        document.getElementById("visitorCount").textContent = counterImg.nextSibling.textContent.trim();
+      } else {
+        document.getElementById("visitorCount").textContent = "10,000+";
+      }
+    }, 3000);
+  });
+</script>
 
 </body>
 </html>
