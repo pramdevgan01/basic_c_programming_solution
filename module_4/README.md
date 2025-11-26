@@ -1,73 +1,236 @@
-# Arrays and Strings
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arrays & Strings in C - Complete Solutions</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --text: #1e293b;
+      --primary: #0ea5e9;
+      --accent: #6366f1;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --code: #f0f9ff;
+      --hover: #0284c7;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      font-size: 3.1rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+    h2 {
+      font-size: 2rem;
+      color: var(--accent);
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 0.5rem;
+      margin-top: 3.5rem;
+    }
+    .container {
+      max-width: 1150px;
+      margin: 0 auto;
+      background: var(--card);
+      padding: 2.8rem;
+      border-radius: 18px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 1rem 0;
+      padding: 1.3rem 1.8rem;
+      background: var(--code);
+      border-left: 6px solid var(--primary);
+      border-radius: 12px;
+      transition: all 0.35s ease;
+      box-shadow: 0 4px 12px rgba(14,165,233,0.12);
+    }
+    li:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(14,165,233,0.25);
+      border-left-color: var(--accent);
+    }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.08rem;
+    }
+    a:hover {
+      color: var(--hover);
+      text-decoration: underline;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.35rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: bold;
+      margin-right: 0.8rem;
+    }
+    .multi {
+      font-size: 0.96rem;
+      color: #7c3aed;
+      font-weight: bold;
+      margin-left: 8px;
+    }
+    .coming-soon {
+      color: #94a3b8;
+      font-style: italic;
+    }
+    footer {
+      text-align: center;
+      margin-top: 6rem;
+      padding: 3rem;
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: white;
+      border-radius: 16px;
+      font-size: 1.05rem;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
 
-## Introduction to Arrays
-### Solutions
-1. [Negative Values Count](./code/4.1.1.c)
-2. [Print the Elements of an Array in C](./code/4.1.2.c)
-3. [Insert an Element into an Array](./code/4.1.3.c)
-4. [Print Square of Array Elements](./code/4.1.4.c)
-5. [Array Initialization After Declaration](./code/4.1.5.c)
-6. [Getting the Size of an Array](./code/4.1.6.c)
-7. [Accessing and Modifying Array](./code/4.1.7.c)
-8. [Count Even and Odd Numbers in an Array](./code/4.1.8.c)
-9. [Find Second Largest Element in Array](./code/4.1.9.c)
-10. [Frequency of Each Element in Array](./code/4.1.10.c)
+<div class="container">
 
-## 1D Arrays
-### Solutions
-1. [1D Array with a for Loop](./code/4.2.1.c)
-2. [1D Char Array Using while Loop](./code/4.2.2.c)
-3. [Average of n Numbers Using Arrays](./code/4.2.3.c)
-4. [Largest Element in an Array](./code/4.2.4.c)
-5. [Sum of Elements in an Array](./code/4.2.5.c)
-6. [Count the Number of Even and Odd](./code/4.2.6.c)
-7. [Reverse an Array](./code/4.2.7.c)
-8. [Remove Duplicates](./code/4.2.8.c)
-9. [Maximum and Minimum Element](./code/4.2.9.c)
-10. [Product of Array Elements](./code/4.2.10.c)
+<h1>Arrays & Strings in C</h1>
 
-## Multi Dimensional Arrays
-### Solutions
-1. [Access Array Without Loops](./code/4.3.1.c)
-2. [Access Array Using Loops](./code/4.3.2.c)
-3. [Accessing 2D Array Elements Using For-Loop](./code/4.3.3.c)
-4. [Sum of Two 2x2 Matrices](./code/4.3.4.c)
-5. [Transpose of a Matrix](./code/4.3.5.c)
-6. [Matrix Addition](./code/4.3.6.c)
-7. [Upper Triangular Matrix](./code/4.3.7.c)
-8. [Check Symmetric Matrix](./code/4.3.8.c)
-9. [Diagonal Sum of a Square Matrix](./code/4.3.9.c)
-10. [Zeros in the Lower Triangular of a Matrix](./code/4.3.10.c)
+<div class="section">
+  <h2>Introduction to Arrays</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/4.1.1.c">Count Negative Values in Array</a></li>
+    <li><span class="badge">2</span> <a href="./code/4.1.2.c">Print All Elements of an Array</a></li>
+    <li><span class="badge">3</span> <a href="./code/4.1.3.c">Insert Element at Specific Position</a></li>
+    <li><span class="badge">4</span> <a href="./code/4.1.4.c">Print Square of Each Element</a></li>
+    <li><span class="badge">5</span> <a href="./code/4.1.5.c">Initialize Array After Declaration</a></li>
+    <li><span class="badge">6</span> <a href="./code/4.1.6.c">Get Array Size using sizeof()</a></li>
+    <li><span class="badge">7</span> <a href="./code/4.1.7.c">Access & Modify Array Elements</a></li>
+    <li><span class="badge">8</span> <a href="./code/4.1.8.c">Count Even & Odd Numbers</a></li>
+    <li><span class="badge">9</span> <a href="./code/4.1.9.c">Find Second Largest Element</a></li>
+    <li><span class="badge">10</span> <a href="./code/4.1.10.c">Frequency of Each Element</a></li>
+  </ul>
+</div>
 
-## Introduction to Strings
-### Solutions
-1. [Print the First Character](./code/4.4.1.c)
-2. [Changing a Specific Character](./code/4.4.2.c)
-3. [Read and Display Characters](./code/4.4.3.c)
-4. [String Literal without Specifying Size](./code/4.4.4.c)
-5. [String Literal with a Predefined Size](./code/4.4.5.c)
-6. [Print the total number of characters](./code/4.4.6.c)
-7. [String Provided by the User](./code/4.4.7.c)
-8. [Characters Individually with Size](./code/4.4.8.c)
-9. [Remove non alphabets](./code/4.4.9.c)
-10. [Display character occurence](./code/4.4.10.c)
+<div class="section">
+  <h2>1D Arrays</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/4.2.1.c">Traverse 1D Array using for Loop</a></li>
+    <li><span class="badge">2</span> <a href="./code/4.2.2.c">Character Array using while Loop</a></li>
+    <li><span class="badge">3</span> <a href="./code/4.2.3.c">Average of n Numbers</a></li>
+    <li><span class="badge">4</span> <a href="./code/4.2.4.c">Find Largest Element</a></li>
+    <li><span class="badge">5</span> <a href="./code/4.2.5.c">Sum of All Elements</a></li>
+    <li><span class="badge">6</span> <a href="./code/4.2.6.c">Count Even & Odd Elements</a></li>
+    <li><span class="badge">7</span> <a href="./code/4.2.7.c">Reverse Array In-Place</a></li>
+    <li><span class="badge">8</span> <a href="./code/4.2.8.c">Remove Duplicate Elements</a></li>
+    <li><span class="badge">9</span> <a href="./code/4.2.9.c">Find Maximum & Minimum</a></li>
+    <li><span class="badge">10</span> <a href="./code/4.2.10.c">Product of All Elements</a></li>
+  </ul>
+</div>
 
-## Standard String Functions
-### Solutions
-1. String Equality Checker [Solution 1](./code/4.5.1.1.c) [Solution 2](./code/4.5.1.2.c)
-2. [Manual String Copy Without Library Functions](./code/4.5.2.c)
-3. [Split a String into Words](./code/4.5.3.c)
-4. [Check for isomorphic strings](./code/4.5.4.c)
-5. [Check for anagram strings](./code/4.5.5.c)
-6. [Reverse the vowels](./code/4.5.6.c)
-7. [Index value of a non repeating character](./code/4.5.7.c)
-8. [Length of the final word](./code/4.5.8.c)
-9. [String Length and Concatenation](./code/4.5.9.c)
-10. [Compare Two Strings](./code/4.5.10.c)
+<div class="section">
+  <h2>Multi-Dimensional Arrays</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/4.3.1.c">Access 2D Array Without Loops</a></li>
+    <li><span class="badge">2</span> <a href="./code/4.3.2.c">Access 2D Array Using Loops</a></li>
+    <li><span class="badge">3</span> <a href="./code/4.3.3.c">Traverse 2D Array with Nested Loops</a></li>
+    <li><span class="badge">4</span> <a href="./code/4.3.4.c">Sum of Two 2×2 Matrices</a></li>
+    <li><span class="badge">5</span> <a href="./code/4.3.5.c">Transpose of a Matrix</a></li>
+    <li><span class="badge">6</span> <a href="./code/4.3.6.c">Matrix Addition (Dynamic Size)</a></li>
+    <li><span class="badge">7</span> <a href="./code/4.3.7.c">Check Upper Triangular Matrix</a></li>
+    <li><span class="badge">8</span> <a href="./code/4.3.8.c">Check Symmetric Matrix</a></li>
+    <li><span class="badge">9</span> <a href="./code/4.3.9.c">Sum of Main & Anti-Diagonal</a></li>
+    <li><span class="badge">10</span> <a href="./code/4.3.10.c">Check Zeros in Lower Triangle</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Introduction to Strings</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/4.4.1.c">Print First Character of String</a></li>
+    <li><span class="badge">2</span> <a href="./code/4.4.2.c">Modify Specific Character</a></li>
+    <li><span class="badge">3</span> <a href="./code/4.4.3.c">Read & Display String using %s</a></li>
+    <li><span class="badge">4</span> <a href="./code/4.4.4.c">String Literal (Auto Size)</a></li>
+    <li><span class="badge">5</span> <a href="./code/4.4.5.c">String with Fixed Size Array</a></li>
+    <li><span class="badge">6</span> <a href="./code/4.4.6.c">Count Total Characters</a></li>
+    <li><span class="badge">7</span> <a href="./code/4.4.7.c">Take String Input from User</a></li>
+    <li><span class="badge">8</span> <a href="./code/4.4.8.c">Input Characters One by One</a></li>
+    <li><span class="badge">9</span> <a href="./code/4.4.9.c">Remove Non-Alphabetic Characters</a></li>
+    <li><span class="badge">10</span> <a href="./code/4.4.10.c">Display Character Frequency</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Standard String Functions (Manual Implementation)</h2>
+  <ul>
+    <li><span class="badge">1</span> String Equality Checker 
+      <a href="./code/4.5.1.1.c" class="multi">[Solution 1]</a> 
+      <a href="./code/4.5.1.2.c" class="multi">[Solution 2]</a>
+    </li>
+    <li><span class="badge">2</span> <a href="./code/4.5.2.c">Manual String Copy (No strcpy)</a></li>
+    <li><span class="badge">3</span> <a href="./code/4.5.3.c">Split String into Words</a></li>
+    <li><span class="badge">4</span> <a href="./code/4.5.4.c">Check Isomorphic Strings</a></li>
+    <li><span class="badge">5</span> <a href="./code/4.5.5.c">Check if Strings are Anagrams</a></li>
+    <li><span class="badge">6</span> <a href="./code/4.5.6.c">Reverse Only Vowels</a></li>
+    <li><span class="badge">7</span> <a href="./code/4.5.7.c">First Non-Repeating Character Index</a></li>
+    <li><span class="badge">8</span> <a href="./code/4.5.8.c">Length of Last Word</a></li>
+    <li><span class="badge">9</span> <a href="./code/4.5.9.c">strlen() & strcat() Manual</a></li>
+    <li><span class="badge">10</span> <a href="./code/4.5.10.c">strcmp() Manual Implementation</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Module Test</h2>
+  <ul>
+    <li><span class="badge">1</span> <span class="coming-soon">Analyze Weekly Temperature Data (7-Day Array)</span></li>
+    <li><span class="badge">2</span> <span class="coming-soon">Calculate Total & Average Marks for Students (2D Array)</span></li>
+    <li><span class="badge">3</span> <span class="coming-soon">Count Positive Feedback Words in Customer Comments</span></li>
+  </ul>
+  <p style="color: #64748b; font-style: italic; margin-top: 1rem;">
+    Solutions coming soon — stay tuned!
+  </p>
+</div>
+
+</div>
+
+<footer>
+  <p style="margin-bottom: 8px;">
+    Made with ❤️ for C Programming Learners<br>
+    <strong>Author:</strong> Param Vishwakarma
+  </p>
+  <p>
+    <strong>LinkedIn:</strong> 
+    <a href="https://www.linkedin.com/in/vpramatma/" target="_blank" 
+       style="color: #0A66C2; text-decoration: none; font-weight: 600;">
+       Pramatma Vishwakarma ↗
+    </a>
+  </p>
+  <p style="margin-top: 12px; color: #94a3b8; font-size: 0.9rem;">
+    Last updated: November 2025
+  </p>
+</footer>
 
 
-
-## Module Test
-1. [Analyze Weekly Temperature Data]()
-2. [Calculate Total and Average Marks for Students]()
-3. [Count Positive Feedback Words in Customer Comments]()
+</body>
+</html>

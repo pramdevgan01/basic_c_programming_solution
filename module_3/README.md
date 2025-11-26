@@ -1,89 +1,243 @@
-# **Control Statements**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Control Statements in C - Practice Solutions</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --text: #1e293b;
+      --primary: #f59e0b;
+      --accent: #ef4444;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --code: #fff7ed;
+      --hover: #d97706;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    h2 {
+      font-size: 2rem;
+      color: var(--accent);
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 0.5rem;
+      margin-top: 3.5rem;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--card);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 0.9rem 0;
+      padding: 1.2rem 1.6rem;
+      background: var(--code);
+      border-left: 6px solid var(--primary);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(245,158,11,0.1);
+    }
+    li:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(245,158,11,0.25);
+      border-left-color: var(--accent);
+    }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    a:hover {
+      color: var(--hover);
+      text-decoration: underline;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.3rem 0.7rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-right: 0.7rem;
+    }
+    .multi {
+      font-size: 0.95rem;
+      color: #dc2626;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      margin-top: 5rem;
+      padding: 2.5rem;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: white;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
 
-## **Decision Making: if and if-else**
-### Solution
-1. [Rectangle is square or not](./code/3.1.1.c)
-2. [Greatest number using nested statements](./code/3.1.2.c)
-3. [Categorize temperature state](./code/3.1.3.c)
-4. [Senior Citizen Using an if Statement](./code/3.1.4.c)
-5. [Multiple If-Else using Relational Operators](./code/3.1.5.c)
-6. [Multiple if Statements](./code/3.1.6.c)
-7. [Person is Eligible to Vote or Not](./code/3.1.7.c)
-8. [Calculate the Electricity Bill](./code/3.1.8.c)
-9. [Arithmetic Operations Using If-Else Ladder](./code/3.1.9.c)
-10. [Percentages and grades](./code/3.1.10.c)
+<div class="container">
+
+<h1>Control Statements in C</h1>
+
+<div class="section">
+  <h2>Decision Making: if & if-else</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/3.1.1.c">Check if Rectangle is Square</a></li>
+    <li><span class="badge">2</span> <a href="./code/3.1.2.c">Greatest of Three Numbers using Nested if</a></li>
+    <li><span class="badge">3</span> <a href="./code/3.1.3.c">Categorize Temperature (Hot/Warm/Cold)</a></li>
+    <li><span class="badge">4</span> <a href="./code/3.1.4.c">Check Senior Citizen (Age ≥ 60)</a></li>
+    <li><span class="badge">5</span> <a href="./code/3.1.5.c">Multiple if-else with Relational Operators</a></li>
+    <li><span class="badge">6</span> <a href="./code/3.1.6.c">Multiple Independent if Statements</a></li>
+    <li><span class="badge">7</span> <a href="./code/3.1.7.c">Check Voting Eligibility (Age ≥ 18)</a></li>
+    <li><span class="badge">8</span> <a href="./code/3.1.8.c">Calculate Electricity Bill (Tiered Pricing)</a></li>
+    <li><span class="badge">9</span> <a href="./code/3.1.9.c">Arithmetic Operations using if-else Ladder</a></li>
+    <li><span class="badge">10</span> <a href="./code/3.1.10.c">Calculate Grade from Percentage</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Loops in C: for Loop</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/3.2.1.c">Print Multiplication Table</a></li>
+    <li><span class="badge">2</span> <a href="./code/3.2.2.c">Sum of First N Natural Numbers</a></li>
+    <li><span class="badge">3</span> <a href="./code/3.2.3.c">Print Alphabets A to Z</a></li>
+    <li><span class="badge">4</span> Uppercase ↔ Lowercase 
+      <a href="./code/3.2.4.1.c" class="multi">[Method 1]</a> 
+      <a href="./code/3.2.4.2.c" class="multi">[Method 2]</a>
+    </li>
+    <li><span class="badge">5</span> <a href="./code/3.2.5.c">Factorial of a Number</a></li>
+    <li><span class="badge">6</span> <a href="./code/3.2.6.c">Fibonacci Series</a></li>
+    <li><span class="badge">7</span> <a href="./code/3.2.7.c">Reverse a Number</a></li>
+    <li><span class="badge">8</span> <a href="./code/3.2.8.c">Check Prime Number</a></li>
+    <li><span class="badge">9</span> <a href="./code/3.2.9.c">Check Palindrome Number</a></li>
+    <li><span class="badge">10</span> <a href="./code/3.2.10.c">String Length without strlen()</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Loops in C: while Loop</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/3.3.1.c">Sum of Digits using while</a></li>
+    <li><span class="badge">2</span> <a href="./code/3.3.2.c">Check Even/Odd</a></li>
+    <li><span class="badge">3</span> <a href="./code/3.3.3.c">Check Prime Number</a></li>
+    <li><span class="badge">4</span> <a href="./code/3.3.4.c">Reverse a Number</a></li>
+    <li><span class="badge">5</span> <a href="./code/3.3.5.c">Fibonacci Sequence</a></li>
+    <li><span class="badge">6</span> <a href="./code/3.3.6.c">Count Number of Digits</a></li>
+    <li><span class="badge">7</span> <a href="./code/3.3.7.c">Factorial using while</a></li>
+    <li><span class="badge">8</span> <a href="./code/3.3.8.c">Check Armstrong Number</a></li>
+    <li><span class="badge">9</span> <a href="./code/3.3.9.c">Calculate Power (x^n)</a></li>
+    <li><span class="badge">10</span> <a href="./code/3.3.10.c">Find GCD of Two Numbers</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Loops in C: do-while Loop</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/3.4.1.c">Print "Hello World" 5 Times</a></li>
+    <li><span class="badge">2</span> <a href="./code/3.4.2.c">Basic do-while Demo</a></li>
+    <li><span class="badge">3</span> <a href="./code/3.4.3.c">Run Until User Enters 0</a></li>
+    <li><span class="badge">4</span> <a href="./code/3.4.4.c">Factorial using do-while</a></li>
+    <li><span class="badge">5</span> <a href="./code/3.4.5.c">Sum of Natural Numbers</a></li>
+    <li><span class="badge">6</span> <a href="./code/3.4.6.c">Reverse a Number</a></li>
+    <li><span class="badge">7</span> <a href="./code/3.4.7.c">Count Digits in Number</a></li>
+    <li><span class="badge">8</span> <a href="./code/3.4.8.c">Sum of Even & Odd Numbers Separately</a></li>
+    <li><span class="badge">9</span> <a href="./code/3.4.9.c">Continue Until Negative Number</a></li>
+    <li><span class="badge">10</span> <a href="./code/3.4.10.c">Menu-Driven Calculator</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Nested Loops</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/3.5.1.c">Right-Angled Triangle (Asterisks)</a></li>
+    <li><span class="badge">2</span> <a href="./code/3.5.2.c">Inverted Triangle Pattern</a></li>
+    <li><span class="badge">3</span> <a href="./code/3.5.3.c">Pyramid Star Pattern</a></li>
+    <li><span class="badge">4</span> <a href="./code/3.5.4.c">Number Triangle (1 to n)</a></li>
+    <li><span class="badge">5</span> <a href="./code/3.5.5.c">Incremental Number Pattern</a></li>
+    <li><span class="badge">6</span> <a href="./code/3.5.6.c">Hollow Rectangle</a></li>
+    <li><span class="badge">7</span> <a href="./code/3.5.7.c">Right-Angled Triangle with Numbers</a></li>
+    <li><span class="badge">8</span> <a href="./code/3.5.8.c">Diamond Star Pattern</a></li>
+    <li><span class="badge">9</span> <a href="./code/3.5.9.c">Center-Aligned Number Triangle</a></li>
+    <li><span class="badge">10</span> <a href="./code/3.5.10.c">Pascal's Triangle (Center-Aligned)</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Loop Control: break, continue, goto</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/3.6.1.c">Stop on Vowel Encounter</a></li>
+    <li><span class="badge">2</span> <a href="./code/3.6.2.c">Break in for Loop</a></li>
+    <li><span class="badge">3</span> <a href="./code/3.6.3.c">Infinite while(1) with break</a></li>
+    <li><span class="badge">4</span> <a href="./code/3.6.4.c">Prompt Until Valid Input</a></li>
+    <li><span class="badge">5</span> <a href="./code/3.6.5.c">Continue Taking Input</a></li>
+    <li><span class="badge">6</span> <a href="./code/3.6.6.c">Skip Even Numbers using continue</a></li>
+    <li><span class="badge">7</span> <a href="./code/3.6.7.c">goto Statement Demo (Sum & Diff)</a></li>
+    <li><span class="badge">8</span> <a href="./code/3.6.8.c">Skip Non-Prime with continue</a></li>
+    <li><span class="badge">9</span> <a href="./code/3.6.9.c">continue in do-while</a></li>
+    <li><span class="badge">10</span> <a href="./code/3.6.10.c">goto in Nested Loops</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Module Test</h2>
+  <ul>
+    <li><span class="badge">1</span> <a href="./code/3.7.1.c">Even or Odd using if-else</a></li>
+    <li><span class="badge">2</span> <a href="./code/3.7.2.c">Countdown Timer using while</a></li>
+    <li><span class="badge">3</span> <a href="./code/3.7.3.c">Print All Prime Numbers in Range (with continue)</a></li>
+  </ul>
+</div>
+
+</div>
+
+<footer>
+  <p style="margin-bottom: 8px;">
+    Made with ❤️ for C Programming Learners<br>
+    <strong>Author:</strong> Param Vishwakarma
+  </p>
+  <p>
+    <strong>LinkedIn:</strong> 
+    <a href="https://www.linkedin.com/in/vpramatma/" target="_blank" 
+       style="color: #0A66C2; text-decoration: none; font-weight: 600;">
+       Pramatma Vishwakarma ↗
+    </a>
+  </p>
+  <p style="margin-top: 12px; color: #94a3b8; font-size: 0.9rem;">
+    Last updated: November 2025
+  </p>
+</footer>
 
 
-
-## **Loops in C: for Loop**
-### Solution
-
-1. [Multiplication table](./code/3.2.1.c)
-2. [Sum of First Natural Numbers](./code/3.2.2.c)
-3. [Print Alphabets in Order](./code/3.2.3.c)
-4. Uppercase or Lowercase Transformation [Method 1](./code/3.2.4.1.c) [Method 2](./code/3.2.4.2.c)
-5. [Factorial](./code/3.2.5.c)
-6. [Fibonacci series](./code/3.2.6.c)
-7. [Reverse number](./code/3.2.7.c)
-8. [Whether a Number is Prime or Not](./code/3.2.8.c)
-9. [Palindrome or not](./code/3.2.9.c)
-10. [Length of a String without using strlen()](./code/3.2.10.c)
-
-## **Loops in C: while Loop**
-### Solution
-
-1. [Sum of Digits Using while Loop](./code/3.3.1.c)
-2. [Check Whether a Number is Even or Odd](./code/3.3.2.c)
-3. [Check Whether a Number is Prime or Not](./code/3.3.3.c)
-4. [Reverse a Number](./code/3.3.4.c)
-5. [Fibonacci Sequence](./code/3.3.5.c)
-6. [Counting the Number of Digits](./code/3.3.6.c)
-7. [Finding the Factorial](./code/3.3.7.c)
-8. [Armstrong Number](./code/3.3.8.c)
-9. [Power of a Number](./code/3.3.9.c)
-10. [GCD](./code/3.3.10.c)
-
-## **Loops in C: do-while Loops**
-### Solution
-1. [Print "Hello World" Five Times](./code/3.4.1.c)
-2. [Using do-while Loop](./code/3.4.2.c)
-3. [Until the User Enters Zero](./code/3.4.3.c)
-4. [Factorial Calculation](./code/3.4.4.c)
-5. [Sum of Natural Numbers](./code/3.4.5.c)
-6. [Reverse a Number](./code/3.4.6.c)
-7. [Count Digits](./code/3.4.7.c)
-8. [Sum of Even and Odd Numbers](./code/3.4.8.c)
-9. [Until Negative Input](./code/3.4.9.c)
-10. [Menu-Driven Calculator](./code/3.4.10.c)
-
-## **Nested Loops**
-### Solution
-1. [Printing a Pattern of Asterisk](./code/3.5.1.c)
-2. [Decreasing Star Pattern](./code/3.5.2.c)
-3. [Pyramid Pattern of Asterisks](./code/3.5.3.c)
-4. [Number Triangle Pattern](./code/3.5.4.c)
-5. [Number Pattern Using Incremental Numbers](./code/3.5.5.c)
-6. [Hollow Rectangle Pattern](./code/3.5.6.c)
-7. [Right-Angled Triangle Pattern](./code/3.5.7.c)
-8. [Diamond Star Pattern](./code/3.5.8.c)
-9. [Center-Aligned Number Triangle Pattern](./code/3.5.9.c)
-10. [Center-aligned Pascal's triangle pattern](./code/3.5.10.c)
-
-## **Loop Control Statements**
-### Solution
-1. [Vowel Encounter()](./code/3.6.1.c)
-2. [Break Statement in a For Loop](./code/3.6.2.c)
-3. [While(1) Loop](./code/3.6.3.c)
-4. [Prompting User](./code/3.6.4.c)
-5. [Continue Input](./code/3.6.5.c)
-6. [Skip Even Numbers](./code/3.6.6.c)
-7. [Goto - Sum and Difference](./code/3.6.7.c)
-8. [Continue - Prime Numbers](./code/3.6.8.c)
-9. [Continue in do-while Loop](./code/3.6.9.c)
-10. [Goto in nested `for`](./code/3.6.10.c)
-
-## **Module Test**
-### Solution
-1. [Determine Even or Odd Using if-else](./code/3.7.1.c)
-2. [Count Down with while Loop](./code/3.7.2.c)
-3. [Print Prime Numbers in Range Using Nested Loops and continue](./code/3.7.3.c)
+</body>
+</html>
