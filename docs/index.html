@@ -432,31 +432,299 @@
       </section>
 
       <!-- Footer -->
-      <footer>
-        <p style="margin-bottom: 6px;">
-            Made with ❤️ for C Programming Learners<br>
-            <strong>Author:</strong> Param Vishwakarma<br>
-            <strong>Maintainer:</strong> Param Vishwakarma
-        </p>
-        <p>
-            <strong>LinkedIn:</strong>
-            <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
-            Pramatma Vishwakarma ↗
+      <footer class="cc-footer">
+        <div class="cc-footer-inner">
+
+          <!-- LEFT SECTION: Author & Maintainer Cards -->
+          <div class="cc-people">
+
+            <!-- Author -->
+            <a href="https://github.com/pramdevgan" target="_blank" class="cc-person-card" title="Author: Param Vishwakarma (GitHub)">
+              <div class="cc-avatar">
+                <img src="https://avatars.githubusercontent.com/u/61196674?v=4" alt="Param Vishwakarma" class="cc-img-base">
+                <img src="https://i.ibb.co/d0rhZgNQ/Me1.jpg" alt="Param Vishwakarma (hover)" class="cc-img-hover">
+              </div>
+              <div class="cc-person-meta">
+                <div class="cc-person-name">Param Vishwakarma</div>
+                <div class="cc-person-role">Author</div>
+                <i class="fa-brands fa-github cc-gh-icon"></i>
+              </div>
             </a>
-        </p>
-        <p class="footer-small">
-            Last Updated: November 2025 · Basic C Programming Course
-        </p>
-        </footer>
+
+            <!-- Maintainer / Contributor -->
+            <a href="https://github.com/mrinfotech369-sys" target="_blank" class="cc-person-card" title="Maintainer & Contributor: Devansh Tiwari (GitHub)">
+              <div class="cc-avatar">
+                <img src="https://avatars.githubusercontent.com/u/227535288?v=4" alt="Devansh Tiwari" class="cc-img-base">
+                <img src="https://i.ibb.co/8DP02FV3/Devansh-2.png" alt="Devansh Tiwari (hover)" class="cc-img-hover">
+              </div>
+              <div class="cc-person-meta">
+                <div class="cc-person-name">Devansh Tiwari</div>
+                <div class="cc-person-role">Maintainer & Contributor</div>
+                <i class="fa-brands fa-github cc-gh-icon"></i>
+              </div>
+            </a>
+
+          </div>
+
+          <!-- RIGHT SECTION: Project Info -->
+          <!-- RIGHT SECTION: Project Info (Enhanced) -->
+          <div class="cc-info">
+            
+            <!-- Title -->
+            <div class="cc-title">
+              <i class="fa-solid fa-heart-circle-bolt cc-icon-heart"></i>
+              Crafted with passion for C Programming Learners
+            </div>
+
+            <!-- Social Link -->
+            <div class="cc-social">
+              <a href="https://www.linkedin.com/in/vpramatma/" 
+                class="cc-social-link" 
+                target="_blank" 
+                title="Visit Author LinkedIn">
+                <i class="fa-brands fa-linkedin cc-icon-ln"></i>
+                Connect on LinkedIn
+              </a>
+            </div>
+
+            <!-- Update text -->
+            <div class="cc-update">
+              <i class="fa-regular fa-clock cc-icon-clock"></i>
+              Last Updated: <strong>November 2025</strong>  
+              <span class="cc-course-label">· Basic C Programming Course</span>
+            </div>
+          </div>
+        </div>
+
+      <!-- Footer CSS -->
+      <style>
+        .cc-footer {
+          max-width: 1200px;
+          margin: 28px auto;
+          padding: 22px;
+          color: white;
+          border-radius: 16px;
+          background: linear-gradient(135deg, #7c3aed, #ec4899);
+          box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+          font-family: Inter, system-ui, sans-serif;
+        }
+
+        .cc-footer-inner {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          flex-wrap: wrap;
+          gap: 22px;
+        }
+
+        /* People (Left) */
+        .cc-people {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          min-width: 260px;
+        }
+
+        .cc-person-card {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          text-decoration: none;
+          color: white;
+          padding: 8px 12px;
+          border-radius: 12px;
+          transition: background .22s ease, transform .22s ease;
+        }
+        .cc-person-card:hover {
+          background: rgba(255,255,255,0.12);
+          transform: translateY(-3px);
+        }
+
+        .cc-avatar {
+          position: relative;
+          overflow: hidden;
+          width: 56px;
+          height: 56px;
+          border-radius: 999px;
+          border: 2px solid rgba(255,255,255,0.22);
+          flex-shrink: 0;
+        }
+
+        .cc-avatar img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .cc-img-hover {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          transition: opacity .25s ease;
+        }
+
+        .cc-avatar:hover .cc-img-hover,
+        .cc-avatar:focus-within .cc-img-hover {
+          opacity: 1;
+        }
+
+        .cc-avatar:hover .cc-img-base,
+        .cc-avatar:focus-within .cc-img-base {
+          opacity: 0;
+        }
+
+        .cc-person-meta {
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+        }
+
+        .cc-person-name {
+          font-size: 1rem;
+          font-weight: 700;
+        }
+
+        .cc-person-role {
+          font-size: 0.85rem;
+          opacity: 0.9;
+        }
+
+        .cc-gh-icon {
+          font-size: 1rem;
+          margin-top: 2px;
+          opacity: 0.85;
+        }
+
+        /* Right Section */
+        .cc-info {
+          text-align: right;
+          min-width: 260px;
+        }
+
+        .cc-title {
+          font-size: 1rem;
+          font-weight: 700;
+          margin-bottom: 6px;
+        }
+
+        .cc-linkedin a {
+          color: #fff;
+          font-weight: 600;
+          text-decoration: underline;
+        }
+
+        .cc-update {
+          margin-top: 6px;
+          opacity: 0.92;
+          font-size: 0.86rem;
+        }
+
+        /* Responsive */
+        @media(max-width:700px){
+          .cc-footer-inner {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .cc-info { text-align: left; }
+        }
+        /* Right Info Section */
+    .cc-info {
+      text-align: right;
+      min-width: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Title */
+    .cc-title {
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      opacity: 0.95;
+    }
+
+    .cc-icon-heart {
+      color: #ffb4d6;
+      font-size: 1.1rem;
+      filter: drop-shadow(0 0 4px rgba(255,255,255,0.3));
+    }
+
+    /* Social Links */
+    .cc-social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .cc-social-link:hover {
+      background: rgba(255,255,255,0.18);
+      transform: translateY(-2px);
+    }
+
+    .cc-icon-ln {
+      font-size: 1.1rem;
+      color: #0A66C2;
+      background: #fff;
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    /* Update info */
+    .cc-update {
+      font-size: 0.87rem;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cc-icon-clock {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .cc-course-label {
+      font-weight: 600;
+      opacity: 0.95;
+    }
+
+    /* Responsive */
+    @media(max-width:700px) {
+      .cc-info {
+        text-align: left;
+      }
+    }
+
+          </style>
+    </footer>
 
 
-    </div>
-  </main>
 
-  <!-- Bootstrap JS Bundle -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-  ></script>
 
+        </div>
+      </main>
+
+      <!-- Bootstrap JS Bundle -->
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      ></script>
+      <script>
+        (function(){
+          const t = document.getElementById('code').textContent;
+          console.log(t.split("\n").length);
+        })();
+
+  </script>
 </body>
 </html>
