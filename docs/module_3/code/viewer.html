@@ -238,7 +238,7 @@
     const fallbackModule = (function(){
       const q = new URLSearchParams(location.search).get('file') || '';
       const m = q.match(/^(\d+)\./);
-      return m ? `../module_${m[1]}.html` : '../module_6.html';
+      return m ? `../module_${m[1]}.html` : '../module_3.html';
     })();
 
     backBtn.addEventListener('click', ()=> { if(history.length>1) history.back(); else location.href = fallbackModule; });
