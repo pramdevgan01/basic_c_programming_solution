@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Code Viewer</title>
+
+  <!-- Prism.js for syntax highlighting -->
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg: #071029;
+      --panel: #041226;
+      --muted: #9fb3d9;
+      --primary: #3b82f6;
+      --accent: #6366f1;
+      --glass: rgba(255,255,255,0.02);
+      --card-radius: 12px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#011226 0%, var(--bg) 60%);
+      color: #e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding: 22px;
+    }
+
+    .top {
+      display:flex; gap:12px; align-items:center; margin-bottom:18px;
+    }
+    .back-btn {
+      display:inline-flex; align-items:center; gap:8px;
+      background: linear-gradient(90deg,var(--primary),var(--accent));
+      color: white; padding:10px 14px; border-radius:999px; text-decoration:none; font-weight:700;
+      box-shadow: 0 12px 30px rgba(99,102,241,0.12);
+      border: none; cursor:pointer;
+    }
+    .meta {
+      margin-left:12px;
+      display:flex; flex-direction:column;
+      gap:4px;
+    }
+    .meta .filename { font-weight:800; font-size:1.05rem; color: #e6eef6; }
+    .meta .sub { color:var(--muted); font-size:0.92rem; }
+
+    .actions {
+      margin-left:auto; display:flex; gap:8px; align-items:center;
+    }
+    .action-btn {
+      background:transparent; border:1px solid rgba(255,255,255,0.04);
+      color: var(--muted); padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:700;
+    }
+    .action-btn.primary { background: linear-gradient(90deg,var(--primary),var(--accent)); color:white; border:none; box-shadow: 0 10px 24px rgba(59,130,246,0.12); }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--card-radius);
+      padding: 14px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 20px 60px rgba(3,10,20,0.6);
+    }
+
+    /* code area */
+    pre[class*="language-"] {
+      margin:0;
+      padding: 18px;
+      border-radius: 10px;
+      overflow: auto;
+      background: #001826 !important;
+      font-size: 0.92rem;
+      line-height:1.45;
+    }
+    .prism-line-numbers .line-numbers-rows { border-right-color: rgba(255,255,255,0.02) }
+
+    .info-row { display:flex; gap:12px; align-items:center; margin:10px 0 14px; color:var(--muted); font-size:0.95rem; flex-wrap:wrap; }
+    .badge { padding:6px 10px; border-radius:999px; background: rgba(59,130,246,0.06); color: var(--primary); font-weight:800; border:1px solid rgba(59,130,246,0.06); }
+
+    .notice { margin-top:10px; color: #9fb3d9; font-size:0.9rem; }
+
+    /* small responsive */
+    @media (max-width:720px){
+      .top { flex-direction:column; align-items:flex-start; gap:8px; }
+      .actions { margin-left:0; width:100%; justify-content:space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top">
+    <button class="back-btn" id="backBtn" title="Go back">
+      ← Back
+    </button>
+
+    <div class="meta">
+      <div class="filename" id="fileName">loading...</div>
+      <div class="sub" id="fileMeta">Fetching file...</div>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn" id="openRaw" title="Open raw file in new tab">Open raw</button>
+      <button class="action-btn" id="downloadBtn" title="Download file">Download</button>
+      <button class="action-btn" id="copyBtn" title="Copy code">Copy</button>
+      <button class="action-btn primary" id="moduleBtn" title="Back to Module 6">Module 6</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="info-row" id="infoRow">
+      <div class="badge" id="langBadge">C</div>
+      <div id="sizeInfo">—</div>
+      <div id="loadingIndicator" style="margin-left:auto;color:var(--muted)">Ready</div>
+    </div>
+
+    <pre id="codeBlock" class="line-numbers language-c"><code id="code" class="language-c">/* Loading... */</code></pre>
+
+    <div class="notice" id="notice">If the page can't fetch files, ensure you serve the project via <code>http://</code> or <code>https://</code> (local file protocol blocks fetch).</div>
+  </div>
+
+  <!-- Prism JS & plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+  <script>
+    // Utility: get query parameter ?file=...
+    function getQuery(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    const fileParam = getQuery('file');
+    const fallbackModuleURL = '../module_6.html'; // used by Module button
+    const backBtn = document.getElementById('backBtn');
+    const moduleBtn = document.getElementById('moduleBtn');
+    const openRaw = document.getElementById('openRaw');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const fileNameEl = document.getElementById('fileName');
+    const fileMeta = document.getElementById('fileMeta');
+    const sizeInfo = document.getElementById('sizeInfo');
+    const codeEl = document.getElementById('code');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+
+    // Back behavior: prefer history.back but also fall back to module page
+    backBtn.addEventListener('click', () => {
+      if (history.length > 1) history.back();
+      else window.location.href = fallbackModuleURL;
+    });
+    moduleBtn.addEventListener('click', () => window.location.href = fallbackModuleURL);
+
+    // If no file specified, show a friendly error
+    if (!fileParam) {
+      fileNameEl.textContent = 'No file specified';
+      fileMeta.textContent = 'Open a file via viewer.html?file=yourfile.c';
+      codeEl.textContent = '/* Use links like viewer.html?file=6.1.1.c */';
+    } else {
+      // sanitize (prevent path traversal)
+      const safeFile = fileParam.replace(/\\.\\.+/g, '').replace(/\\//g, '');
+      fileNameEl.textContent = safeFile;
+      fileMeta.textContent = 'Loading...';
+      const url = encodeURIComponent(safeFile);
+      const path = './' + safeFile; // relative to this viewer.html file (resides in code/)
+      loadingIndicator.textContent = 'Fetching...';
+
+      // fetch file as text
+      fetch(path).then(async res => {
+        if (!res.ok) throw new Error('Failed to fetch file: ' + res.status);
+        // Try to read size if available
+        const contentLength = res.headers.get('Content-Length');
+        const text = await res.text();
+        codeEl.textContent = text;
+
+        // update meta
+        fileMeta.textContent = (contentLength ? (Math.round(contentLength/1024) + ' KB') : (text.length + ' bytes')) + ' · ' + new Date().toLocaleString();
+        sizeInfo.textContent = (contentLength ? (Math.round(contentLength/1024) + ' KB') : (text.length + ' bytes'));
+
+        // update actions
+        openRaw.onclick = () => window.open(path, '_blank');
+        downloadBtn.onclick = () => {
+          const blob = new Blob([text], {type: 'text/x-csrc'});
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = safeFile;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        };
+        copyBtn.onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(text);
+            copyBtn.textContent = 'Copied ✓';
+            setTimeout(()=> copyBtn.textContent = 'Copy', 1500);
+          } catch(e) {
+            copyBtn.textContent = 'Copy failed';
+            setTimeout(()=> copyBtn.textContent = 'Copy', 1500);
+          }
+        };
+
+        // highlight via Prism
+        // Prism.highlightElement expects a DOM node with language- class (we used code.language-c)
+        Prism.highlightElement(codeEl);
+        loadingIndicator.textContent = 'Rendered';
+      }).catch(err => {
+        console.error(err);
+        fileMeta.textContent = 'Could not load file';
+        codeEl.textContent = '/* Error: ' + err.message + ' */';
+        loadingIndicator.textContent = 'Error';
+      });
+    }
+  </script>
+</body>
+</html>
