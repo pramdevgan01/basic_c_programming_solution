@@ -4,231 +4,1090 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Variables, Data Types & Operators in C</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
   <style>
     :root {
-      --bg: #f8fafc;
-      --text: #1e293b;
+      --bg: #020617;
+      --text: #e5e7eb;
       --primary: #8b5cf6;
       --accent: #ec4899;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --code: #fdf4ff;
-      --hover: #7c3aed;
+      --card: #020617;
+      --border: #1f2937;
+      --code: #0b1020;
+      --hover: #c4b5fd;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg);
+      background: radial-gradient(circle at top left, #1e293b 0%, #020617 45%, #020617 100%);
       color: var(--text);
       line-height: 1.7;
       margin: 0;
-      padding: 2rem;
+      min-height: 100vh;
     }
-    h1 {
+
+    /* Top bar similar to other redesigned pages */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.97);
+      backdrop-filter: blur(12px);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9999;
+      border-bottom: 1px solid rgba(139,92,246,0.6);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .top-bar-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-bar-title i {
+      color: var(--primary);
+    }
+
+    .top-bar-sub {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    .top-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .home-btn,
+    .back-to-top {
+      border: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .home-btn {
+      background: linear-gradient(45deg, #8b5cf6, #ec4899);
+      color: white;
+      box-shadow: 0 6px 18px rgba(139,92,246,0.4);
+    }
+
+    .home-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(139,92,246,0.7);
+      color: #fff;
+    }
+
+    .back-to-top {
+      background: linear-gradient(45deg, #ec4899, #f97316);
+      color: white;
+      box-shadow: 0 6px 18px rgba(236,72,153,0.5);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(236,72,153,0.7);
+      color: #fff;
+    }
+
+    .main-wrapper {
+      padding-top: 90px; /* for fixed top bar */
+      padding-bottom: 40px;
+    }
+
+    .container-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-inline: 1.25rem;
+    }
+
+    h1.page-title {
       text-align: center;
-      font-size: 2.9rem;
-      margin-bottom: 1rem;
+      font-size: clamp(2.2rem, 4.5vw, 3rem);
+      margin-bottom: 0.6rem;
       background: linear-gradient(90deg, var(--primary), var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      font-weight: 900;
     }
-    h2 {
-      font-size: 2rem;
+
+    .hero-subtitle {
+      background: linear-gradient(90deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .page-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 0.45rem 1.2rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.85rem;
+      color: #e5e7eb;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-pill i {
+      color: var(--primary);
+    }
+
+    .card-shell {
+      background: radial-gradient(circle at top left, rgba(139,92,246,0.22), rgba(15,23,42,1));
+      border-radius: 18px;
+      padding: 2.3rem 1.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .card-shell {
+        padding: 2.6rem 2.4rem;
+      }
+    }
+
+    h2.section-title {
+      font-size: 1.4rem;
       color: var(--accent);
-      border-bottom: 3px solid var(--primary);
-      padding-bottom: 0.5rem;
-      margin-top: 3.5rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.4rem;
+      margin-top: 1.3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: var(--card);
-      padding: 2.5rem;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+    h2.section-title i {
+      color: var(--primary);
+      font-size: 1.2rem;
     }
-    ul {
+
+    ul.exercise-list {
       list-style: none;
       padding: 0;
+      margin: 1.2rem 0 0;
     }
-    li {
-      margin: 0.9rem 0;
-      padding: 1.2rem 1.6rem;
+
+    li.exercise-item {
+      margin: 0.8rem 0;
+      padding: 1rem 1.3rem;
       background: var(--code);
-      border-left: 6px solid var(--primary);
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 10px rgba(139,92,246,0.1);
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 15px rgba(139,92,246,0.35);
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    li:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(139,92,246,0.2);
-      border-left-color: var(--accent);
+
+    li.exercise-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(236,72,153,0.45);
+      border-color: var(--accent);
+      background: radial-gradient(circle at top left, rgba(236,72,153,0.18), #020617);
     }
-    a {
+
+    .badge-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(236,72,153,0.5);
+    }
+
+    .exercise-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .exercise-meta a {
       color: var(--primary);
       text-decoration: none;
       font-weight: 600;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
+      word-wrap: break-word;
     }
-    a:hover {
+
+    .exercise-meta a:hover {
       color: var(--hover);
       text-decoration: underline;
     }
-    .badge {
-      display: inline-block;
-      background: var(--primary);
-      color: white;
-      padding: 0.3rem 0.7rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      margin-right: 0.7rem;
+
+    .exercise-tagline {
+      font-size: 0.8rem;
+      color: #cbd5f5;
     }
+
+    .code-icon {
+      margin-left: auto;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      color: #f97316;
+      opacity: 0.8;
+    }
+
+    li.exercise-item:hover .code-icon {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    /* Quick nav + search */
+    .quick-nav-wrapper {
+      margin: 1.5rem auto 0.5rem;
+      max-width: 1100px;
+    }
+
+    .quick-nav {
+      background: rgba(15,23,42,0.95);
+      border-radius: 999px;
+      padding: 0.4rem 0.6rem;
+      border: 1px solid rgba(148,163,184,0.7);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .quick-nav .nav-link {
+      color: #e5e7eb;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .quick-nav .nav-link i {
+      font-size: 0.8rem;
+      color: #c4b5fd;
+    }
+
+    .quick-nav .nav-link.active,
+    .quick-nav .nav-link:hover {
+      background: linear-gradient(90deg, #8b5cf6, #ec4899);
+      color: #fff;
+    }
+
+    .search-wrapper {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .search-input {
+      max-width: 420px;
+      margin: 0.3rem auto 0;
+      background: #020617;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      padding: 0.45rem 1rem;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 1px #8b5cf6;
+    }
+
+    .search-hint {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 0.3rem;
+    }
+
     footer {
       text-align: center;
-      margin-top: 5rem;
-      padding: 2.5rem;
+      margin-top: 3rem;
+      padding: 2rem 1rem;
       background: linear-gradient(to right, #8b5cf6, #ec4899);
       color: white;
-      border-radius: 12px;
-      font-size: 1rem;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      max-width: 1100px;
+      margin-inline: auto;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
     }
+
     footer a {
-      color: #fff;
+      color: #e5f2ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
       text-decoration: underline;
-      font-weight: bold;
+    }
+
+    .footer-small {
+      margin-top: 10px;
+      color: #e5e7eb;
+      font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
+  <!-- Top Bar with Home + Top -->
+  <div class="top-bar">
+    <div>
+      <div class="top-bar-title">
+        <i class="fa-solid fa-cubes"></i>
+        <span>Module 2 · Variables, Data Types &amp; Operators</span>
+      </div>
+      <div class="top-bar-sub">
+        Practice Solutions · Core C Building Blocks
+      </div>
+    </div>
 
-<h1>Variables, Data Types & Operators in C</h1>
+    <div class="top-right-actions">
+      <!-- Update href if homepage path is different -->
+      <a href="../index.html" class="home-btn">
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
 
-<div class="section">
-  <h2>Variables & Constants (const, #define), Scope</h2>
-  <ul>
-    <li><span class="badge">1</span> <a href="../module_2/code/2.1.1.c">Declaration of Variables</a></li>
-    <li><span class="badge">2</span> <a href="../module_2/code/2.1.2.c">Assign Value to a Variable</a></li>
-    <li><span class="badge">3</span> <a href="../module_2/code/2.1.3.c">Calculate Area and Perimeter of Rectangle</a></li>
-    <li><span class="badge">4</span> <a href="../module_2/code/2.1.4.c">Demonstrate Local Variable Scope</a></li>
-    <li><span class="badge">5</span> <a href="../module_2/code/2.1.5.c">Update Global Variables from Function</a></li>
-    <li><span class="badge">6</span> <a href="../module_2/code/2.1.6.c">Sum of Variables & Check Divisibility</a></li>
-    <li><span class="badge">7</span> <a href="../module_2/code/2.1.7.c">Convert Minutes to Seconds using #define</a></li>
-    <li><span class="badge">8</span> <a href="../module_2/code/2.1.8.c">Calculate Price After Discount using const</a></li>
-    <li><span class="badge">9</span> <a href="../module_2/code/2.1.9.c">Demonstrate Local Scope with User Input</a></li>
-    <li><span class="badge">10</span> <a href="../module_2/code/2.1.10.c">Global vs Static vs Auto Scope Demo</a></li>
-  </ul>
-</div>
+      <button
+        class="back-to-top"
+        type="button"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      >
+        <i class="fa-solid fa-arrow-up"></i>
+        Top
+      </button>
+    </div>
+  </div>
 
-<div class="section">
-  <h2>Data Types (int, float, char, bool)</h2>
-  <ul>
-    <li><span class="badge">1</span> <a href="../module_2/code/2.2.1.c">Display ASCII Value of a Character</a></li>
-    <li><span class="badge">2</span> <a href="../module_2/code/2.2.2.c">Decimal to Octal & Hexadecimal Conversion</a></li>
-    <li><span class="badge">3</span> <a href="../module_2/code/2.2.3.c">Difference Between float and double</a></li>
-    <li><span class="badge">4</span> <a href="../module_2/code/2.2.4.c">Input and Display a Character</a></li>
-    <li><span class="badge">5</span> <a href="../module_2/code/2.2.5.c">Sum of Float and Double Values</a></li>
-    <li><span class="badge">6</span> <a href="../module_2/code/2.2.6.c">Print ASCII Values of Special Characters</a></li>
-    <li><span class="badge">7</span> <a href="../module_2/code/2.2.7.c">Sum of ASCII Values of a String</a></li>
-    <li><span class="badge">8</span> <a href="../module_2/code/2.2.8.c">Demonstrate Data Type Qualifiers</a></li>
-    <li><span class="badge">9</span> <a href="../module_2/code/2.2.9.c">Signed vs Unsigned Integers</a></li>
-    <li><span class="badge">10</span> <a href="../module_2/code/2.2.10.c">Qualifiers with Floating-Point Types</a></li>
-  </ul>
-</div>
+  <!-- MAIN CONTENT -->
+  <main class="main-wrapper">
+    <div class="container-main">
 
-<div class="section">
-  <h2>Type Casting (Implicit & Explicit)</h2>
-  <ul>
-    <li><span class="badge">1</span> <a href="../module_2/code/2.3.1.c">Implicit Type Conversion</a></li>
-    <li><span class="badge">2</span> <a href="../module_2/code/2.3.2.c">Explicit Type Casting</a></li>
-    <li><span class="badge">3</span> <a href="../module_2/code/2.3.3.c">Character to Integer Conversion</a></li>
-    <li><span class="badge">4</span> <a href="../module_2/code/2.3.4.c">With and Without Type Casting</a></li>
-    <li><span class="badge">5</span> <a href="../module_2/code/2.3.5.c">long to int Conversion</a></li>
-    <li><span class="badge">6</span> <a href="../module_2/code/2.3.6.c">Mixed Data Type Expressions</a></li>
-    <li><span class="badge">7</span> <a href="../module_2/code/2.3.7.c">Division Behavior with Type Casting</a></li>
-    <li><span class="badge">8</span> <a href="../module_2/code/2.3.8.c">double to int Truncation</a></li>
-    <li><span class="badge">9</span> <a href="../module_2/code/2.3.9.c">float vs double Precision</a></li>
-    <li><span class="badge">10</span> <a href="../module_2/code/2.3.10.c">Advanced Type Casting & Data Interpretation</a></li>
-  </ul>
-</div>
+      <section class="text-center mb-4">
+        <span class="page-pill">
+          <i class="fa-solid fa-graduation-cap"></i>
+          Basic C Programming Course · Module 2 Practice Set
+        </span>
 
-<div class="section">
-  <h2>Arithmetic & Assignment Operators</h2>
-  <ul>
-    <li><span class="badge">1</span> <a href="../module_2/code/2.4.1.c">Addition of Two Numbers</a></li>
-    <li><span class="badge">2</span> <a href="../module_2/code/2.4.2.c">Division of Two Numbers</a></li>
-    <li><span class="badge">3</span> <a href="../module_2/code/2.4.3.c">Subtraction of Two Numbers</a></li>
-    <li><span class="badge">4</span> <a href="../module_2/code/2.4.4.c">Multiplication of Two Numbers</a></li>
-    <li><span class="badge">5</span> <a href="../module_2/code/2.4.5.c">Weather Station (Temperature Conversion)</a></li>
-    <li><span class="badge">6</span> <a href="../module_2/code/2.4.6.c">Simple Calculator using Switch</a></li>
-    <li><span class="badge">7</span> <a href="../module_2/code/2.4.7.c">Reverse a Three-Digit Number</a></li>
-    <li><span class="badge">8</span> <a href="../module_2/code/2.4.8.c">Demonstrate Assignment Operators</a></li>
-    <li><span class="badge">9</span> <a href="../module_2/code/2.4.9.c">Chained Assignment: c = a = b</a></li>
-    <li><span class="badge">10</span> <a href="../module_2/code/2.4.10.c">Calculate Volume of Sphere/Cylinder</a></li>
-  </ul>
-</div>
+        <h1 class="page-title">Variables, Data Types &amp; Operators in C</h1>
 
-<div class="section">
-  <h2>Logical & Bitwise Operators</h2>
-  <ul>
-    <li><span class="badge">1</span> <a href="../module_2/code/2.5.1.c">Logical AND (&&) Condition Check</a></li>
-    <li><span class="badge">2</span> <a href="../module_2/code/2.5.2.c">At Least One Number > 10 (Logical OR)</a></li>
-    <li><span class="badge">3</span> <a href="../module_2/code/2.5.3.c">Logical NOT Operator Demo</a></li>
-    <li><span class="badge">4</span> <a href="../module_2/code/2.5.4.c">Pre and Post Increment</a></li>
-    <li><span class="badge">5</span> <a href="../module_2/code/2.5.5.c">Pre and Post Decrement</a></li>
-    <li><span class="badge">6</span> <a href="../module_2/code/2.5.6.c">Bitwise AND, OR Operators</a></li>
-    <li><span class="badge">7</span> <a href="../module_2/code/2.5.7.c">Bitwise XOR Operator</a></li>
-    <li><span class="badge">8</span> <a href="../module_2/code/2.5.8.c">Bitwise NOT (Complement)</a></li>
-    <li><span class="badge">9</span> <a href="../module_2/code/2.5.9.c">Left Shift Operator (<<)</a></li>
-    <li><span class="badge">10</span> <a href="../module_2/code/2.5.10.c">Right Shift Operator (>>)</a></li>
-  </ul>
-</div>
+        <div class="hero-subtitle mb-2">
+          Foundations of Data &amp; Expression Handling
+        </div>
 
-<div class="section">
-  <h2>Comparison Operators & Precedence</h2>
-  <ul>
-    <li><span class="badge">1</span> <a href="../module_2/code/2.6.1.c">Check Positive, Negative or Zero</a></li>
-    <li><span class="badge">2</span> <a href="../module_2/code/2.6.2.c">Even Number Divisible by 3 or 7</a></li>
-    <li><span class="badge">3</span> <a href="../module_2/code/2.6.3.c">Find Greatest & Smallest of Three Numbers</a></li>
-    <li><span class="badge">4</span> <a href="../module_2/code/2.6.4.c">Check Pass/Fail Based on Marks</a></li>
-    <li><span class="badge">5</span> <a href="../module_2/code/2.6.5.c">Compare Using >= and <=</a></li>
-    <li><span class="badge">6</span> <a href="../module_2/code/2.6.6.c">Evaluate Complex Expression</a></li>
-    <li><span class="badge">7</span> <a href="../module_2/code/2.6.7.c">Ternary Operator (Conditional)</a></li>
-    <li><span class="badge">8</span> <a href="../module_2/code/2.6.8.c">Nested Ternary Operator</a></li>
-    <li><span class="badge">9</span> <a href="../module_2/code/2.6.9.c">Check Odd/Even Using Ternary</a></li>
-    <li><span class="badge">10</span> <a href="../module_2/code/2.6.10.c">Check Leap Year</a></li>
-  </ul>
-</div>
+        <p style="color:#cbd5f5;font-size:0.9rem;">
+          Work these out by hand or in your IDE, then compare with the reference C solutions to build rock-solid fundamentals.
+        </p>
+      </section>
 
-<div class="section">
-  <h2>Module Test</h2>
-  <ul>
-    <li><span class="badge">1</span> <a href="../module_2/code/2.7.1.c">Discount Calculator using const Keyword</a></li>
-    <li><span class="badge">2</span> <a href="../module_2/code/2.7.2.c">Precise Division Using Type Casting</a></li>
-    <li><span class="badge">3</span> <a href="../module_2/code/2.7.3.c">Arithmetic + Assignment Operator Evaluation</a></li>
-  </ul>
-</div>
+      <!-- Quick Navigation + Search -->
+      <div class="quick-nav-wrapper">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2">
+          <ul class="nav nav-pills quick-nav flex-wrap justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#variables-constants">
+                <i class="fa-solid fa-code"></i> Variables &amp; Constants
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#data-types">
+                <i class="fa-solid fa-database"></i> Data Types
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#type-casting">
+                <i class="fa-solid fa-shuffle"></i> Type Casting
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#arithmetic-assignment">
+                <i class="fa-solid fa-calculator"></i> Arithmetic &amp; Assignment
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#logical-bitwise">
+                <i class="fa-solid fa-toggle-on"></i> Logical &amp; Bitwise
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#comparison-precedence">
+                <i class="fa-solid fa-scale-unbalanced"></i> Comparison &amp; Precedence
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#module-test">
+                <i class="fa-solid fa-trophy"></i> Module Test
+              </a>
+            </li>
+          </ul>
 
-</div>
+          <div class="search-wrapper w-100 w-lg-auto">
+            <input
+              type="text"
+              id="exerciseSearch"
+              class="form-control search-input"
+              placeholder="Search problems by keyword (e.g., bitwise, discount, leap year)..."
+            />
+            <div class="search-hint">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              Type to filter across all exercises on this page.
+            </div>
+          </div>
+        </div>
+      </div>
 
-<footer>
-  <p style="margin-bottom: 8px;">
-    Made with ❤️ for C Programming Learners<br>
-    <strong>Author:</strong> Param Vishwakarma
-  </p>
-  <p>
-    <strong>LinkedIn:</strong> 
-    <a href="https://www.linkedin.com/in/vpramatma/" target="_blank" 
-       style="color: #0A66C2; text-decoration: none; font-weight: 600;">
-       Pramatma Vishwakarma ↗
-    </a>
-  </p>
-  <p style="margin-top: 12px; color: #94a3b8; font-size: 0.9rem;">
-    Last updated: November 2025
-  </p>
-</footer>
+      <section class="card-shell">
 
+        <!-- Variables & Constants -->
+        <div id="variables-constants">
+          <h2 class="section-title">
+            <i class="fa-solid fa-code"></i>
+            Variables &amp; Constants (<code>const</code>, <code>#define</code>), Scope
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.1.c">Declaration of Variables</a>
+                <span class="exercise-tagline">Basic declarations and memory for named data</span>
+              </div>
+              <i class="fa-solid fa-code code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.2.c">Assign Value to a Variable</a>
+                <span class="exercise-tagline">Initialization vs assignment with simple integers</span>
+              </div>
+              <i class="fa-solid fa-code code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.3.c">Calculate Area and Perimeter of Rectangle</a>
+                <span class="exercise-tagline">Using variables to model real-world quantities</span>
+              </div>
+              <i class="fa-solid fa-ruler-combined code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.4.c">Demonstrate Local Variable Scope</a>
+                <span class="exercise-tagline">Block scope and lifetime of local variables</span>
+              </div>
+              <i class="fa-solid fa-location-arrow code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.5.c">Update Global Variables from Function</a>
+                <span class="exercise-tagline">Accessing and modifying global state across functions</span>
+              </div>
+              <i class="fa-solid fa-globe code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.6.c">Sum of Variables &amp; Check Divisibility</a>
+                <span class="exercise-tagline">Arithmetic plus simple decision-making</span>
+              </div>
+              <i class="fa-solid fa-calculator code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.7.c">Convert Minutes to Seconds using #define</a>
+                <span class="exercise-tagline">Using macros to avoid magic numbers</span>
+              </div>
+              <i class="fa-solid fa-clock code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.8.c">Calculate Price After Discount using const</a>
+                <span class="exercise-tagline">Immutability and safe constants in formulas</span>
+              </div>
+              <i class="fa-solid fa-tags code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.9.c">Demonstrate Local Scope with User Input</a>
+                <span class="exercise-tagline">Reading values and limiting scope properly</span>
+              </div>
+              <i class="fa-solid fa-keyboard code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.1.10.c">Global vs Static vs Auto Scope Demo</a>
+                <span class="exercise-tagline">Comparing storage classes and lifetimes</span>
+              </div>
+              <i class="fa-solid fa-layer-group code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Data Types -->
+        <div id="data-types">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-database"></i>
+            Data Types (<code>int</code>, <code>float</code>, <code>char</code>, qualifiers)
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.1.c">Display ASCII Value of a Character</a>
+                <span class="exercise-tagline">Characters as small integers behind the scenes</span>
+              </div>
+              <i class="fa-solid fa-font code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.2.c">Decimal to Octal &amp; Hexadecimal Conversion</a>
+                <span class="exercise-tagline">Exploring different number systems in C</span>
+              </div>
+              <i class="fa-solid fa-code code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.3.c">Difference Between float and double</a>
+                <span class="exercise-tagline">Precision, size, and when it matters</span>
+              </div>
+              <i class="fa-solid fa-arrows-left-right-to-line code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.4.c">Input and Display a Character</a>
+                <span class="exercise-tagline">Reading single char safely from user</span>
+              </div>
+              <i class="fa-solid fa-i-cursor code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.5.c">Sum of Float and Double Values</a>
+                <span class="exercise-tagline">Mixing floating-point types in expressions</span>
+              </div>
+              <i class="fa-solid fa-plus-minus code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.6.c">Print ASCII Values of Special Characters</a>
+                <span class="exercise-tagline">Understanding non-alphanumeric symbols</span>
+              </div>
+              <i class="fa-solid fa-hashtag code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.7.c">Sum of ASCII Values of a String</a>
+                <span class="exercise-tagline">Strings as arrays of character codes</span>
+              </div>
+              <i class="fa-solid fa-lines-leaning code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.8.c">Demonstrate Data Type Qualifiers</a>
+                <span class="exercise-tagline">signed, unsigned, short, long in action</span>
+              </div>
+              <i class="fa-solid fa-sliders code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.9.c">Signed vs Unsigned Integers</a>
+                <span class="exercise-tagline">Range, overflow, and interpretation of bits</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-9-1 code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.2.10.c">Qualifiers with Floating-Point Types</a>
+                <span class="exercise-tagline">Extended precision and memory trade-offs</span>
+              </div>
+              <i class="fa-solid fa-water code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Type Casting -->
+        <div id="type-casting">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-shuffle"></i>
+            Type Casting (Implicit &amp; Explicit)
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.1.c">Implicit Type Conversion</a>
+                <span class="exercise-tagline">How C promotes types automatically in expressions</span>
+              </div>
+              <i class="fa-solid fa-wand-magic-sparkles code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.2.c">Explicit Type Casting</a>
+                <span class="exercise-tagline">Forcing conversions with cast operators</span>
+              </div>
+              <i class="fa-solid fa-wand-magic code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.3.c">Character to Integer Conversion</a>
+                <span class="exercise-tagline">From readable letters to numeric codes</span>
+              </div>
+              <i class="fa-solid fa-arrow-right-arrow-left code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.4.c">With and Without Type Casting</a>
+                <span class="exercise-tagline">Comparing precision and results before/after casting</span>
+              </div>
+              <i class="fa-solid fa-scale-balanced code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.5.c">long to int Conversion</a>
+                <span class="exercise-tagline">Understanding narrowing conversions and loss</span>
+              </div>
+              <i class="fa-solid fa-arrows-to-circle code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.6.c">Mixed Data Type Expressions</a>
+                <span class="exercise-tagline">Rules of usual arithmetic conversions in depth</span>
+              </div>
+              <i class="fa-solid fa-diagram-project code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.7.c">Division Behavior with Type Casting</a>
+                <span class="exercise-tagline">Integer vs floating division and truncation</span>
+              </div>
+              <i class="fa-solid fa-divide code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.8.c">double to int Truncation</a>
+                <span class="exercise-tagline">Fractional loss when casting down</span>
+              </div>
+              <i class="fa-solid fa-down-long code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.9.c">float vs double Precision</a>
+                <span class="exercise-tagline">Comparing rounding errors and outputs</span>
+              </div>
+              <i class="fa-solid fa-magnifying-glass-plus code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.3.10.c">Advanced Type Casting &amp; Data Interpretation</a>
+                <span class="exercise-tagline">More complex combinations & reading memory differently</span>
+              </div>
+              <i class="fa-solid fa-brain code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Arithmetic & Assignment -->
+        <div id="arithmetic-assignment">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-calculator"></i>
+            Arithmetic &amp; Assignment Operators
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.1.c">Addition of Two Numbers</a>
+                <span class="exercise-tagline">Your very first numeric operation in C</span>
+              </div>
+              <i class="fa-solid fa-plus code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.2.c">Division of Two Numbers</a>
+                <span class="exercise-tagline">Integer division behavior and pitfalls</span>
+              </div>
+              <i class="fa-solid fa-divide code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.3.c">Subtraction of Two Numbers</a>
+                <span class="exercise-tagline">Combining input and basic arithmetic</span>
+              </div>
+              <i class="fa-solid fa-minus code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.4.c">Multiplication of Two Numbers</a>
+                <span class="exercise-tagline">Simple product calculations</span>
+              </div>
+              <i class="fa-solid fa-xmark code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.5.c">Weather Station (Temperature Conversion)</a>
+                <span class="exercise-tagline">Celsius/Fahrenheit conversions with operators</span>
+              </div>
+              <i class="fa-solid fa-temperature-half code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.6.c">Simple Calculator using Switch</a>
+                <span class="exercise-tagline">Menu-based operations with multiple operators</span>
+              </div>
+              <i class="fa-solid fa-list-ol code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.7.c">Reverse a Three-Digit Number</a>
+                <span class="exercise-tagline">Using / and % to extract digits</span>
+              </div>
+              <i class="fa-solid fa-rotate code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.8.c">Demonstrate Assignment Operators</a>
+                <span class="exercise-tagline">+=, -=, *= and friends in action</span>
+              </div>
+              <i class="fa-solid fa-equals code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.9.c">Chained Assignment: c = a = b</a>
+                <span class="exercise-tagline">Order of evaluation and final values</span>
+              </div>
+              <i class="fa-solid fa-link code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.4.10.c">Calculate Volume of Sphere/Cylinder</a>
+                <span class="exercise-tagline">Combining formulas with typed variables</span>
+              </div>
+              <i class="fa-solid fa-circle-dot code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Logical & Bitwise -->
+        <div id="logical-bitwise">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-toggle-on"></i>
+            Logical &amp; Bitwise Operators
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.1.c">Logical AND (&&) Condition Check</a>
+                <span class="exercise-tagline">Combine multiple conditions safely</span>
+              </div>
+              <i class="fa-solid fa-code-branch code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.2.c">At Least One Number &gt; 10 (Logical OR)</a>
+                <span class="exercise-tagline">Checking ranges using OR logic</span>
+              </div>
+              <i class="fa-solid fa-ellipsis-code code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.3.c">Logical NOT Operator Demo</a>
+                <span class="exercise-tagline">Flipping truth values in conditions</span>
+              </div>
+              <i class="fa-solid fa-circle-half-stroke code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.4.c">Pre and Post Increment</a>
+                <span class="exercise-tagline">Understanding ++x vs x++ in expressions</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-short-wide code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.5.c">Pre and Post Decrement</a>
+                <span class="exercise-tagline">Symmetry with --x and x--</span>
+              </div>
+              <i class="fa-solid fa-arrow-down-short-wide code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.6.c">Bitwise AND, OR Operators</a>
+                <span class="exercise-tagline">Playing directly with bits &amp; masks</span>
+              </div>
+              <i class="fa-solid fa-binary code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.7.c">Bitwise XOR Operator</a>
+                <span class="exercise-tagline">Toggling bits and parity checks</span>
+              </div>
+              <i class="fa-solid fa-xmarks-lines code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.8.c">Bitwise NOT (Complement)</a>
+                <span class="exercise-tagline">Inverting every bit and effects on sign</span>
+              </div>
+              <i class="fa-solid fa-circle-notch code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.9.c">Left Shift Operator (&lt;&lt;)</a>
+                <span class="exercise-tagline">Fast multiplication by powers of 2</span>
+              </div>
+              <i class="fa-solid fa-angles-left code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.5.10.c">Right Shift Operator (&gt;&gt;)</a>
+                <span class="exercise-tagline">Fast division &amp; shifting bits right</span>
+              </div>
+              <i class="fa-solid fa-angles-right code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Comparison & Precedence -->
+        <div id="comparison-precedence">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-scale-unbalanced"></i>
+            Comparison Operators &amp; Precedence
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.1.c">Check Positive, Negative or Zero</a>
+                <span class="exercise-tagline">Simple branching with relational operators</span>
+              </div>
+              <i class="fa-solid fa-arrows-split-up-and-left code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.2.c">Even Number Divisible by 3 or 7</a>
+                <span class="exercise-tagline">Combining %, &&, and || properly</span>
+              </div>
+              <i class="fa-solid fa-7 code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.3.c">Find Greatest &amp; Smallest of Three Numbers</a>
+                <span class="exercise-tagline">Nested comparisons &amp; decision trees</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-wide-short code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.4.c">Check Pass/Fail Based on Marks</a>
+                <span class="exercise-tagline">Threshold checks with >= and &lt;</span>
+              </div>
+              <i class="fa-solid fa-clipboard-check code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.5.c">Compare Using &gt;= and &lt;=</a>
+                <span class="exercise-tagline">Inclusive range conditions</span>
+              </div>
+              <i class="fa-solid fa-arrows-left-right-to-line code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.6.c">Evaluate Complex Expression</a>
+                <span class="exercise-tagline">Operator precedence and associativity</span>
+              </div>
+              <i class="fa-solid fa-diagram-next code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.7.c">Ternary Operator (Conditional)</a>
+                <span class="exercise-tagline">Compact if-else for quick decisions</span>
+              </div>
+              <i class="fa-solid fa-question code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.8.c">Nested Ternary Operator</a>
+                <span class="exercise-tagline">Handling multiple outcomes with ?:</span>
+              </div>
+              <i class="fa-solid fa-sitemap code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.9.c">Check Odd/Even Using Ternary</a>
+                <span class="exercise-tagline">Combining % with ternary for compact code</span>
+              </div>
+              <i class="fa-solid fa-circle-half-stroke code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.6.10.c">Check Leap Year</a>
+                <span class="exercise-tagline">Multi-condition logic with precedence awareness</span>
+              </div>
+              <i class="fa-solid fa-calendar-days code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Module Test -->
+        <div id="module-test">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-trophy"></i>
+            Module Test
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.7.1.c">Discount Calculator using const Keyword</a>
+                <span class="exercise-tagline">Real-world style program combining constants & operators</span>
+              </div>
+              <i class="fa-solid fa-tags code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.7.2.c">Precise Division Using Type Casting</a>
+                <span class="exercise-tagline">Fixing integer division bugs with casting</span>
+              </div>
+              <i class="fa-solid fa-square-root-variable code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="../module_2/code/2.7.3.c">Arithmetic + Assignment Operator Evaluation</a>
+                <span class="exercise-tagline">Tracing step-by-step changes in expressions</span>
+              </div>
+              <i class="fa-solid fa-list-check code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p style="margin-bottom: 6px;">
+        Made with ❤️ for C Programming Learners<br>
+        <strong>Author:</strong> Param Vishwakarma
+      </p>
+      <p>
+        <strong>LinkedIn:</strong>
+        <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
+          Pramatma Vishwakarma ↗
+        </a>
+      </p>
+      <p class="footer-small">
+        Last updated: November 2025 · Module 2 · Practice Solutions
+      </p>
+    </footer>
+  </main>
+
+  <!-- Bootstrap JS Bundle -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <!-- Shared JS for search + quick nav -->
+  <script src="../assets/js/module-common.js"></script>
 </body>
 </html>

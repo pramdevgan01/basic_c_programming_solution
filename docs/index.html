@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Basic C Programming Course - Param Vishwakarma</title>
 
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
   <style>
     :root {
       --primary: #8b5cf6;
@@ -17,7 +32,11 @@
       --card: #1e293b;
       --text: #e2e8f0;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -26,6 +45,7 @@
       min-height: 100vh;
     }
 
+    /* Fixed top bar without visitor counter */
     .top-bar {
       position: fixed;
       top: 0;
@@ -33,265 +53,410 @@
       width: 100%;
       background: rgba(15, 23, 42, 0.95);
       backdrop-filter: blur(12px);
-      padding: 15px 30px;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 9999;
-      border-bottom: 1px solid rgba(139,92,246,0.3);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
-    .visitor-count {
-      color: #a78bfa;
-      font-weight: bold;
-      font-size: 1.1rem;
-      background: rgba(139,92,246,0.2);
-      padding: 10px 20px;
-      border-radius: 50px;
-      border: 1px solid #8b5cf6;
+    .top-bar-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #e2e8f0;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+    }
+
+    .top-bar-title i {
+      color: var(--primary);
     }
 
     .back-to-top {
       background: linear-gradient(45deg, #ec4899, #f43f5e);
       color: white;
       border: none;
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-weight: bold;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
-      box-shadow: 0 8px 25px rgba(236,72,153,0.4);
+      box-shadow: 0 6px 18px rgba(236, 72, 153, 0.4);
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .back-to-top:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 15px 35px rgba(236,72,153,0.6);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(236, 72, 153, 0.6);
     }
 
-    .container {
-      max-width: 1300px;
-      margin: 120px auto 50px;
-      padding: 0 20px;
+    .main-wrapper {
+      padding-top: 80px; /* for fixed top bar */
+      padding-bottom: 40px;
     }
 
     h1 {
-      font-size: 4.5rem;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
       text-align: center;
       background: linear-gradient(90deg, #8b5cf6, #ec4899, #f59e0b);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 40px 0 10px;
+      margin: 20px 0 10px;
       font-weight: 900;
     }
-    h3 {
-      font-size: 1.9rem;
+
+    h3.hero-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.9rem);
       text-align: center;
       color: #94a3b8;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
-    .stats {
-      text-align: center;
-      margin: 40px 0;
-    }
-    .badge {
-      display: inline-block;
-      padding: 12px 28px;
-      margin: 10px;
-      border-radius: 50px;
-      font-weight: bold;
-      background: rgba(139,92,246,0.2);
-      border: 2px solid #8b5cf6;
-      transition: 0.4s;
+    .hero-text {
       font-size: 1.1rem;
     }
-    .badge:hover {
-      transform: translateY(-10px) scale(1.1);
-      background: #8b5cf6;
+
+    .stats .badge-pill {
+      border-radius: 999px;
+      padding: 0.6rem 1.6rem;
+      font-size: 0.95rem;
+      background: rgba(139, 92, 246, 0.2);
+      border: 1px solid #8b5cf6;
+      color: #e5e7eb;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .modules-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 35px;
-      margin: 60px 0;
+    .stats .badge-pill:hover {
+      transform: translateY(-6px) scale(1.02);
+      background: #8b5cf6;
     }
 
     .module-card {
       background: var(--card);
-      padding: 45px 25px;
-      border-radius: 28px;
+      border-radius: 1.5rem;
       text-align: center;
-      transition: 0.5s;
+      padding: 2.2rem 1.5rem;
+      transition: 0.4s;
+      border: 2px solid transparent;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       cursor: pointer;
-      border: 3px solid transparent;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      height: 100%;
+      position: relative;
+      overflow: hidden;
     }
+
     .module-card:hover {
-      transform: translateY(-25px) scale(1.06);
-      box-shadow: 0 35px 70px rgba(0,0,0,0.7);
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
       border-color: var(--accent);
     }
 
     .module-num {
-      font-size: 7rem;
+      font-size: 4rem;
       font-weight: 900;
-      background: linear-gradient(45deg, #fff, #ddd);
+      background: linear-gradient(45deg, #ffffff, #d1d5db);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
     }
 
-    .module-title { font-size: 1.8rem; font-weight: bold; }
+    .module-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
 
     .module-desc {
       opacity: 0.9;
-      font-size: 1.15rem;
-      margin-bottom: 25px;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
     }
 
-    .btn {
-      display: inline-block;
-      padding: 18px 50px;
-      background: white;
-      color: var(--dark);
-      border-radius: 60px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.3rem;
-      transition: 0.4s;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    .module-btn {
+      border-radius: 999px;
+      padding: 0.7rem 1.8rem;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .btn:hover {
-      transform: scale(1.12);
-      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    .module-btn i {
+      font-size: 0.9rem;
     }
 
     footer {
-      text-align: center;
-      padding: 50px;
-      color: #94a3b8;
-      font-size: 1.4rem;
+    text-align: center;
+    padding: 30px 10px;
+    color: #94a3b8;
+    font-size: 1rem;
+    }
+
+    footer a {
+    color: #e5f2ff;
+    text-decoration: none;
+    font-weight: 600;
+    }
+
+    footer a:hover {
+    text-decoration: underline;
+    }
+
+    .footer-small {
+    margin-top: 8px;
+    color: #cbd5f5;
+    font-size: 0.85rem;
+    }
+
+
+    /* Gradient backgrounds tailored per module */
+    .bg-module-1 {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .bg-module-2 {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+
+    .bg-module-3 {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+    }
+
+    .bg-module-4 {
+      background: linear-gradient(135deg, #06b6d4, #0891b2);
+    }
+
+    .bg-module-5 {
+      background: linear-gradient(135deg, #ec4899, #e11d48);
+    }
+
+    .bg-module-6 {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    }
+
+    .bg-module-7 {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
     }
   </style>
-
 </head>
 <body>
 
-<!-- ⭐ TOP BAR WITH REAL VISITOR COUNTER ⭐ -->
-<div class="top-bar">
-  <div class="visitor-count">
-    <span>Total Visitors:</span>
-    <span id="visitorCount">Loading...</span>
+  <!-- Top Bar (no visitor counter) -->
+  <div class="top-bar">
+    <div class="top-bar-title">
+      <i class="fa-solid fa-code"></i>
+      <span>Basic C Programming Course</span>
+    </div>
+    <button
+      class="back-to-top"
+      type="button"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      <i class="fa-solid fa-arrow-up"></i>
+      Top
+    </button>
   </div>
 
-  <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-    Back to Top
-  </button>
-</div>
+  <!-- MAIN CONTENT -->
+  <main class="main-wrapper">
+    <div class="container">
 
-<!-- MAIN CONTENT -->
-<div class="container" align="center">
+      <!-- Hero Section -->
+      <section class="text-center mb-5">
+        <img
+          src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/C.svg"
+          alt="C Programming"
+          width="140"
+          class="img-fluid mb-3"
+        />
 
-  <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/C.svg" width="160"/>
+        <h1>Basic C Programming Course</h1>
+        <h3 class="hero-subtitle">
+          The Complete 7-Module Mastery Path for Engineering Students
+        </h3>
 
-  <h1>Basic C Programming Course</h1>
-  <h3>The Complete 7-Module Mastery Path for Engineering Students</h3>
+        <p class="hero-text text-light mt-3">
+          <strong>300+ Problems • 3+ Real Projects • 100% Placement Ready</strong>
+        </p>
+      </section>
 
-  <p style="font-size:1.5rem; color:#e2e8f0; margin:20px 0;">
-    <strong>300+ Problems • 3+ Real Projects • 100% Placement Ready</strong>
-  </p>
+      <!-- Stats Section -->
+      <section class="stats text-center mb-5">
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+          <span class="badge-pill">
+            <i class="fa-solid fa-layer-group"></i> Modules: 7
+          </span>
+          <span class="badge-pill">
+            <i class="fa-solid fa-list-check"></i> Topics: 49
+          </span>
+          <span class="badge-pill">
+            <i class="fa-solid fa-flask"></i> Labs: 38
+          </span>
+          <span class="badge-pill">
+            <i class="fa-solid fa-clipboard-check"></i> Tests: 49
+          </span>
+          <span class="badge-pill">
+            <i class="fa-solid fa-book-open"></i> Reading: 42
+          </span>
+          <span class="badge-pill">
+            <i class="fa-solid fa-seedling"></i> Beginner Level
+          </span>
+        </div>
+      </section>
 
-  <div class="stats">
-    <div class="badge">Modules: 7</div>
-    <div class="badge">Topics: 49</div>
-    <div class="badge">Labs: 38</div>
-    <div class="badge">Tests: 49</div>
-    <div class="badge">Reading: 42</div>
-    <div class="badge">Beginner Level</div>
-  </div>
+      <!-- Modules Grid -->
+      <section class="mb-5">
+        <div class="row g-4">
 
-  <div class="modules-grid">
+          <!-- Module 1 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="module-card bg-module-1">
+              <div class="module-num">01</div>
+              <h3 class="module-title">Introduction to C &amp; Setup</h3>
+              <p class="module-desc">
+                First Program • I/O • Comments • GCC
+              </p>
+              <a href="module_1/module_1.html" class="btn btn-light module-btn text-success">
+                <i class="fa-solid fa-play"></i>
+                Start Module 1
+              </a>
+            </div>
+          </div>
 
-    <!-- MODULE CARDS -->
-    <div class="module-card" style="background: linear-gradient(135deg, #10b981, #059669);">
-      <div class="module-num">01</div>
-      <h3 class="module-title">Introduction to C & Setup</h3>
-      <p class="module-desc">First Program • I/O • Comments • GCC</p>
-      <a href="module_1/module_1.html" class="btn" style="color:#10b981;">Start Module 1</a>
+          <!-- Module 2 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="module-card bg-module-2">
+              <div class="module-num">02</div>
+              <h3 class="module-title">Variables &amp; Operators</h3>
+              <p class="module-desc">
+                Data Types • Type Casting • Bitwise • const
+              </p>
+              <a href="module_2/module_2.html" class="btn btn-light module-btn text-primary">
+                <i class="fa-solid fa-play"></i>
+                Start Module 2
+              </a>
+            </div>
+          </div>
+
+          <!-- Module 3 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="module-card bg-module-3">
+              <div class="module-num">03</div>
+              <h3 class="module-title">Control Statements</h3>
+              <p class="module-desc">
+                if-else • Loops • Patterns • break/continue
+              </p>
+              <a href="module_3/module_3.html" class="btn btn-light module-btn text-warning">
+                <i class="fa-solid fa-play"></i>
+                Start Module 3
+              </a>
+            </div>
+          </div>
+
+          <!-- Module 4 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="module-card bg-module-4">
+              <div class="module-num">04</div>
+              <h3 class="module-title">Arrays &amp; Strings</h3>
+              <p class="module-desc">
+                1D/2D Arrays • String Functions • Matrix Ops
+              </p>
+              <a href="module_4/module_4.html" class="btn btn-light module-btn text-info">
+                <i class="fa-solid fa-play"></i>
+                Start Module 4
+              </a>
+            </div>
+          </div>
+
+          <!-- Module 5 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="module-card bg-module-5">
+              <div class="module-num">05</div>
+              <h3 class="module-title">Functions &amp; Recursion</h3>
+              <p class="module-desc">
+                Scope • Storage Classes • Header Files
+              </p>
+              <a href="module_5/module_5.html" class="btn btn-light module-btn" style="color:#ec4899;">
+                <i class="fa-solid fa-play"></i>
+                Start Module 5
+              </a>
+            </div>
+          </div>
+
+          <!-- Module 6 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="module-card bg-module-6">
+              <div class="module-num">06</div>
+              <h3 class="module-title">Pointers &amp; Memory</h3>
+              <p class="module-desc">
+                Address • Pointer Arithmetic • Dynamic Memory
+              </p>
+              <button class="btn btn-light module-btn" disabled style="color:#8b5cf6;">
+                <i class="fa-solid fa-hourglass-half"></i>
+                Coming Soon
+              </button>
+            </div>
+          </div>
+
+          <!-- Module 7 (Full-width on all screens) -->
+          <div class="col-12">
+            <div class="module-card bg-module-7">
+              <div class="module-num">07</div>
+              <h2 class="module-title fs-1">
+                Structs, Unions &amp; File I/O
+              </h2>
+              <p class="module-desc fs-5">
+                Custom Data Types • Binary/Text Files • Real-World Data Handling
+              </p>
+
+              <button class="btn btn-light module-btn" style="color:#ef4444;" disabled>
+                <i class="fa-solid fa-rocket"></i>
+                Launching Soon – Become a C Master
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <p style="margin-bottom: 6px;">
+            Made with ❤️ for C Programming Learners<br>
+            <strong>Author:</strong> Param Vishwakarma<br>
+            <strong>Maintainer:</strong> Param Vishwakarma
+        </p>
+        <p>
+            <strong>LinkedIn:</strong>
+            <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
+            Pramatma Vishwakarma ↗
+            </a>
+        </p>
+        <p class="footer-small">
+            Last Updated: November 2025 · Basic C Programming Course
+        </p>
+        </footer>
+
+
     </div>
+  </main>
 
-    <div class="module-card" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
-      <div class="module-num">02</div>
-      <h3 class="module-title">Variables & Operators</h3>
-      <p class="module-desc">Data Types • Type Casting • Bitwise • const</p>
-      <a href="module_2/module_2.html" class="btn" style="color:#3b82f6;">Start Module 2</a>
-    </div>
-
-    <div class="module-card" style="background: linear-gradient(135deg, #f59e0b, #f97316);">
-      <div class="module-num">03</div>
-      <h3 class="module-title">Control Statements</h3>
-      <p class="module-desc">if-else • Loops • Patterns • break/continue</p>
-      <a href="module_3/module_3.html" class="btn" style="color:#f59e0b;">Start Module 3</a>
-    </div>
-
-    <div class="module-card" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
-      <div class="module-num">04</div>
-      <h3 class="module-title">Arrays & Strings</h3>
-      <p class="module-desc">1D/2D Arrays • String Functions • Matrix Ops</p>
-      <a href="module_4/module_4.html" class="btn" style="color:#06b6d4;">Start Module 4</a>
-    </div>
-
-    <div class="module-card" style="background: linear-gradient(135deg, #ec4899, #e11d48);">
-      <div class="module-num">05</div>
-      <h3 class="module-title">Functions & Recursion</h3>
-      <p class="module-desc">Scope • Storage Classes • Header Files</p>
-      <a href="module_5/module_5.html" class="btn" style="color:#ec4899;">Start Module 5</a>
-    </div>
-
-    <div class="module-card" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
-      <div class="module-num">06</div>
-      <h3 class="module-title">Pointers & Memory</h3>
-      <p class="module-desc">Address • Pointer Arithmetic • Dynamic Memory</p>
-      <a href="#" class="btn" style="color:#8b5cf6;">Coming Soon</a>
-    </div>
-
-  </div>
-
-  <div class="module-card" style="background: linear-gradient(135deg, #ef4444, #dc2626); grid-column: 1/-1; padding:80px;">
-    <div class="module-num">07</div>
-    <h2 class="module-title" style="font-size:3.5rem;">Structs, Unions & File I/O</h2>
-    <p class="module-desc" style="font-size:1.6rem;">Custom Data Types • Binary/Text Files • Real-World Data Handling</p>
-
-    <a href="#" class="btn" style="color:#ef4444; padding:22px 70px; font-size:1.8rem;">
-      Launching Soon – Become a C Master
-    </a>
-  </div>
-
-  <footer>
-    <strong>Made with passion, precision, and 1000+ hours of mentoring</strong><br>
-    <strong>Last Updated: November 2025</strong>
-  </footer>
-
-</div>
-
-<!-- ⭐ REAL VISITOR COUNTER (ONLY HTML + JS) ⭐ -->
-<script>
-  const visitorSpan = document.getElementById("visitorCount");
-
-  fetch("https://api.countapi.xyz/hit/param-basic-c-course/visitor")
-    .then(res => res.json())
-    .then(data => {
-      visitorSpan.textContent = data.value.toLocaleString("en-IN");
-    })
-    .catch(err => {
-      visitorSpan.textContent = "—";
-    });
-</script>
+  <!-- Bootstrap JS Bundle -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
 
 </body>
 </html>

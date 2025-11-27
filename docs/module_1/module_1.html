@@ -4,147 +4,606 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Introduction to C & Setup - Practice Solutions</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
   <style>
     :root {
-      --bg: #f8fafc;
-      --text: #1e293b;
+      --bg: #0f172a;
+      --bg-soft: #020617;
+      --text: #e2e8f0;
       --primary: #10b981;
       --accent: #3b82f6;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --code: #f0fdf4;
+      --card: #0b1220;
+      --border: #1f2937;
+      --code: #022c22;
       --hover: #059669;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg);
+      background: radial-gradient(circle at top left, #1e293b 0%, #020617 45%, #020617 100%);
       color: var(--text);
       line-height: 1.7;
       margin: 0;
-      padding: 2rem;
+      min-height: 100vh;
     }
+
+    /* Top bar similar to main page */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.97);
+      backdrop-filter: blur(12px);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9999;
+      border-bottom: 1px solid rgba(16,185,129,0.4);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .top-bar-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-bar-title i {
+      color: var(--primary);
+    }
+
+    .top-bar-sub {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    .top-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .home-btn,
+    .back-to-top {
+      border: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .home-btn {
+      background: linear-gradient(45deg, #3b82f6, #10b981);
+      color: white;
+      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.4);
+    }
+
+    .home-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(59,130,246,0.6);
+      color: #fff;
+    }
+
+    .back-to-top {
+      background: linear-gradient(45deg, #10b981, #3b82f6);
+      color: white;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(16, 185, 129, 0.6);
+      color: #fff;
+    }
+
+    .main-wrapper {
+      padding-top: 90px; /* for fixed top bar */
+      padding-bottom: 40px;
+    }
+
     h1 {
       text-align: center;
-      color: var(--primary);
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
+      font-size: clamp(2.1rem, 4vw, 2.8rem);
+      margin-bottom: 0.5rem;
       background: linear-gradient(90deg, var(--primary), var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      font-weight: 900;
     }
-    h2 {
-      font-size: 2rem;
-      color: var(--accent);
-      border-bottom: 3px solid var(--primary);
-      padding-bottom: 0.5rem;
-      margin-top: 3rem;
+
+    .hero-subtitle {
+      background: linear-gradient(90deg, #10b981, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1rem;
+      font-weight: 600;
     }
-    .container {
+
+    .page-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 0.45rem 1.2rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.85rem;
+      color: #cbd5f5;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-pill i {
+      color: var(--primary);
+    }
+
+    .container-main {
       max-width: 1100px;
       margin: 0 auto;
-      background: var(--card);
-      padding: 2.5rem;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding-inline: 1.25rem;
     }
-    ul {
+
+    .card-shell {
+      background: radial-gradient(circle at top left, rgba(16,185,129,0.15), rgba(15,23,42,1));
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+
+    @media (min-width: 768px) {
+      .card-shell {
+        padding: 2.5rem 2.5rem;
+      }
+    }
+
+    h2.section-title {
+      font-size: 1.5rem;
+      color: var(--accent);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
+      margin-top: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2.section-title i {
+      color: var(--primary);
+      font-size: 1.3rem;
+    }
+
+    ul.exercise-list {
       list-style: none;
       padding: 0;
+      margin: 1.5rem 0 0;
     }
-    li {
+
+    li.exercise-item {
       margin: 0.9rem 0;
-      padding: 1.2rem 1.6rem;
-      background: var(--code);
-      border-left: 6px solid var(--primary);
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 10px rgba(16,185,129,0.1);
+      padding: 1rem 1.3rem;
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      transition: all 0.25s ease;
+      box-shadow: 0 5px 18px rgba(15, 118, 110, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    li:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(16,185,129,0.2);
-      border-left-color: var(--accent);
+
+    li.exercise-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 38px rgba(16,185,129,0.35);
+      border-color: var(--accent);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,1));
     }
-    a {
+
+    .badge-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(59,130,246,0.5);
+    }
+
+    .exercise-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .exercise-meta a {
       color: var(--primary);
       text-decoration: none;
       font-weight: 600;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
+      word-wrap: break-word;
     }
-    a:hover {
+
+    .exercise-meta a:hover {
       color: var(--hover);
       text-decoration: underline;
     }
-    .badge {
-      display: inline-block;
-      background: var(--primary);
-      color: white;
-      padding: 0.3rem 0.7rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      margin-right: 0.7rem;
+
+    .exercise-tagline {
+      font-size: 0.8rem;
+      color: #9ca3af;
     }
-    footer {
-      text-align: center;
-      margin-top: 5rem;
-      padding: 2.5rem;
-      background: linear-gradient(to right, #8b5cf6, #ec4899);
-      color: white;
-      border-radius: 12px;
-      font-size: 1rem;
+
+    .code-icon {
+      margin-left: auto;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      color: #22c55e;
+      opacity: 0.8;
     }
-    footer a {
+
+    li.exercise-item:hover .code-icon {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    /* Quick nav + search (same pattern as other modules) */
+    .quick-nav-wrapper {
+      margin: 1.5rem auto 0.5rem;
+      max-width: 1100px;
+    }
+
+    .quick-nav {
+      background: rgba(15,23,42,0.95);
+      border-radius: 999px;
+      padding: 0.4rem 0.6rem;
+      border: 1px solid rgba(148,163,184,0.7);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .quick-nav .nav-link {
+      color: #e5e7eb;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .quick-nav .nav-link i {
+      font-size: 0.8rem;
+      color: #6ee7b7;
+    }
+
+    .quick-nav .nav-link.active,
+    .quick-nav .nav-link:hover {
+      background: linear-gradient(90deg, #10b981, #3b82f6);
       color: #fff;
-      text-decoration: underline;
-      font-weight: bold;
     }
+
+    .search-wrapper {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .search-input {
+      max-width: 420px;
+      margin: 0.3rem auto 0;
+      background: #020617;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      padding: 0.45rem 1rem;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #10b981;
+      box-shadow: 0 0 0 1px #10b981;
+    }
+
+    .search-hint {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 0.3rem;
+    }
+
+    footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem 1rem;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  color: #ffffff;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  max-width: 1100px;
+  margin-inline: auto;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+}
+
+footer a {
+  color: #e5f2ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-small {
+  margin-top: 10px;
+  color: #e5e7eb;
+  font-size: 0.8rem;
+}
+
   </style>
 </head>
 <body>
 
-<div class="container">
+  <!-- Top Bar with Home + Top -->
+  <div class="top-bar">
+    <div>
+      <div class="top-bar-title">
+        <i class="fa-solid fa-terminal"></i>
+        <span>Module 1 · Introduction to C &amp; Setup</span>
+      </div>
+      <div class="top-bar-sub">
+        Practice Solutions · Input / Output · Debugging
+      </div>
+    </div>
 
-<h1>Getting Started with C<br>
-  <small style="background: linear-gradient(90deg, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size:1.2rem;">
-    Input/Output, Basics & Debugging
-  </small>
-</h1>
+    <div class="top-right-actions">
+      <!-- 🔹 HOME BUTTON: update href if your homepage path is different -->
+      <a href="../index.html" class="home-btn">
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
 
-<div class="section">
-  <h2>Input and Output in C + Error Types</h2>
-  <ul>
-    <li><span class="badge">1</span> <a href="../module_1/code/1.c">Print "Hello" and "World" on separate lines</a></li>
-    <li><span class="badge">2</span> <a href="../module_1/code/2.c">Swap Two Float Values Using a Temporary Variable</a></li>
-    <li><span class="badge">3</span> <a href="../module_1/code/3.c">Demonstrate Case Sensitivity in Identifiers</a></li>
-    <li><span class="badge">4</span> <a href="../module_1/code/4.c">Single-line and Multi-line Comments Example</a></li>
-    <li><span class="badge">5</span> <a href="../module_1/code/5.c">Demonstrate All Escape Sequences (\n, \t, \b, etc.)</a></li>
-    <li><span class="badge">6</span> <a href="../module_1/code/6.c">Take College Address as Input and Display Formatted</a></li>
-    <li><span class="badge">7</span> <a href="../module_1/code/7.c">Input First & Last Name → Print on Separate Lines</a></li>
-    <li><span class="badge">8</span> <a href="../module_1/code/8.c">BMI Calculator with Weight & Height Input + Validation</a></li>
-    <li><span class="badge">9</span> <a href="../module_1/code/9.c">Identify & Fix Errors in Circle Area Calculation Program</a></li>
-    <li><span class="badge">10</span> <a href="../module_1/code/10.c">Debug a Faulty Tax Calculator Program (Syntax + Logic Errors)</a></li>
-  </ul>
-</div>
+      <button
+        class="back-to-top"
+        type="button"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      >
+        <i class="fa-solid fa-arrow-up"></i>
+        Top
+      </button>
+    </div>
+  </div>
 
-</div>
+  <!-- MAIN CONTENT -->
+  <main class="main-wrapper">
+    <div class="container-main">
 
-<footer>
-  <p style="margin-bottom: 8px;">
+      <section class="text-center mb-4">
+        <span class="page-pill">
+          <i class="fa-solid fa-graduation-cap"></i>
+          Basic C Programming Course · Practice Set
+        </span>
+
+        <h1>Getting Started with C</h1>
+
+        <div class="hero-subtitle mb-2">
+          Input/Output, Basics &amp; Debugging
+        </div>
+
+        <p class="text-muted" style="color:#cbd5f5;font-size:0.92rem;">
+          Solve in your own IDE, then compare with these clean, industry-style C solutions.
+        </p>
+      </section>
+
+      <!-- Quick Navigation + Search (even though only one section, keeps UX consistent) -->
+      <div class="quick-nav-wrapper">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2">
+          <ul class="nav nav-pills quick-nav flex-wrap justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#io-errors">
+                <i class="fa-solid fa-keyboard"></i> Input / Output &amp; Errors
+              </a>
+            </li>
+          </ul>
+
+          <div class="search-wrapper w-100 w-lg-auto">
+            <input
+              type="text"
+              id="exerciseSearch"
+              class="form-control search-input"
+              placeholder='Search problems (e.g., "BMI", "debug", "Hello World")...'
+            />
+            <div class="search-hint">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              Filters all exercises on this page as you type.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="card-shell" id="io-errors">
+        <h2 class="section-title">
+          <i class="fa-solid fa-keyboard"></i>
+          Input and Output in C + Error Types
+        </h2>
+
+        <ul class="exercise-list">
+
+          <li class="exercise-item">
+            <span class="badge-num">1</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/1.c">
+                Print "Hello" and "World" on separate lines
+              </a>
+              <span class="exercise-tagline">Basics of <code>printf</code> and newline characters</span>
+            </div>
+            <i class="fa-solid fa-code code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <span class="badge-num">2</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/2.c">
+                Swap Two Float Values Using a Temporary Variable
+              </a>
+              <span class="exercise-tagline">Understanding variables, input, and assignments</span>
+            </div>
+            <i class="fa-solid fa-code code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <span class="badge-num">3</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/3.c">
+                Demonstrate Case Sensitivity in Identifiers
+              </a>
+              <span class="exercise-tagline">Why <code>Age</code>, <code>age</code>, and <code>AGE</code> are all different</span>
+            </div>
+            <i class="fa-solid fa-code code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <span class="badge-num">4</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/4.c">
+                Single-line and Multi-line Comments Example
+              </a>
+              <span class="exercise-tagline">Write clear, readable code with comments</span>
+            </div>
+            <i class="fa-solid fa-code code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <span class="badge-num">5</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/5.c">
+                Demonstrate All Escape Sequences (\n, \t, \b, etc.)
+              </a>
+              <span class="exercise-tagline">Mastering formatted output and special characters</span>
+            </div>
+            <i class="fa-solid fa-code code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <span class="badge-num">6</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/6.c">
+                Take College Address as Input and Display Formatted
+              </a>
+              <span class="exercise-tagline">Multi-line input, spacing, and clean printing</span>
+            </div>
+            <i class="fa-solid fa-code code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <span class="badge-num">7</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/7.c">
+                Input First &amp; Last Name → Print on Separate Lines
+              </a>
+              <span class="exercise-tagline">Working with strings and basic formatting</span>
+            </div>
+            <i class="fa-solid fa-code code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <span class="badge-num">8</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/8.c">
+                BMI Calculator with Weight &amp; Height Input + Validation
+              </a>
+              <span class="exercise-tagline">Simple math, input validation, and conditions</span>
+            </div>
+            <i class="fa-solid fa-code code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <span class="badge-num">9</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/9.c">
+                Identify &amp; Fix Errors in Circle Area Calculation Program
+              </a>
+              <span class="exercise-tagline">Spotting syntax vs. logical mistakes</span>
+            </div>
+            <i class="fa-solid fa-bug code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <span class="badge-num">10</span>
+            <div class="exercise-meta">
+              <a href="../module_1/code/10.c">
+                Debug a Faulty Tax Calculator Program (Syntax + Logic Errors)
+              </a>
+              <span class="exercise-tagline">Real-world style debugging with multiple error types</span>
+            </div>
+            <i class="fa-solid fa-bug code-icon"></i>
+          </li>
+
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+  <p>
     Made with ❤️ for C Programming Learners<br>
     <strong>Author:</strong> Param Vishwakarma
   </p>
   <p>
-    <strong>LinkedIn:</strong> 
-    <a href="https://www.linkedin.com/in/vpramatma/" target="_blank" 
-       style="color: #0A66C2; text-decoration: none; font-weight: 600;">
-       Pramatma Vishwakarma ↗
+    <strong>LinkedIn:</strong>
+    <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
+      Pramatma Vishwakarma ↗
     </a>
   </p>
-  <p style="margin-top: 12px; color: #94a3b8; font-size: 0.9rem;">
-    Last updated: November 2025
+  <p class="footer-small">
+    Last updated: November 2025 · Module 1 · Practice Solutions
   </p>
 </footer>
 
+  </main>
+
+  <!-- Bootstrap JS Bundle -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <!-- Shared JS for search + quick nav (same file used in other modules) -->
+  <script src="../assets/js/module-common.js"></script>
 </body>
 </html>

@@ -4,237 +4,1108 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Control Statements in C - Practice Solutions</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
   <style>
     :root {
-      --bg: #f8fafc;
-      --text: #1e293b;
+      --bg: #020617;
+      --text: #e5e7eb;
       --primary: #f59e0b;
       --accent: #ef4444;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --code: #fff7ed;
-      --hover: #d97706;
+      --card: #020617;
+      --border: #1f2937;
+      --code: #0b1020;
+      --hover: #fde68a;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg);
+      background: radial-gradient(circle at top left, #1e293b 0%, #020617 45%, #020617 100%);
       color: var(--text);
       line-height: 1.7;
       margin: 0;
-      padding: 2rem;
+      min-height: 100vh;
     }
-    h1 {
+
+    /* Top bar */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.97);
+      backdrop-filter: blur(12px);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9999;
+      border-bottom: 1px solid rgba(245,158,11,0.7);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .top-bar-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-bar-title i {
+      color: var(--primary);
+    }
+
+    .top-bar-sub {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    .top-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .home-btn,
+    .back-to-top {
+      border: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .home-btn {
+      background: linear-gradient(45deg, #f97316, #ef4444);
+      color: white;
+      box-shadow: 0 6px 18px rgba(249,115,22,0.4);
+    }
+
+    .home-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(239,68,68,0.7);
+      color: #fff;
+    }
+
+    .back-to-top {
+      background: linear-gradient(45deg, #f59e0b, #f97316);
+      color: white;
+      box-shadow: 0 6px 18px rgba(245,158,11,0.4);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(245,158,11,0.7);
+      color: #fff;
+    }
+
+    .main-wrapper {
+      padding-top: 90px;
+      padding-bottom: 40px;
+    }
+
+    .container-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-inline: 1.25rem;
+    }
+
+    h1.page-title {
       text-align: center;
-      font-size: 3rem;
-      margin-bottom: 1rem;
+      font-size: clamp(2.3rem, 4.8vw, 3rem);
+      margin-bottom: 0.6rem;
       background: linear-gradient(90deg, var(--primary), var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      font-weight: 900;
     }
-    h2 {
-      font-size: 2rem;
+
+    .hero-subtitle {
+      background: linear-gradient(90deg, #facc15, #f97316, #ef4444);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .page-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 0.45rem 1.2rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.85rem;
+      color: #e5e7eb;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-pill i {
+      color: var(--primary);
+    }
+
+    .card-shell {
+      background: radial-gradient(circle at top left, rgba(245,158,11,0.22), rgba(15,23,42,1));
+      border-radius: 18px;
+      padding: 2.3rem 1.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .card-shell {
+        padding: 2.6rem 2.4rem;
+      }
+    }
+
+    h2.section-title {
+      font-size: 1.4rem;
       color: var(--accent);
-      border-bottom: 3px solid var(--primary);
-      padding-bottom: 0.5rem;
-      margin-top: 3.5rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.4rem;
+      margin-top: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: var(--card);
-      padding: 2.5rem;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+    h2.section-title i {
+      color: var(--primary);
+      font-size: 1.2rem;
     }
-    ul {
+
+    ul.exercise-list {
       list-style: none;
       padding: 0;
+      margin: 1.2rem 0 0;
     }
-    li {
-      margin: 0.9rem 0;
-      padding: 1.2rem 1.6rem;
+
+    li.exercise-item {
+      margin: 0.8rem 0;
+      padding: 1rem 1.3rem;
       background: var(--code);
-      border-left: 6px solid var(--primary);
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 10px rgba(245,158,11,0.1);
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 15px rgba(245,158,11,0.35);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #f9fafb;
     }
-    li:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(245,158,11,0.25);
-      border-left-color: var(--accent);
+
+    li.exercise-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(239,68,68,0.5);
+      border-color: var(--accent);
+      background: radial-gradient(circle at top left, rgba(248,113,113,0.2), #020617);
     }
-    a {
+
+    .badge-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(249,115,22,0.6);
+    }
+
+    .exercise-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .exercise-meta a {
       color: var(--primary);
       text-decoration: none;
       font-weight: 600;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
+      word-wrap: break-word;
     }
-    a:hover {
+
+    .exercise-meta a:hover {
       color: var(--hover);
       text-decoration: underline;
     }
-    .badge {
-      display: inline-block;
-      background: var(--primary);
-      color: white;
-      padding: 0.3rem 0.7rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      margin-right: 0.7rem;
+
+    .exercise-tagline {
+      font-size: 0.8rem;
+      color: #fde68a;
     }
+
+    .code-icon {
+      margin-left: auto;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      color: #fb923c;
+      opacity: 0.8;
+    }
+
+    li.exercise-item:hover .code-icon {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
     .multi {
-      font-size: 0.95rem;
-      color: #dc2626;
-      font-weight: bold;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-left: 0.35rem;
+      color: #fecaca;
+      text-decoration: none;
     }
+
+    .multi:hover {
+      text-decoration: underline;
+      color: #fed7aa;
+    }
+
+    /* Quick nav + search */
+    .quick-nav-wrapper {
+      margin: 1.5rem auto 0.5rem;
+      max-width: 1100px;
+    }
+
+    .quick-nav {
+      background: rgba(15,23,42,0.95);
+      border-radius: 999px;
+      padding: 0.4rem 0.6rem;
+      border: 1px solid rgba(148,163,184,0.7);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .quick-nav .nav-link {
+      color: #e5e7eb;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .quick-nav .nav-link i {
+      font-size: 0.8rem;
+      color: #facc15;
+    }
+
+    .quick-nav .nav-link.active,
+    .quick-nav .nav-link:hover {
+      background: linear-gradient(90deg, #f59e0b, #ef4444);
+      color: #fff;
+    }
+
+    .search-wrapper {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .search-input {
+      max-width: 420px;
+      margin: 0.3rem auto 0;
+      background: #020617;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      padding: 0.45rem 1rem;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 1px #f59e0b;
+    }
+
+    .search-hint {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 0.3rem;
+    }
+
     footer {
       text-align: center;
-      margin-top: 5rem;
-      padding: 2.5rem;
+      margin-top: 3rem;
+      padding: 2rem 1rem;
       background: linear-gradient(135deg, #f59e0b, #ef4444);
       color: white;
-      border-radius: 12px;
-      font-size: 1rem;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      max-width: 1100px;
+      margin-inline: auto;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
     }
+
     footer a {
-      color: #fff;
+      color: #fee2e2;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
       text-decoration: underline;
-      font-weight: bold;
+    }
+
+    .footer-small {
+      margin-top: 10px;
+      color: #fee2e2;
+      font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>Control Statements in C</h1>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div>
+      <div class="top-bar-title">
+        <i class="fa-solid fa-code-branch"></i>
+        <span>Module 3 · Control Statements in C</span>
+      </div>
+      <div class="top-bar-sub">
+        Practice Solutions · Decisions · Loops · Control Flow
+      </div>
+    </div>
 
-  <div class="section">
-    <h2>Decision Making: if & if-else</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/3.1.1.c">Check if Rectangle is Square</a></li>
-      <li><span class="badge">2</span> <a href="./code/3.1.2.c">Greatest of Three Numbers using Nested if</a></li>
-      <li><span class="badge">3</span> <a href="./code/3.1.3.c">Categorize Temperature (Hot/Warm/Cold)</a></li>
-      <li><span class="badge">4</span> <a href="./code/3.1.4.c">Check Senior Citizen (Age ≥ 60)</a></li>
-      <li><span class="badge">5</span> <a href="./code/3.1.5.c">Multiple if-else with Relational Operators</a></li>
-      <li><span class="badge">6</span> <a href="./code/3.1.6.c">Multiple Independent if Statements</a></li>
-      <li><span class="badge">7</span> <a href="./code/3.1.7.c">Check Voting Eligibility (Age ≥ 18)</a></li>
-      <li><span class="badge">8</span> <a href="./code/3.1.8.c">Calculate Electricity Bill (Tiered Pricing)</a></li>
-      <li><span class="badge">9</span> <a href="./code/3.1.9.c">Arithmetic Operations using if-else Ladder</a></li>
-      <li><span class="badge">10</span> <a href="./code/3.1.10.c">Calculate Grade from Percentage</a></li>
-    </ul>
+    <div class="top-right-actions">
+      <!-- Adjust href if your homepage path is different -->
+      <a href="../index.html" class="home-btn">
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
+
+      <button
+        class="back-to-top"
+        type="button"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      >
+        <i class="fa-solid fa-arrow-up"></i>
+        Top
+      </button>
+    </div>
   </div>
 
-  <div class="section">
-    <h2>Loops in C: for Loop</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/3.2.1.c">Print Multiplication Table</a></li>
-      <li><span class="badge">2</span> <a href="./code/3.2.2.c">Sum of First N Natural Numbers</a></li>
-      <li><span class="badge">3</span> <a href="./code/3.2.3.c">Print Alphabets A to Z</a></li>
-      <li><span class="badge">4</span> Uppercase to Lowercase 
-        <a href="./code/3.2.4.1.c" class="multi">[Method 1]</a>
-        <a href="./code/3.2.4.2.c" class="multi">[Method 2]</a>
-      </li>
-      <li><span class="badge">5</span> <a href="./code/3.2.5.c">Factorial of a Number</a></li>
-      <li><span class="badge">6</span> <a href="./code/3.2.6.c">Fibonacci Series</a></li>
-      <li><span class="badge">7</span> <a href="./code/3.2.7.c">Reverse a Number</a></li>
-      <li><span class="badge">8</span> <a href="./code/3.2.8.c">Check Prime Number</a></li>
-      <li><span class="badge">9</span> <a href="./code/3.2.9.c">Check Palindrome Number</a></li>
-      <li><span class="badge">10</span> <a href="./code/3.2.10.c">String Length without strlen()</a></li>
-    </ul>
-  </div>
+  <!-- MAIN CONTENT -->
+  <main class="main-wrapper">
+    <div class="container-main">
 
-  <div class="section">
-    <h2>Loops in C: while Loop</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/3.3.1.c">Sum of Digits using while</a></li>
-      <li><span class="badge">2</span> <a href="./code/3.3.2.c">Check Even/Odd</a></li>
-      <li><span class="badge">3</span> <a href="./code/3.3.3.c">Check Prime Number</a></li>
-      <li><span class="badge">4</span> <a href="./code/3.3.4.c">Reverse a Number</a></li>
-      <li><span class="badge">5</span> <a href="./code/3.3.5.c">Fibonacci Sequence</a></li>
-      <li><span class="badge">6</span> <a href="./code/3.3.6.c">Count Number of Digits</a></li>
-      <li><span class="badge">7</span> <a href="./code/3.3.7.c">Factorial using while</a></li>
-      <li><span class="badge">8</span> <a href="./code/3.3.8.c">Check Armstrong Number</a></li>
-      <li><span class="badge">9</span> <a href="./code/3.3.9.c">Calculate Power (x^n)</a></li>
-      <li><span class="badge">10</span> <a href="./code/3.3.10.c">Find GCD of Two Numbers</a></li>
-    </ul>
-  </div>
+      <section class="text-center mb-4">
+        <span class="page-pill">
+          <i class="fa-solid fa-graduation-cap"></i>
+          Basic C Programming Course · Module 3 Practice Set
+        </span>
 
-  <div class="section">
-    <h2>Loops in C: do-while Loop</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/3.4.1.c">Print "Hello World" 5 Times</a></li>
-      <li><span class="badge">2</span> <a href="./code/3.4.2.c">Basic do-while Demo</a></li>
-      <li><span class="badge">3</span> <a href="./code/3.4.3.c">Run Until User Enters 0</a></li>
-      <li><span class="badge">4</span> <a href="./code/3.4.4.c">Factorial using do-while</a></li>
-      <li><span class="badge">5</span> <a href="./code/3.4.5.c">Sum of Natural Numbers</a></li>
-      <li><span class="badge">6</span> <a href="./code/3.4.6.c">Reverse a Number</a></li>
-      <li><span class="badge">7</span> <a href="./code/3.4.7.c">Count Digits in Number</a></li>
-      <li><span class="badge">8</span> <a href="./code/3.4.8.c">Sum of Even & Odd Numbers Separately</a></li>
-      <li><span class="badge">9</span> <a href="./code/3.4.9.c">Continue Until Negative Number</a></li>
-      <li><span class="badge">10</span> <a href="./code/3.4.10.c">Menu-Driven Calculator</a></li>
-    </ul>
-  </div>
+        <h1 class="page-title">Control Statements in C</h1>
 
-  <div class="section">
-    <h2>Nested Loops</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/3.5.1.c">Right-Angled Triangle (Asterisks)</a></li>
-      <li><span class="badge">2</span> <a href="./code/3.5.2.c">Inverted Triangle Pattern</a></li>
-      <li><span class="badge">3</span> <a href="./code/3.5.3.c">Pyramid Star Pattern</a></li>
-      <li><span class="badge">4</span> <a href="./code/3.5.4.c">Number Triangle (1 to n)</a></li>
-      <li><span class="badge">5</span> <a href="./code/3.5.5.c">Incremental Number Pattern</a></li>
-      <li><span class="badge">6</span> <a href="./code/3.5.6.c">Hollow Rectangle</a></li>
-      <li><span class="badge">7</span> <a href="./code/3.5.7.c">Right-Angled Triangle with Numbers</a></li>
-      <li><span class="badge">8</span> <a href="./code/3.5.8.c">Diamond Star Pattern</a></li>
-      <li><span class="badge">9</span> <a href="./code/3.5.9.c">Center-Aligned Number Triangle</a></li>
-      <li><span class="badge">10</span> <a href="./code/3.5.10.c">Pascal's Triangle (Center-Aligned)</a></li>
-    </ul>
-  </div>
+        <div class="hero-subtitle mb-2">
+          Decision Making, Loops, Patterns &amp; Control Flow
+        </div>
 
-  <div class="section">
-    <h2>Loop Control: break, continue, goto</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/3.6.1.c">Stop on Vowel Encounter</a></li>
-      <li><span class="badge">2</span> <a href="./code/3.6.2.c">Break in for Loop</a></li>
-      <li><span class="badge">3</span> <a href="./code/3.6.3.c">Infinite while(1) with break</a></li>
-      <li><span class="badge">4</span> <a href="./code/3.6.4.c">Prompt Until Valid Input</a></li>
-      <li><span class="badge">5</span> <a href="./code/3.6.5.c">Continue Taking Input</a></li>
-      <li><span class="badge">6</span> <a href="./code/3.6.6.c">Skip Even Numbers using continue</a></li>
-      <li><span class="badge">7</span> <a href="./code/3.6.7.c">goto Statement Demo (Sum & Diff)</a></li>
-      <li><span class="badge">8</span> <a href="./code/3.6.8.c">Skip Non-Prime with continue</a></li>
-      <li><span class="badge">9</span> <a href="./code/3.6.9.c">continue in do-while</a></li>
-      <li><span class="badge">10</span> <a href="./code/3.6.10.c">goto in Nested Loops</a></li>
-    </ul>
-  </div>
+        <p style="color:#e5e7eb;font-size:0.9rem;">
+          Practice how C decides, repeats, and exits — then compare with clean reference implementations to level up your logic.
+        </p>
+      </section>
 
-  <div class="section">
-    <h2>Module Test</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/3.7.1.c">Even or Odd using if-else</a></li>
-      <li><span class="badge">2</span> <a href="./code/3.7.2.c">Countdown Timer using while</a></li>
-      <li><span class="badge">3</span> <a href="./code/3.7.3.c">Print All Prime Numbers in Range (with continue)</a></li>
-    </ul>
-  </div>
-</div>
+      <!-- Quick Navigation + Search -->
+      <div class="quick-nav-wrapper">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2">
+          <ul class="nav nav-pills quick-nav flex-wrap justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#decision-making">
+                <i class="fa-solid fa-scale-balanced"></i> Decisions (if / else)
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#for-loop">
+                <i class="fa-solid fa-rotate-right"></i> for Loop
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#while-loop">
+                <i class="fa-solid fa-arrow-rotate-left"></i> while Loop
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#do-while-loop">
+                <i class="fa-solid fa-rotate"></i> do-while Loop
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#nested-loops">
+                <i class="fa-solid fa-layer-group"></i> Patterns
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#loop-control">
+                <i class="fa-solid fa-road-barrier"></i> Loop Control
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#module-test">
+                <i class="fa-solid fa-trophy"></i> Module Test
+              </a>
+            </li>
+          </ul>
 
-<footer>
-  <p style="margin-bottom: 8px;">
-    Made with Love for C Programming Learners<br>
-    <strong>Author:</strong> Param Vishwakarma
-  </p>
-  <p>
-    <strong>LinkedIn:</strong>
-    <a href="https://www.linkedin.com/in/vpramatma/" target="_blank"
-       style="color: #0A66C2; text-decoration: none; font-weight: 600;">
-       Pramatma Vishwakarma
-    </a>
-  </p>
-  <p style="margin-top: 12px; color: #94a3b8; font-size: 0.9rem;">
-    Last updated: November 2025
-  </p>
-</footer>
+          <div class="search-wrapper w-100 w-lg-auto">
+            <input
+              type="text"
+              id="exerciseSearch"
+              class="form-control search-input"
+              placeholder="Search problems by keyword (e.g., prime, factorial, pattern)..."
+            />
+            <div class="search-hint">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              Type to filter across all exercises on this page.
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <section class="card-shell">
+
+        <!-- Decision Making -->
+        <div id="decision-making">
+          <h2 class="section-title">
+            <i class="fa-solid fa-scale-balanced"></i>
+            Decision Making: <code>if</code> &amp; <code>if-else</code>
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.1.c">Check if Rectangle is Square</a>
+                <span class="exercise-tagline">Compare sides and branch based on equality</span>
+              </div>
+              <i class="fa-solid fa-vector-square code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.2.c">Greatest of Three Numbers using Nested if</a>
+                <span class="exercise-tagline">Nested conditions to find maximum value</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-wide-short code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.3.c">Categorize Temperature (Hot/Warm/Cold)</a>
+                <span class="exercise-tagline">Multi-range classification using if-else ladder</span>
+              </div>
+              <i class="fa-solid fa-temperature-half code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.4.c">Check Senior Citizen (Age ≥ 60)</a>
+                <span class="exercise-tagline">Simple threshold comparison with >=</span>
+              </div>
+              <i class="fa-solid fa-person-cane code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.5.c">Multiple if-else with Relational Operators</a>
+                <span class="exercise-tagline">Practice chaining relational checks correctly</span>
+              </div>
+              <i class="fa-solid fa-code-compare code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.6.c">Multiple Independent if Statements</a>
+                <span class="exercise-tagline">Separate conditions that can all trigger</span>
+              </div>
+              <i class="fa-solid fa-diagram-project code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.7.c">Check Voting Eligibility (Age ≥ 18)</a>
+                <span class="exercise-tagline">Basic boolean decision-making</span>
+              </div>
+              <i class="fa-solid fa-person-booth code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.8.c">Calculate Electricity Bill (Tiered Pricing)</a>
+                <span class="exercise-tagline">Slab-wise billing with if-else ladder</span>
+              </div>
+              <i class="fa-solid fa-bolt code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.9.c">Arithmetic Operations using if-else Ladder</a>
+                <span class="exercise-tagline">Menu-like decisions without switch</span>
+              </div>
+              <i class="fa-solid fa-calculator code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/3.1.10.c">Calculate Grade from Percentage</a>
+                <span class="exercise-tagline">Ranges and grading logic with conditions</span>
+              </div>
+              <i class="fa-solid fa-clipboard-check code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- for Loop -->
+        <div id="for-loop">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-rotate-right"></i>
+            Loops in C: <code>for</code> Loop
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/3.2.1.c">Print Multiplication Table</a>
+                <span class="exercise-tagline">Iterate fixed times with a counter</span>
+              </div>
+              <i class="fa-solid fa-table-cells-large code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/3.2.2.c">Sum of First N Natural Numbers</a>
+                <span class="exercise-tagline">Accumulating totals inside a loop</span>
+              </div>
+              <i class="fa-solid fa-plus code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/3.2.3.c">Print Alphabets A to Z</a>
+                <span class="exercise-tagline">Iterating through character ranges</span>
+              </div>
+              <i class="fa-solid fa-a code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                Uppercase to Lowercase
+                <span>
+                  <a href="./code/3.2.4.1.c" class="multi">[Method 1]</a>
+                  <a href="./code/3.2.4.2.c" class="multi">[Method 2]</a>
+                </span>
+                <span class="exercise-tagline">Multiple approaches to case conversion</span>
+              </div>
+              <i class="fa-solid fa-arrow-down-a-z code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/3.2.5.c">Factorial of a Number</a>
+                <span class="exercise-tagline">Classic loop-based factorial logic</span>
+              </div>
+              <i class="fa-solid fa-xmarks-lines code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/3.2.6.c">Fibonacci Series</a>
+                <span class="exercise-tagline">Iterative generation of sequences</span>
+              </div>
+              <i class="fa-solid fa-wave-square code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/3.2.7.c">Reverse a Number</a>
+                <span class="exercise-tagline">Extract digits and rebuild in reverse</span>
+              </div>
+              <i class="fa-solid fa-arrow-rotate-left code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/3.2.8.c">Check Prime Number</a>
+                <span class="exercise-tagline">Divisibility checks with loop limits</span>
+              </div>
+              <i class="fa-solid fa-hashtag code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/3.2.9.c">Check Palindrome Number</a>
+                <span class="exercise-tagline">Compare original and reversed value</span>
+              </div>
+              <i class="fa-solid fa-rotate code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/3.2.10.c">String Length without strlen()</a>
+                <span class="exercise-tagline">Manual traversal until '\\0'</span>
+              </div>
+              <i class="fa-solid fa-ruler code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- while Loop -->
+        <div id="while-loop">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+            Loops in C: <code>while</code> Loop
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.1.c">Sum of Digits using while</a>
+                <span class="exercise-tagline">Repeated extraction until number becomes 0</span>
+              </div>
+              <i class="fa-solid fa-layer-group code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.2.c">Check Even/Odd</a>
+                <span class="exercise-tagline">Loop and condition combination</span>
+              </div>
+              <i class="fa-solid fa-circle-half-stroke code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.3.c">Check Prime Number</a>
+                <span class="exercise-tagline">Prime logic using while instead of for</span>
+              </div>
+              <i class="fa-solid fa-gem code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.4.c">Reverse a Number</a>
+                <span class="exercise-tagline">Loop until there are no digits left</span>
+              </div>
+              <i class="fa-solid fa-arrow-rotate-right code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.5.c">Fibonacci Sequence</a>
+                <span class="exercise-tagline">while-based sequence construction</span>
+              </div>
+              <i class="fa-solid fa-chart-line code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.6.c">Count Number of Digits</a>
+                <span class="exercise-tagline">Increment counter until number ends</span>
+              </div>
+              <i class="fa-solid fa-sort-numeric-up code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.7.c">Factorial using while</a>
+                <span class="exercise-tagline">Multiplicative pattern with while loop</span>
+              </div>
+              <i class="fa-solid fa-xmark code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.8.c">Check Armstrong Number</a>
+                <span class="exercise-tagline">Sum of powers of digits vs original</span>
+              </div>
+              <i class="fa-solid fa-cubes code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.9.c">Calculate Power (x^n)</a>
+                <span class="exercise-tagline">Repeated multiplication with while</span>
+              </div>
+              <i class="fa-solid fa-superscript code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/3.3.10.c">Find GCD of Two Numbers</a>
+                <span class="exercise-tagline">Euclid-style loop until remainder is zero</span>
+              </div>
+              <i class="fa-solid fa-diagram-venn code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- do-while Loop -->
+        <div id="do-while-loop">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-rotate"></i>
+            Loops in C: <code>do-while</code> Loop
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.1.c">Print "Hello World" 5 Times</a>
+                <span class="exercise-tagline">At-least-once execution demo</span>
+              </div>
+              <i class="fa-solid fa-message code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.2.c">Basic do-while Demo</a>
+                <span class="exercise-tagline">Structure and control flow illustration</span>
+              </div>
+              <i class="fa-solid fa-diagram-next code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.3.c">Run Until User Enters 0</a>
+                <span class="exercise-tagline">Menu-like looping with exit condition</span>
+              </div>
+              <i class="fa-solid fa-circle-stop code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.4.c">Factorial using do-while</a>
+                <span class="exercise-tagline">Factorial with do-while variant</span>
+              </div>
+              <i class="fa-solid fa-square-xmark code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.5.c">Sum of Natural Numbers</a>
+                <span class="exercise-tagline">Sum loop that runs at least once</span>
+              </div>
+              <i class="fa-solid fa-list-ol code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.6.c">Reverse a Number</a>
+                <span class="exercise-tagline">Reversal with do-while pattern</span>
+              </div>
+              <i class="fa-solid fa-arrows-spin code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.7.c">Count Digits in Number</a>
+                <span class="exercise-tagline">Correctly handle number 0 as well</span>
+              </div>
+              <i class="fa-solid fa-hashtag code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.8.c">Sum of Even &amp; Odd Numbers Separately</a>
+                <span class="exercise-tagline">Classifying values in a do-while loop</span>
+              </div>
+              <i class="fa-solid fa-scale-unbalanced-flip code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.9.c">Continue Until Negative Number</a>
+                <span class="exercise-tagline">Sentinel-controlled looping</span>
+              </div>
+              <i class="fa-solid fa-circle-notch code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/3.4.10.c">Menu-Driven Calculator</a>
+                <span class="exercise-tagline">Realistic do-while based menu program</span>
+              </div>
+              <i class="fa-solid fa-list-check code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Nested Loops -->
+        <div id="nested-loops">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-layer-group"></i>
+            Nested Loops &amp; Patterns
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.1.c">Right-Angled Triangle (Asterisks)</a>
+                <span class="exercise-tagline">Basic row-column nested loop pattern</span>
+              </div>
+              <i class="fa-solid fa-triangle-exclamation code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.2.c">Inverted Triangle Pattern</a>
+                <span class="exercise-tagline">Reverse ordering with decreasing stars</span>
+              </div>
+              <i class="fa-solid fa-turn-down code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.3.c">Pyramid Star Pattern</a>
+                <span class="exercise-tagline">Center-aligned star pyramid</span>
+              </div>
+              <i class="fa-solid fa-mountain-sun code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.4.c">Number Triangle (1 to n)</a>
+                <span class="exercise-tagline">Triangular numeric layout</span>
+              </div>
+              <i class="fa-solid fa-sort-numeric-down code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.5.c">Incremental Number Pattern</a>
+                <span class="exercise-tagline">Numbers increasing across rows</span>
+              </div>
+              <i class="fa-solid fa-stairs code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.6.c">Hollow Rectangle</a>
+                <span class="exercise-tagline">Borders only with nested conditions</span>
+              </div>
+              <i class="fa-solid fa-border-all code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.7.c">Right-Angled Triangle with Numbers</a>
+                <span class="exercise-tagline">Mixing numeric values with pattern logic</span>
+              </div>
+              <i class="fa-solid fa-sort-numeric-up code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.8.c">Diamond Star Pattern</a>
+                <span class="exercise-tagline">Symmetric star shape with nested loops</span>
+              </div>
+              <i class="fa-solid fa-gem code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.9.c">Center-Aligned Number Triangle</a>
+                <span class="exercise-tagline">Spacing plus numbering for alignment</span>
+              </div>
+              <i class="fa-solid fa-indent code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/3.5.10.c">Pascal's Triangle (Center-Aligned)</a>
+                <span class="exercise-tagline">Combinatorics + pattern printing</span>
+              </div>
+              <i class="fa-solid fa-circle-nodes code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Loop Control -->
+        <div id="loop-control">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-road-barrier"></i>
+            Loop Control: <code>break</code>, <code>continue</code>, <code>goto</code>
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.1.c">Stop on Vowel Encounter</a>
+                <span class="exercise-tagline">Use break to terminate early</span>
+              </div>
+              <i class="fa-solid fa-stop code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.2.c">Break in for Loop</a>
+                <span class="exercise-tagline">Conditionally exiting a counted loop</span>
+              </div>
+              <i class="fa-solid fa-circle-stop code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.3.c">Infinite while(1) with break</a>
+                <span class="exercise-tagline">Manual loop termination from inside</span>
+              </div>
+              <i class="fa-solid fa-infinity code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.4.c">Prompt Until Valid Input</a>
+                <span class="exercise-tagline">Loop until user meets constraints</span>
+              </div>
+              <i class="fa-solid fa-circle-question code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.5.c">Continue Taking Input</a>
+                <span class="exercise-tagline">Continue cycles until stop condition</span>
+              </div>
+              <i class="fa-solid fa-arrow-rotate-left code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.6.c">Skip Even Numbers using continue</a>
+                <span class="exercise-tagline">Skip certain iterations selectively</span>
+              </div>
+              <i class="fa-solid fa-forward-step code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.7.c">goto Statement Demo (Sum &amp; Diff)</a>
+                <span class="exercise-tagline">Jumping to labels (for learning only!)</span>
+              </div>
+              <i class="fa-solid fa-location-arrow code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.8.c">Skip Non-Prime with continue</a>
+                <span class="exercise-tagline">Optimize by skipping unneeded work</span>
+              </div>
+              <i class="fa-solid fa-forward-fast code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.9.c">continue in do-while</a>
+                <span class="exercise-tagline">Re-check condition after skipping work</span>
+              </div>
+              <i class="fa-solid fa-rotate-right code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/3.6.10.c">goto in Nested Loops</a>
+                <span class="exercise-tagline">Jumping out of multiple levels</span>
+              </div>
+              <i class="fa-solid fa-diagram-predecessor code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Module Test -->
+        <div id="module-test">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-trophy"></i>
+            Module Test
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/3.7.1.c">Even or Odd using if-else</a>
+                <span class="exercise-tagline">Fundamental conditional logic review</span>
+              </div>
+              <i class="fa-solid fa-toggle-on code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/3.7.2.c">Countdown Timer using while</a>
+                <span class="exercise-tagline">Reverse counting with delay-style logic</span>
+              </div>
+              <i class="fa-solid fa-hourglass-end code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/3.7.3.c">Print All Prime Numbers in Range (with continue)</a>
+                <span class="exercise-tagline">Combine loops, conditions and continue effectively</span>
+              </div>
+              <i class="fa-solid fa-list-ol code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p style="margin-bottom: 6px;">
+        Made with ❤️ for C Programming Learners<br>
+        <strong>Author:</strong> Param Vishwakarma
+      </p>
+      <p>
+        <strong>LinkedIn:</strong>
+        <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
+          Pramatma Vishwakarma ↗
+        </a>
+      </p>
+      <p class="footer-small">
+        Last updated: November 2025 · Module 3 · Practice Solutions
+      </p>
+    </footer>
+  </main>
+
+  <!-- Bootstrap JS Bundle -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <!-- Shared JS for search + quick nav (same as other modules) -->
+  <script src="../assets/js/module-common.js"></script>
 </body>
 </html>

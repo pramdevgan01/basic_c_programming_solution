@@ -4,281 +4,1089 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Functions & Recursion in C - Complete Solutions</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
   <style>
     :root {
-      --bg: #f8fafc;
-      --text: #1e293b;
+      --bg: #020617;
+      --text: #e5e7eb;
       --primary: #7c3aed;
       --accent: #ec4899;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --code: #fdf4ff;
-      --hover: #6d28d9;
+      --card: #020617;
+      --border: #1f2937;
+      --code: #020617;
+      --hover: #a855f7;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg);
+      background: radial-gradient(circle at top left, #1e293b 0%, #020617 45%, #020617 100%);
       color: var(--text);
       line-height: 1.7;
       margin: 0;
-      padding: 2rem;
+      min-height: 100vh;
     }
-    h1 {
+
+    /* Top bar */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.97);
+      backdrop-filter: blur(12px);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9999;
+      border-bottom: 1px solid rgba(124,58,237,0.7);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .top-bar-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-bar-title i {
+      color: var(--primary);
+    }
+
+    .top-bar-sub {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    .top-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .home-btn,
+    .back-to-top {
+      border: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .home-btn {
+      background: linear-gradient(45deg, #7c3aed, #ec4899);
+      color: white;
+      box-shadow: 0 6px 18px rgba(236,72,153,0.4);
+    }
+
+    .home-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(236,72,153,0.7);
+      color: #fff;
+    }
+
+    .back-to-top {
+      background: linear-gradient(45deg, #22c55e, #a855f7);
+      color: white;
+      box-shadow: 0 6px 18px rgba(168,85,247,0.4);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(168,85,247,0.7);
+      color: #fff;
+    }
+
+    .main-wrapper {
+      padding-top: 90px;
+      padding-bottom: 40px;
+    }
+
+    .container-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 1.25rem;
+    }
+
+    h1.page-title {
       text-align: center;
-      font-size: 3.2rem;
-      margin-bottom: 1rem;
+      font-size: clamp(2.5rem, 5vw, 3.2rem);
+      margin-bottom: 0.6rem;
       background: linear-gradient(90deg, var(--primary), var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 900;
     }
-    h2 {
-      font-size: 2.1rem;
-      color: var(--accent);
-      border-bottom: 4px solid var(--primary);
-      padding-bottom: 0.6rem;
-      margin-top: 4rem;
+
+    .hero-subtitle {
+      background: linear-gradient(90deg, #7c3aed, #ec4899, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1rem;
+      font-weight: 600;
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: var(--card);
-      padding: 3rem;
+
+    .page-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 0.45rem 1.2rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.85rem;
+      color: #e5e7eb;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-pill i {
+      color: var(--primary);
+    }
+
+    .card-shell {
+      background: radial-gradient(circle at top left, rgba(124,58,237,0.22), rgba(15,23,42,1));
       border-radius: 20px;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+      padding: 2.6rem 2rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      margin-bottom: 2.5rem;
     }
-    ul {
+
+    @media (min-width: 768px) {
+      .card-shell {
+        padding: 2.9rem 2.8rem;
+      }
+    }
+
+    h2.section-title {
+      font-size: 1.45rem;
+      color: var(--accent);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.4rem;
+      margin-top: 1.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2.section-title i {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    ul.exercise-list {
       list-style: none;
       padding: 0;
+      margin: 1.2rem 0 0;
     }
-    li {
-      margin: 1rem 0;
-      padding: 1.4rem 2rem;
+
+    li.exercise-item {
+      margin: 0.9rem 0;
+      padding: 1.1rem 1.5rem;
       background: var(--code);
-      border-left: 7px solid var(--primary);
       border-radius: 14px;
-      transition: all 0.4s ease;
-      box-shadow: 0 5px 15px rgba(124,58,237,0.15);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      transition: all 0.25s ease;
+      box-shadow: 0 5px 18px rgba(124,58,237,0.35);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: #e5e7eb;
+      flex-wrap: wrap;
     }
-    li:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(124,58,237,0.3);
-      border-left-color: var(--accent);
+
+    li.exercise-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 44px rgba(236,72,153,0.5);
+      border-color: var(--accent);
+      background: radial-gradient(circle at top left, rgba(236,72,153,0.22), #020617);
     }
-    a {
+
+    .badge-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      width: 2.1rem;
+      height: 2.1rem;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(236,72,153,0.6);
+    }
+
+    .exercise-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .exercise-meta a {
       color: var(--primary);
       text-decoration: none;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 0.98rem;
+      word-wrap: break-word;
     }
-    a:hover {
+
+    .exercise-meta a:hover {
       color: var(--hover);
       text-decoration: underline;
     }
-    .badge {
-      display: inline-block;
-      background: var(--primary);
-      color: white;
-      padding: 0.4rem 0.9rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      margin-right: 0.9rem;
+
+    .exercise-tagline {
+      font-size: 0.8rem;
+      color: #e5e7eb;
+      opacity: 0.9;
     }
+
+    .code-icon {
+      margin-left: auto;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      color: #f97316;
+      opacity: 0.85;
+    }
+
+    li.exercise-item:hover .code-icon {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
     .multi {
-      font-size: 0.95rem;
-      color: #d946ef;
-      font-weight: bold;
-      margin-left: 10px;
+      font-size: 0.9rem;
+      color: #f9a8ff;
+      font-weight: 600;
+      margin-left: 8px;
+      text-decoration: none;
     }
+
+    .multi:hover {
+      color: #f5d0fe;
+      text-decoration: underline;
+    }
+
     .file-list {
-      font-size: 0.95rem;
-      color: #8b5cf6;
-      margin-left: 10px;
+      font-size: 0.86rem;
+      color: #c4b5fd;
+      margin-left: 6px;
+      text-decoration: none;
+      font-weight: 600;
     }
+
+    .file-list:hover {
+      color: #e9d5ff;
+      text-decoration: underline;
+    }
+
+    /* Quick nav + search */
+    .quick-nav-wrapper {
+      margin: 1.5rem auto 0.5rem;
+      max-width: 1100px;
+    }
+
+    .quick-nav {
+      background: rgba(15,23,42,0.95);
+      border-radius: 999px;
+      padding: 0.4rem 0.6rem;
+      border: 1px solid rgba(148,163,184,0.7);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .quick-nav .nav-link {
+      color: #e5e7eb;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .quick-nav .nav-link i {
+      font-size: 0.8rem;
+      color: #a5b4fc;
+    }
+
+    .quick-nav .nav-link.active,
+    .quick-nav .nav-link:hover {
+      background: linear-gradient(90deg, #7c3aed, #ec4899);
+      color: #fff;
+    }
+
+    .search-wrapper {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .search-input {
+      max-width: 420px;
+      margin: 0.3rem auto 0;
+      background: #020617;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      padding: 0.45rem 1rem;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #a855f7;
+      box-shadow: 0 0 0 1px #a855f7;
+    }
+
+    .search-hint {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 0.3rem;
+    }
+
     footer {
       text-align: center;
-      margin-top: 7rem;
-      padding: 3.5rem;
+      margin-top: 3rem;
+      padding: 2.5rem 1rem;
       background: linear-gradient(135deg, #7c3aed, #ec4899);
       color: white;
       border-radius: 18px;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
+      max-width: 1200px;
+      margin-inline: auto;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
     }
+
     footer a {
-      color: #fff;
+      color: #fee2ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
       text-decoration: underline;
-      font-weight: bold;
+    }
+
+    .footer-small {
+      margin-top: 10px;
+      color: #fce7f3;
+      font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>Functions & Recursion in C</h1>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div>
+      <div class="top-bar-title">
+        <i class="fa-solid fa-code"></i>
+        <span>Module 5 · Functions &amp; Recursion in C</span>
+      </div>
+      <div class="top-bar-sub">
+        Practice Solutions · Functions · Scope · Recursion · Headers
+      </div>
+    </div>
 
-  <div class="section">
-    <h2>Introduction to Functions</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/5.1.1.c">Cube of a Number using cube() Function</a></li>
-      <li><span class="badge">2</span> <a href="./code/5.1.2.c">Sum of Digits using Function</a></li>
-      <li><span class="badge">3</span> <a href="./code/5.1.3.c">Check Odd or Even</a></li>
-      <li><span class="badge">4</span> <a href="./code/5.1.4.c">Decimal to Binary Conversion</a></li>
-      <li><span class="badge">5</span> <a href="./code/5.1.5.c">Swap Two Numbers (Call by Reference)</a></li>
-      <li><span class="badge">6</span> <a href="./code/5.1.6.c">Factorial using Function</a></li>
-      <li><span class="badge">7</span> <a href="./code/5.1.7.c">Count Vowels in String</a></li>
-      <li><span class="badge">8</span> <a href="./code/5.1.8.c">Check Palindrome Number</a></li>
-      <li><span class="badge">9</span> <a href="./code/5.1.9.c">Check Prime Number</a></li>
-      <li><span class="badge">10</span> <a href="./code/5.1.10.c">Generate Fibonacci Sequence</a></li>
-    </ul>
+    <div class="top-right-actions">
+      <!-- Adjust href if homepage path is different -->
+      <a href="../index.html" class="home-btn">
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
+
+      <button
+        class="back-to-top"
+        type="button"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      >
+        <i class="fa-solid fa-arrow-up"></i>
+        Top
+      </button>
+    </div>
   </div>
 
-  <div class="section">
-    <h2>Function Parameters and Scope</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/5.2.1.c">Find Min & Max in Array</a></li>
-      <li><span class="badge">2</span> <a href="./code/5.2.2.c">Sort Array in Ascending Order</a></li>
-      <li><span class="badge">3</span> <a href="./code/5.2.3.c">Sum of Array Elements</a></li>
-      <li><span class="badge">4</span> <a href="./code/5.2.4.c">Work with Multi-dimensional Arrays</a></li>
-      <li><span class="badge">5</span> <a href="./code/5.2.5.c">Delete Element from Array</a></li>
-      <li><span class="badge">6</span> <a href="./code/5.2.6.c">Sum of All Elements in 2D Array</a></li>
-      <li><span class="badge">7</span> <a href="./code/5.2.7.c">Average of Array Elements</a></li>
-      <li><span class="badge">8</span> Search Element
-        <a href="./code/5.2.8.1.c" class="multi">[Linear Search]</a>
-        <a href="./code/5.2.8.2.c" class="multi">[Binary Search]</a>
-      </li>
-      <li><span class="badge">9</span> <a href="./code/5.2.9.c">Reverse an Array</a></li>
-      <li><span class="badge">10</span> <a href="./code/5.2.10.c">Merge Two Sorted Arrays</a></li>
-    </ul>
-  </div>
+  <!-- MAIN CONTENT -->
+  <main class="main-wrapper">
+    <div class="container-main">
 
-  <div class="section">
-    <h2>Storage Classes in C</h2>
-    <ul>
-      <li><span class="badge">1</span> Scope Demo
-        <a href="./code/5.3.1.1.c" class="file-list">Main.c</a> |
-        <a href="./code/5.3.1.2.c" class="file-list">helper.h</a> |
-        <a href="./code/5.3.1.3.c" class="file-list">helper.c</a>
-      </li>
-      <li><span class="badge">2</span> <a href="./code/5.3.2.c">Area of Rectangle using extern</a></li>
-      <li><span class="badge">3</span> Volume of Cylinder
-        <a href="./code/5.3.3.1.c" class="file-list">Main.c</a> |
-        <a href="./code/5.3.3.2.c" class="file-list">dimensions.c</a>
-      </li>
-      <li><span class="badge">4</span> <a href="./code/5.3.4.c">Pattern using register Keyword</a></li>
-      <li><span class="badge">5</span> Parallelogram Perimeter
-        <a href="./code/5.3.5.1.c" class="file-list">Main.c</a> |
-        <a href="./code/5.3.5.2.c" class="file-list">sides.c</a>
-      </li>
-      <li><span class="badge">6</span> <a href="./code/5.3.6.c">Demonstrate auto Storage Class</a></li>
-      <li><span class="badge">7</span> <a href="./code/5.3.7.c">Demonstrate register Storage Class</a></li>
-      <li><span class="badge">8</span> <a href="./code/5.3.8.c">static Variable in Function (Counter)</a></li>
-      <li><span class="badge">9</span> extern Global Counter
-        <a href="./code/5.3.9.1.c" class="file-list">counter.c</a> |
-        <a href="./code/5.3.9.2.c" class="file-list">counter.h</a> |
-        <a href="./code/5.3.9.3.c" class="file-list">increment.c</a> |
-        <a href="./code/5.3.9.4.c" class="file-list">Main.c</a>
-      </li>
-      <li><span class="badge">10</span> extern Global Decrement
-        <a href="./code/5.3.10.1.c" class="file-list">Main.c</a> |
-        <a href="./code/5.3.10.2.c" class="file-list">counter.c</a>
-      </li>
-    </ul>
-  </div>
+      <section class="text-center mb-4">
+        <span class="page-pill">
+          <i class="fa-solid fa-graduation-cap"></i>
+          Basic C Programming Course · Module 5 Practice Set
+        </span>
 
-  <div class="section">
-    <h2>Recursion Basics</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/5.4.1.c">Check Happy Number</a></li>
-      <li><span class="badge">2</span> <a href="./code/5.4.2.c">Check Friendly Pair (Amicable Numbers)</a></li>
-      <li><span class="badge">3</span> <a href="./code/5.4.3.c">Check Magic Number</a></li>
-      <li><span class="badge">4</span> <a href="./code/5.4.4.c">Power using Recursion (x^n)</a></li>
-      <li><span class="badge">5</span> <a href="./code/5.4.5.c">Sum of Digits using Recursion</a></li>
-      <li><span class="badge">6</span> <a href="./code/5.4.6.c">GCD using Euclidean Algorithm</a></li>
-      <li><span class="badge">7</span> <a href="./code/5.4.7.c">Fibonacci Sequence using Recursion</a></li>
-      <li><span class="badge">8</span> <a href="./code/5.4.8.c">Factorial using Recursion</a></li>
-      <li><span class="badge">9</span> <a href="./code/5.4.9.c">Sum of First N Natural Numbers</a></li>
-      <li><span class="badge">10</span> <a href="./code/5.4.10.c">Power Function using Recursion</a></li>
-    </ul>
-  </div>
+        <h1 class="page-title">Functions &amp; Recursion in C</h1>
 
-  <div class="section">
-    <h2>Header Files & Standard Libraries</h2>
-    <ul>
-      <li><span class="badge">1</span> Arithmetic Operations
-        <a href="./code/5.5.1.c" class="file-list">Main.c</a> |
-        <a href="./code/arithmetic.h" class="file-list">arithmetic.h</a>
-      </li>
-      <li><span class="badge">2</span> Temperature Conversion
-        <a href="./code/5.5.2.c" class="file-list">Main.c</a> |
-        <a href="./code/temperature.h" class="file-list">temperature.h</a>
-      </li>
-      <li><span class="badge">3</span> Area Calculations
-        <a href="./code/5.5.3.c" class="file-list">Main.c</a> |
-        <a href="./code/area.h" class="file-list">area.h</a>
-      </li>
-      <li><span class="badge">4</span> Utility Macros
-        <a href="./code/5.5.4.c" class="file-list">Main.c</a> |
-        <a href="./code/utils.h" class="file-list">utils.h</a>
-      </li>
-      <li><span class="badge">5</span> Custom Data Types
-        <a href="./code/5.5.5.c" class="file-list">Main.c</a> |
-        <a href="./code/datatype.h" class="file-list">datatype.h</a>
-      </li>
-      <li><span class="badge">6</span> String Utilities
-        <a href="./code/5.5.6.c" class="file-list">Main.c</a> |
-        <a href="./code/stringutils.h" class="file-list">stringutils.h</a> |
-        <a href="./code/stringutils.c" class="file-list">stringutils.c</a>
-      </li>
-      <li><span class="badge">7</span> Array Utilities
-        <a href="./code/5.5.7.c" class="file-list">Main.c</a> |
-        <a href="./code/arrayutils.h" class="file-list">arrayutils.h</a> |
-        <a href="./code/arrayutils.c" class="file-list">arrayutils.c</a>
-      </li>
-      <li><span class="badge">8</span> File Utilities
-        <a href="./code/5.5.8.c" class="file-list">Main.c</a> |
-        <a href="./code/fileutils.h" class="file-list">fileutils.h</a> |
-        <a href="./code/fileutils.c" class="file-list">fileutils.c</a> |
-        <a href="./code/sample.txt" class="file-list">sample.txt</a>
-      </li>
-      <li><span class="badge">9</span> Config with enum
-        <a href="./code/5.5.9.c" class="file-list">Main.c</a> |
-        <a href="./code/config.h" class="file-list">config.h</a> |
-        <a href="./code/config.c" class="file-list">config.c</a>
-      </li>
-    </ul>
-  </div>
+        <div class="hero-subtitle mb-2">
+          Clean Function Design, Scope Mastery &amp; Elegant Recursive Thinking
+        </div>
 
-  <div class="section">
-    <h2>Module Test - Real-World Projects</h2>
-    <ul>
-      <li><span class="badge">1</span> <a href="./code/5.6.1.c">Banking Transaction System (Static Counter + Modular Design)</a></li>
-      <li><span class="badge">2</span> Tiered Electricity Billing
-        <a href="./code/5.6.2.c" class="file-list">Main.c</a> |
-        <a href="./code/billing.h" class="file-list">billing.h</a> |
-        <a href="./code/billing.c" class="file-list">billing.c</a>
-      </li>
-      <li><span class="badge">3</span> <a href="./code/5.6.3.c">Railway Ticket Booking Simulation (Call by Value & Scope)</a></li>
-    </ul>
-  </div>
-</div>
+        <p style="color:#e5e7eb;font-size:0.9rem;">
+          Practice building reusable functions, understand how data flows through your program,
+          and learn to think recursively with these structured exercises and multi-file examples.
+        </p>
+      </section>
 
-<footer>
-  <p style="margin-bottom: 8px;">
-    Made with Love for C Programming Learners<br>
-    <strong>Author:</strong> Param Vishwakarma
-  </p>
-  <p>
-    <strong>LinkedIn:</strong>
-    <a href="https://www.linkedin.com/in/vpramatma/" target="_blank"
-       style="color: #0A66C2; text-decoration: none; font-weight: 600;">
-       Pramatma Vishwakarma
-    </a>
-  </p>
-  <p style="margin-top: 12px; color: #94a3b8; font-size: 0.9rem;">
-    Last updated: November 2025
-  </p>
-</footer>
+      <!-- Quick Navigation + Search -->
+      <div class="quick-nav-wrapper">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2">
+          <ul class="nav nav-pills quick-nav flex-wrap justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#intro-functions">
+                <i class="fa-solid fa-diagram-project"></i> Intro
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#params-scope">
+                <i class="fa-solid fa-arrows-turn-right"></i> Parameters &amp; Scope
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#storage-classes">
+                <i class="fa-solid fa-box-archive"></i> Storage Classes
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#recursion-basics">
+                <i class="fa-solid fa-circle-nodes"></i> Recursion
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#headers-libs">
+                <i class="fa-solid fa-file-code"></i> Headers &amp; Libs
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#module-test">
+                <i class="fa-solid fa-trophy"></i> Module Test
+              </a>
+            </li>
+          </ul>
 
+          <div class="search-wrapper w-100 w-lg-auto">
+            <input
+              type="text"
+              id="exerciseSearch"
+              class="form-control search-input"
+              placeholder="Search problems by keyword (e.g., factorial, array, extern)..."
+            />
+            <div class="search-hint">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              Type to filter across all exercises on this page.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="card-shell">
+
+        <!-- Introduction to Functions -->
+        <div id="intro-functions">
+          <h2 class="section-title">
+            <i class="fa-solid fa-diagram-project"></i>
+            Introduction to Functions
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.1.c">Cube of a Number using cube() Function</a>
+                <span class="exercise-tagline">Write and call a simple function with one parameter and return value.</span>
+              </div>
+              <i class="fa-solid fa-cube code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.2.c">Sum of Digits using Function</a>
+                <span class="exercise-tagline">Encapsulate digit-processing logic into a helper function.</span>
+              </div>
+              <i class="fa-solid fa-list-ol code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.3.c">Check Odd or Even</a>
+                <span class="exercise-tagline">Return boolean-like results from a reusable check function.</span>
+              </div>
+              <i class="fa-solid fa-circle-half-stroke code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.4.c">Decimal to Binary Conversion</a>
+                <span class="exercise-tagline">Use functions to separate conversion logic from I/O.</span>
+              </div>
+              <i class="fa-solid fa-binary code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.5.c">Swap Two Numbers (Call by Reference)</a>
+                <span class="exercise-tagline">Pass addresses and safely swap values using pointers.</span>
+              </div>
+              <i class="fa-solid fa-right-left code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.6.c">Factorial using Function</a>
+                <span class="exercise-tagline">Implement factorial iteratively inside a dedicated function.</span>
+              </div>
+              <i class="fa-solid fa-xmark code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.7.c">Count Vowels in String</a>
+                <span class="exercise-tagline">Work with strings as parameters and return counts.</span>
+              </div>
+              <i class="fa-solid fa-spell-check code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.8.c">Check Palindrome Number</a>
+                <span class="exercise-tagline">Use helper functions to test numeric palindromes cleanly.</span>
+              </div>
+              <i class="fa-solid fa-rotate code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.9.c">Check Prime Number</a>
+                <span class="exercise-tagline">Encapsulate primality test logic in a reusable function.</span>
+              </div>
+              <i class="fa-solid fa-hashtag code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/5.1.10.c">Generate Fibonacci Sequence</a>
+                <span class="exercise-tagline">Use functions to generate and print a numeric sequence.</span>
+              </div>
+              <i class="fa-solid fa-wave-square code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Function Parameters and Scope -->
+        <div id="params-scope">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-arrows-turn-right"></i>
+            Function Parameters and Scope
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/5.2.1.c">Find Min &amp; Max in Array</a>
+                <span class="exercise-tagline">Pass arrays to functions and return multiple outputs via pointers.</span>
+              </div>
+              <i class="fa-solid fa-arrows-up-down code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/5.2.2.c">Sort Array in Ascending Order</a>
+                <span class="exercise-tagline">Perform in-place modifications to arrays in a function.</span>
+              </div>
+              <i class="fa-solid fa-arrow-down-short-wide code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/5.2.3.c">Sum of Array Elements</a>
+                <span class="exercise-tagline">Write a classic accumulation function taking size as parameter.</span>
+              </div>
+              <i class="fa-solid fa-plus code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/5.2.4.c">Work with Multi-dimensional Arrays</a>
+                <span class="exercise-tagline">Pass 2D arrays correctly and iterate via nested loops.</span>
+              </div>
+              <i class="fa-solid fa-border-all code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/5.2.5.c">Delete Element from Array</a>
+                <span class="exercise-tagline">Manipulate array contents and logical size from a function.</span>
+              </div>
+              <i class="fa-solid fa-eraser code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/5.2.6.c">Sum of All Elements in 2D Array</a>
+                <span class="exercise-tagline">Pass matrix and dimensions, return a total.</span>
+              </div>
+              <i class="fa-solid fa-layer-group code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/5.2.7.c">Average of Array Elements</a>
+                <span class="exercise-tagline">Compute floating-point averages inside functions.</span>
+              </div>
+              <i class="fa-solid fa-scale-balanced code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                Search Element
+                <span>
+                  <a href="./code/5.2.8.1.c" class="multi">[Linear Search]</a>
+                  <a href="./code/5.2.8.2.c" class="multi">[Binary Search]</a>
+                </span>
+                <span class="exercise-tagline">Compare search strategies and complexity through functions.</span>
+              </div>
+              <i class="fa-solid fa-magnifying-glass code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/5.2.9.c">Reverse an Array</a>
+                <span class="exercise-tagline">Implement a generic reverse routine using two indices.</span>
+              </div>
+              <i class="fa-solid fa-right-left code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/5.2.10.c">Merge Two Sorted Arrays</a>
+                <span class="exercise-tagline">Combine sorted inputs into a single sorted output via functions.</span>
+              </div>
+              <i class="fa-solid fa-code-merge code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Storage Classes in C -->
+        <div id="storage-classes">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-box-archive"></i>
+            Storage Classes in C
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                Scope Demo
+                <span>
+                  <a href="./code/5.3.1.1.c" class="file-list">Main.c</a> |
+                  <a href="./code/5.3.1.2.c" class="file-list">helper.h</a> |
+                  <a href="./code/5.3.1.3.c" class="file-list">helper.c</a>
+                </span>
+                <span class="exercise-tagline">Understand global, local and file-scope across multiple files.</span>
+              </div>
+              <i class="fa-solid fa-sitemap code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/5.3.2.c">Area of Rectangle using extern</a>
+                <span class="exercise-tagline">Share variables across translation units with <code>extern</code>.</span>
+              </div>
+              <i class="fa-solid fa-ruler-combined code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                Volume of Cylinder
+                <span>
+                  <a href="./code/5.3.3.1.c" class="file-list">Main.c</a> |
+                  <a href="./code/5.3.3.2.c" class="file-list">dimensions.c</a>
+                </span>
+                <span class="exercise-tagline">Separate data definition and usage into different files.</span>
+              </div>
+              <i class="fa-solid fa-wine-bottle code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/5.3.4.c">Pattern using register Keyword</a>
+                <span class="exercise-tagline">Hint the compiler for faster access with <code>register</code>.</span>
+              </div>
+              <i class="fa-solid fa-bolt-lightning code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                Parallelogram Perimeter
+                <span>
+                  <a href="./code/5.3.5.1.c" class="file-list">Main.c</a> |
+                  <a href="./code/5.3.5.2.c" class="file-list">sides.c</a>
+                </span>
+                <span class="exercise-tagline">Share side lengths across modules with appropriate storage classes.</span>
+              </div>
+              <i class="fa-solid fa-draw-polygon code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/5.3.6.c">Demonstrate auto Storage Class</a>
+                <span class="exercise-tagline">Show default local variable lifetime and visibility.</span>
+              </div>
+              <i class="fa-solid fa-circle-dot code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/5.3.7.c">Demonstrate register Storage Class</a>
+                <span class="exercise-tagline">Compare with normal locals inside loops or hot paths.</span>
+              </div>
+              <i class="fa-solid fa-gauge-high code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/5.3.8.c">static Variable in Function (Counter)</a>
+                <span class="exercise-tagline">Persist state across function calls using <code>static</code>.</span>
+              </div>
+              <i class="fa-solid fa-stopwatch code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                extern Global Counter
+                <span>
+                  <a href="./code/5.3.9.1.c" class="file-list">counter.c</a> |
+                  <a href="./code/5.3.9.2.c" class="file-list">counter.h</a> |
+                  <a href="./code/5.3.9.3.c" class="file-list">increment.c</a> |
+                  <a href="./code/5.3.9.4.c" class="file-list">Main.c</a>
+                </span>
+                <span class="exercise-tagline">Model a shared counter across multiple modules using <code>extern</code>.</span>
+              </div>
+              <i class="fa-solid fa-arrow-up-1-9 code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                extern Global Decrement
+                <span>
+                  <a href="./code/5.3.10.1.c" class="file-list">Main.c</a> |
+                  <a href="./code/5.3.10.2.c" class="file-list">counter.c</a>
+                </span>
+                <span class="exercise-tagline">Extend the same global state to support decrement operations.</span>
+              </div>
+              <i class="fa-solid fa-arrow-down-1-9 code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Recursion Basics -->
+        <div id="recursion-basics">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-circle-nodes"></i>
+            Recursion Basics
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.1.c">Check Happy Number</a>
+                <span class="exercise-tagline">Use recursive digit-square sums to detect happiness.</span>
+              </div>
+              <i class="fa-solid fa-face-smile-beam code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.2.c">Check Friendly Pair (Amicable Numbers)</a>
+                <span class="exercise-tagline">Combine divisor-sum logic with clear recursive structure.</span>
+              </div>
+              <i class="fa-solid fa-people-arrows code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.3.c">Check Magic Number</a>
+                <span class="exercise-tagline">Reduce numbers repeatedly until a base condition is met.</span>
+              </div>
+              <i class="fa-solid fa-wand-magic-sparkles code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.4.c">Power using Recursion (x^n)</a>
+                <span class="exercise-tagline">Model exponentiation as repeated multiplication in recursion.</span>
+              </div>
+              <i class="fa-solid fa-superscript code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.5.c">Sum of Digits using Recursion</a>
+                <span class="exercise-tagline">Decompose number and sum digits via self-calls.</span>
+              </div>
+              <i class="fa-solid fa-list-1-2 code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.6.c">GCD using Euclidean Algorithm</a>
+                <span class="exercise-tagline">Elegant GCD definition as a recursive relationship.</span>
+              </div>
+              <i class="fa-solid fa-diagram-venn code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.7.c">Fibonacci Sequence using Recursion</a>
+                <span class="exercise-tagline">Classical recursive definition of Fibonacci numbers.</span>
+              </div>
+              <i class="fa-solid fa-chart-line code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.8.c">Factorial using Recursion</a>
+                <span class="exercise-tagline">Define n! in terms of (n-1)! recursively.</span>
+              </div>
+              <i class="fa-solid fa-xmarks-lines code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.9.c">Sum of First N Natural Numbers</a>
+                <span class="exercise-tagline">Recursive summation base + smaller subproblem.</span>
+              </div>
+              <i class="fa-solid fa-plus-minus code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/5.4.10.c">Power Function using Recursion</a>
+                <span class="exercise-tagline">Explore optimized power recursion (e.g., x^n using divide &amp; conquer).</span>
+              </div>
+              <i class="fa-solid fa-bolt code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Header Files & Standard Libraries -->
+        <div id="headers-libs">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-file-code"></i>
+            Header Files &amp; Standard Libraries
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                Arithmetic Operations
+                <span>
+                  <a href="./code/5.5.1.c" class="file-list">Main.c</a> |
+                  <a href="./code/arithmetic.h" class="file-list">arithmetic.h</a>
+                </span>
+                <span class="exercise-tagline">Group arithmetic helpers into a single reusable header.</span>
+              </div>
+              <i class="fa-solid fa-calculator code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                Temperature Conversion
+                <span>
+                  <a href="./code/5.5.2.c" class="file-list">Main.c</a> |
+                  <a href="./code/temperature.h" class="file-list">temperature.h</a>
+                </span>
+                <span class="exercise-tagline">Expose conversion APIs via custom headers.</span>
+              </div>
+              <i class="fa-solid fa-temperature-half code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                Area Calculations
+                <span>
+                  <a href="./code/5.5.3.c" class="file-list">Main.c</a> |
+                  <a href="./code/area.h" class="file-list">area.h</a>
+                </span>
+                <span class="exercise-tagline">Practice splitting formulas into separate modules.</span>
+              </div>
+              <i class="fa-solid fa-shapes code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                Utility Macros
+                <span>
+                  <a href="./code/5.5.4.c" class="file-list">Main.c</a> |
+                  <a href="./code/utils.h" class="file-list">utils.h</a>
+                </span>
+                <span class="exercise-tagline">Define helpful macros and inline utilities for reuse.</span>
+              </div>
+              <i class="fa-solid fa-wrench code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                Custom Data Types
+                <span>
+                  <a href="./code/5.5.5.c" class="file-list">Main.c</a> |
+                  <a href="./code/datatype.h" class="file-list">datatype.h</a>
+                </span>
+                <span class="exercise-tagline">Create typedefs and enums to simplify complex signatures.</span>
+              </div>
+              <i class="fa-solid fa-diagram-project code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                String Utilities
+                <span>
+                  <a href="./code/5.5.6.c" class="file-list">Main.c</a> |
+                  <a href="./code/stringutils.h" class="file-list">stringutils.h</a> |
+                  <a href="./code/stringutils.c" class="file-list">stringutils.c</a>
+                </span>
+                <span class="exercise-tagline">Implement your own string helpers as a mini library.</span>
+              </div>
+              <i class="fa-solid fa-text-height code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                Array Utilities
+                <span>
+                  <a href="./code/5.5.7.c" class="file-list">Main.c</a> |
+                  <a href="./code/arrayutils.h" class="file-list">arrayutils.h</a> |
+                  <a href="./code/arrayutils.c" class="file-list">arrayutils.c</a>
+                </span>
+                <span class="exercise-tagline">Bundle frequent array operations into dedicated modules.</span>
+              </div>
+              <i class="fa-solid fa-list-check code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                File Utilities
+                <span>
+                  <a href="./code/5.5.8.c" class="file-list">Main.c</a> |
+                  <a href="./code/fileutils.h" class="file-list">fileutils.h</a> |
+                  <a href="./code/fileutils.c" class="file-list">fileutils.c</a> |
+                  <a href="./code/sample.txt" class="file-list">sample.txt</a>
+                </span>
+                <span class="exercise-tagline">Abstract file operations and test using a sample data file.</span>
+              </div>
+              <i class="fa-solid fa-file-lines code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                Config with enum
+                <span>
+                  <a href="./code/5.5.9.c" class="file-list">Main.c</a> |
+                  <a href="./code/config.h" class="file-list">config.h</a> |
+                  <a href="./code/config.c" class="file-list">config.c</a>
+                </span>
+                <span class="exercise-tagline">Use enums and config structures to control program behavior.</span>
+              </div>
+              <i class="fa-solid fa-sliders code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Module Test -->
+        <div id="module-test">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-trophy"></i>
+            Module Test - Real-World Projects
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/5.6.1.c">Banking Transaction System (Static Counter + Modular Design)</a>
+                <span class="exercise-tagline">Simulate account operations with function decomposition and static IDs.</span>
+              </div>
+              <i class="fa-solid fa-piggy-bank code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                Tiered Electricity Billing
+                <span>
+                  <a href="./code/5.6.2.c" class="file-list">Main.c</a> |
+                  <a href="./code/billing.h" class="file-list">billing.h</a> |
+                  <a href="./code/billing.c" class="file-list">billing.c</a>
+                </span>
+                <span class="exercise-tagline">Design a production-style bill calculator with clean separation.</span>
+              </div>
+              <i class="fa-solid fa-bolt-lightning code-icon"></i>
+            </li>
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/5.6.3.c">Railway Ticket Booking Simulation (Call by Value &amp; Scope)</a>
+                <span class="exercise-tagline">Model seat availability and bookings via functions and proper scopes.</span>
+              </div>
+              <i class="fa-solid fa-train-subway code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p style="margin-bottom: 6px;">
+        Made with ❤️ for C Programming Learners<br>
+        <strong>Author:</strong> Param Vishwakarma
+      </p>
+      <p>
+        <strong>LinkedIn:</strong>
+        <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
+          Pramatma Vishwakarma ↗
+        </a>
+      </p>
+      <p class="footer-small">
+        Last updated: November 2025 · Module 5 · Practice Solutions
+      </p>
+    </footer>
+  </main>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Shared JS for search + quick nav -->
+  <script src="../assets/js/module-common.js"></script>
 </body>
 </html>
