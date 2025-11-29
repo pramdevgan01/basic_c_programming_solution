@@ -1,36 +1,43 @@
 /*************************************************************/
 /*                                                           */
-/*   File Name   : Main.c                                    */
+/*   File Name   : main.c                                    */
 /*   Author      : Param Vishwakarma                         */
-/*   Description : Uses extern variables (side1, side2) from */
-/*                 sides.c. Reads user input for sides and   */
-/*                 calculates the perimeter of a              */
-/*                 parallelogram.                             */
+/*                                                           */
+/*   Description : This file reads the two adjacent sides of */
+/*                 a parallelogram from user input and       */
+/*                 stores them in global variables 'side1'   */
+/*                 and 'side2'.                              */
+/*                                                           */
+/*                 It then calls the function                */
+/*                 calcPerimeter() (defined in               */
+/*                 parameter.c) to compute and display        */
+/*                 the perimeter using extern variables.      */
+/*                                                           */
+/*   Purpose     :                                           */
+/*       • Accept parallelogram side lengths                 */
+/*       • Store them into global variables                  */
+/*       • Invoke external function to compute perimeter      */
 /*                                                           */
 /*   Date        : November 2025                             */
 /*                                                           */
 /*************************************************************/
 
 #include <stdio.h>
-#include "sides.c"   /* Required for online compilers to link variables */
+#include "parameter.c"   /* Included for the online compiler environment */
 
-/* extern declarations */
-extern int side1;
-extern int side2;
+int side1;   /* Global variable: first side length  */
+int side2;   /* Global variable: second side length */
 
-int main(void)
-{
-    /* Read values from user (even though question says no input,
-       sample shows input must be provided) */
-    scanf("%d", &side1);
-    scanf("%d", &side2);
+void calcPerimeter();   /* Function declaration */
 
-    int perimeter = 2 * (side1 + side2);
+int main() {
 
-    /* EXACT OUTPUT FORMAT (no extra spaces or newline at end) */
-    printf("Side1 = %d  \n", side1);
-    printf("Side2 = %d  \n", side2);
-    printf("Perimeter of Parallelogram = %d ", perimeter);
+    /* Reading inputs in the required format */
+    scanf("Side1 = %d", &side1);
+    scanf(" Side2 = %d", &side2);
+
+    /* Calling function to calculate and print perimeter */
+    calcPerimeter();
 
     return 0;
 }

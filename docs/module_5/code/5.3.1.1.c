@@ -18,54 +18,29 @@
 /*                                                           */
 /*************************************************************/
 
-#include <stdio.h>
-#include "helper.h"
-/* you may need this line so helper.c is pulled in:      */
-/* #include "helper.c"                                   */
-#include "helper.c"  
+#include <stdio.h>                  // Standard I/O library for printf and scanf
 
-/*-----------------------------------------------------------*/
-/*  Global variable (accessible in this file and via extern) */
-/*-----------------------------------------------------------*/
-int global = 10;
+#include "helper.c"                 // Include helper file containing extern/static function
 
-/*-----------------------------------------------------------*/
-/*  Extern variable defined here, used in helper.c           */
-/*-----------------------------------------------------------*/
-int g;
+int globalVar = 10;                 // Global variable with initial value 10
 
-int main(void) {
+int g;                              // Extern-shared global variable (used in helper.c)
 
-    int input;
+int main() {                        // Program entry point
+    int input;                      // Local variable to store user input
+    scanf("%d", &input);            // Read integer input from user and store in 'input'
 
-    /* Read input (example: 5) */
-    scanf("%d", &input);
+    g = input;                      // Assign the user input to global extern variable 'g'
 
-    /* auto variable */
-    auto int a = 32;
+    int autoVar = 32;               // Automatic variable (default storage class)
+    register char ch = 'b';         // register variable stored in CPU register for fast access
 
-    /* register variable */
-    register char c = 'b';
+    printf("Auto integer Value - %d  \n", autoVar);     // Print auto variable with two spaces before newline
+    printf("Global variable - %d  \n", globalVar);      // Print global variable with required spacing
+    printf("Register character - %c  \n", ch);          // Print register variable with two spaces before newline
 
-    /* Set extern variable */
-    g = input;
+    showExternAndStatic();          // Call function from helper.c to show extern and static values
 
-    /*-----------------------------------------------------*/
-    /*  EXACT SPACING REQUIREMENT:                         */
-    /*  First 5 lines end with TWO SPACES before '\n'      */
-    /*-----------------------------------------------------*/
-
-    printf("Auto integer Value - %d  \n", a);          // two spaces
-    printf("Global variable - %d  \n", global);        // two spaces
-    printf("Register character - %c  \n", c);          // two spaces
-
-    /* extern print (already has two spaces in helper.c) */
-    printExtern();
-
-    printf("The updated value of 'g'  - %d  \n", g);   // two spaces
-
-    /* Final static value (NO trailing space, NO newline) */
-    printStatic(input);
-
-    return 0;
+return 0;                           // Return 0 to indicate successful execution
 }
+

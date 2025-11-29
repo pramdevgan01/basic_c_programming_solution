@@ -2,40 +2,23 @@
 /*                                                           */
 /*   File Name   : helper.c                                  */
 /*   Author      : Param Vishwakarma                         */
-/*   Description : Implements helper functions that          */
-/*                 demonstrate:                              */
-/*                 - extern variable usage                   */
-/*                 - static variable behavior                */
-/*   Date        : February 2025                             */
+/*   Description : Demonstrates extern and static storage     */
+/*                 classes. The extern variable 'g' is        */
+/*                 accessed from main.c, and a static local   */
+/*                 variable retains its value across calls.   */
+/*                                                           */
+/*   Date        : November 2025                             */
 /*                                                           */
 /*************************************************************/
 
-#include <stdio.h>
-#include "helper.h"
+#include <stdio.h>                       // Standard I/O functions (printf)
 
-/*-----------------------------------------------------------*/
-/*  File-scope static variable                               */
-/*  - Retains its value between function calls               */
-/*  - Visible ONLY inside this file                          */
-/*-----------------------------------------------------------*/
-static int staticVar = 0;
+extern int g;                             // Extern declaration: 'g' is defined in another file (main.c)
 
-/*-----------------------------------------------------------*/
-/* Function Name : printExtern                               */
-/* Description   : Prints the extern variable 'g'.           */
-/* Output        : Ends with TWO SPACES before newline.      */
-/*-----------------------------------------------------------*/
-void printExtern(void) {
-    printf("Extern variable - %d  \n", g);   // TWO SPACES before \n
-}
+void showExternAndStatic() {              // Function to display extern and static variable values
+    static int staticVar = 5;             // Static variable: retains value between function calls
 
-/*-----------------------------------------------------------*/
-/* Function Name : printStatic                               */
-/* Description   : Stores a value in static variable and      */
-/*                 prints it.                                */
-/* Output        : NO trailing spaces, NO newline.           */
-/*-----------------------------------------------------------*/
-void printStatic(int value) {
-    staticVar = value;
-    printf("Static variable - %d", staticVar);
+    printf("Extern variable - %d  \n", g);                // Print the value of extern variable 'g' (2 spaces before newline)
+    printf("The updated value of 'g'  - %d  \n", g);      // Print updated extern variable (same spacing requirement)
+    printf("Static variable - %d\n",staticVar);           // Print static variable (no extra spaces at end)
 }
