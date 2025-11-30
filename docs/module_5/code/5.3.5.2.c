@@ -35,7 +35,7 @@ extern int side2;
 void calcPerimeter() {
     int peri = 2 * (side1 + side2);
 
-    printf("Side1 = %d  \n", side1);
-    printf("Side2 = %d  \n", side2);
-    printf("Perimeter of Parallelogram = %d ", peri);
+    printf("Side A = %d\n", side1);
+    printf("Side B = %d\n", side2);
+    printf("Perimeter = %d", peri);
 }

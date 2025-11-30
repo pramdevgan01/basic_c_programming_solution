@@ -36,14 +36,12 @@ extern int length;
 extern int breadth;
 
 int main() {
-    scanf("Length = %d", &length);
-    scanf(" Breadth = %d", &breadth);
+    scanf("%d", &length);
+    scanf("%d", &breadth);
 
     int area = length * breadth;
 
-    printf("Length = %d  \n", length);
-    printf("Breadth = %d  \n", breadth);
-    printf("Area of Rectangle = %d \n", area);
+    printf("Area = %d", area);
 
     return 0;
 }

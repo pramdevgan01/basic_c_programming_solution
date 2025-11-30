@@ -33,8 +33,8 @@ void calcPerimeter();   /* Function declaration */
 int main() {
 
     /* Reading inputs in the required format */
-    scanf("Side1 = %d", &side1);
-    scanf(" Side2 = %d", &side2);
+    scanf("%d", &side1);
+    scanf("%d", &side2);
 
     /* Calling function to calculate and print perimeter */
     calcPerimeter();

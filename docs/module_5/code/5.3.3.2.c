@@ -1,4 +1,3 @@
-
 /*************************************************************/
 /*                                                           */
 /*   File Name   : main.c                                    */
@@ -29,9 +28,8 @@ int main(void)
     float volume = 3.14f * radius * radius * height;
 
     /* Print output */
-    printf("Radius = %.0f\n", radius);
-    printf("Height = %.0f\n", height);
-    printf("Volume of Cylinder = %.1f", volume);
-
+    printf("Radius: %.2f\n", radius);
+    printf("Height: %.2f\n", height);
+    printf("Volume of Cylinder: %.2f", volume);
     return 0;
 }
