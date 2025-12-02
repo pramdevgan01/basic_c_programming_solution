@@ -24,25 +24,31 @@
     :root {
       --bg: #020617;
       --text: #e5e7eb;
-      --primary: #f59e0b;
-      --accent: #ef4444;
+      --muted: #9ca3af;
+      --primary: #f59e0b;      /* warm primary */
+      --accent: #ef4444;       /* red accent */
+      --accent-soft: #f97316;  /* orange soft */
       --card: #020617;
       --border: #1f2937;
       --code: #0b1020;
       --hover: #fde68a;
+      --radius-xl: 18px;
+      --radius-lg: 12px;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: radial-gradient(circle at top left, #1e293b 0%, #020617 45%, #020617 100%);
-      color: var(--text);
-      line-height: 1.7;
-      margin: 0;
-      min-height: 100vh;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
     }
 
     /* Top bar */
@@ -52,32 +58,35 @@
       left: 0;
       width: 100%;
       background: rgba(15, 23, 42, 0.97);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 9999;
-      border-bottom: 1px solid rgba(245,158,11,0.7);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.7);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     }
 
     .top-bar-title {
-      font-weight: 700;
-      font-size: 1rem;
+      font-weight: 650;
+      font-size: 0.95rem;
       color: #e2e8f0;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      letter-spacing: 0.03em;
     }
 
     .top-bar-title i {
       color: var(--primary);
+      font-size: 1.1rem;
     }
 
     .top-bar-sub {
-      font-size: 0.85rem;
-      color: #9ca3af;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 2px;
     }
 
     .top-right-actions {
@@ -93,7 +102,7 @@
       border-radius: 999px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.25s ease;
       font-size: 0.9rem;
       display: inline-flex;
       align-items: center;
@@ -103,31 +112,31 @@
     }
 
     .home-btn {
-      background: linear-gradient(45deg, #f97316, #ef4444);
+      background: linear-gradient(45deg, #f59e0b, #ef4444);
       color: white;
-      box-shadow: 0 6px 18px rgba(249,115,22,0.4);
+      box-shadow: 0 6px 18px rgba(245,158,11,0.4);
     }
 
     .home-btn:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       box-shadow: 0 12px 24px rgba(239,68,68,0.7);
       color: #fff;
     }
 
     .back-to-top {
-      background: linear-gradient(45deg, #f59e0b, #f97316);
+      background: linear-gradient(45deg, #ef4444, #f97316);
       color: white;
-      box-shadow: 0 6px 18px rgba(245,158,11,0.4);
+      box-shadow: 0 6px 18px rgba(239,68,68,0.5);
     }
 
     .back-to-top:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px rgba(245,158,11,0.7);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(249,115,22,0.7);
       color: #fff;
     }
 
     .main-wrapper {
-      padding-top: 90px;
+      padding-top: 90px; /* for fixed top bar */
       padding-bottom: 40px;
     }
 
@@ -139,19 +148,20 @@
 
     h1.page-title {
       text-align: center;
-      font-size: clamp(2.3rem, 4.8vw, 3rem);
+      font-size: clamp(2.2rem, 4.2vw, 3rem);
       margin-bottom: 0.6rem;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
+      background: linear-gradient(120deg, var(--primary), var(--accent), var(--accent-soft));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 900;
+      letter-spacing: 0.04em;
     }
 
     .hero-subtitle {
-      background: linear-gradient(90deg, #facc15, #f97316, #ef4444);
+      background: linear-gradient(90deg, #facc15, #f97316);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 600;
     }
 
@@ -163,21 +173,27 @@
       padding: 0.45rem 1.2rem;
       background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(148, 163, 184, 0.7);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: #e5e7eb;
       margin-bottom: 0.8rem;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.85);
     }
 
     .page-pill i {
       color: var(--primary);
+      font-size: 0.9rem;
     }
 
+    /* Card shell */
     .card-shell {
-      background: radial-gradient(circle at top left, rgba(245,158,11,0.22), rgba(15,23,42,1));
-      border-radius: 18px;
+      background:
+        radial-gradient(circle at top left, rgba(245,158,11,0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(248,113,113,0.22), transparent 55%),
+        linear-gradient(135deg, #020617, #020617);
+      border-radius: var(--radius-xl);
       padding: 2.3rem 1.7rem;
       border: 1px solid rgba(148, 163, 184, 0.5);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.65);
       margin-bottom: 2.5rem;
     }
 
@@ -188,11 +204,11 @@
     }
 
     h2.section-title {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       color: var(--accent);
-      border-bottom: 2px solid var(--primary);
+      border-bottom: 1px solid rgba(148,163,184,0.7);
       padding-bottom: 0.4rem;
-      margin-top: 1.5rem;
+      margin-top: 1.3rem;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -203,6 +219,76 @@
       font-size: 1.2rem;
     }
 
+    /* PROGRESS TRACKER – SAME LAYOUT AS MODULE 2 */
+    .progress-wrapper {
+      margin-top: 1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    #progressText {
+      font-weight: 500;
+      color: #e5e7eb;
+    }
+
+    #progressText i {
+      color: #a3e635;
+      margin-right: 5px;
+    }
+
+    #progressReset {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15,23,42,0.85);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      visibility: hidden; /* toggled by JS */
+    }
+
+    #progressReset i {
+      font-size: 0.8rem;
+    }
+
+    #progressReset:hover {
+      background: rgba(248,113,113,0.14);
+      border-color: rgba(248,113,113,0.85);
+      transform: translateY(-1px);
+      color: #fecaca;
+    }
+
+    .progress-bar-shell {
+      width: 100%;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(31,41,55,1);
+      overflow: hidden;
+    }
+
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #f59e0b, #ef4444, #f97316);
+      box-shadow: 0 0 12px rgba(248,113,113,0.85);
+      transition: width 0.25s ease;
+    }
+
+    /* Exercise list */
     ul.exercise-list {
       list-style: none;
       padding: 0;
@@ -212,22 +298,93 @@
     li.exercise-item {
       margin: 0.8rem 0;
       padding: 1rem 1.3rem;
-      background: var(--code);
-      border-radius: 12px;
+      background: radial-gradient(circle at top left, #020617, #020617);
+      border-radius: var(--radius-lg);
       border: 1px solid rgba(55, 65, 81, 0.9);
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 15px rgba(245,158,11,0.35);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        opacity 0.25s ease;
+      box-shadow: 0 8px 22px rgba(15,23,42,0.9);
       display: flex;
       align-items: center;
       gap: 12px;
-      color: #f9fafb;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: fadeUp 0.35s ease forwards;
+    }
+
+    /* Staggered animation */
+    li.exercise-item:nth-child(1)  { animation-delay: 0.03s; }
+    li.exercise-item:nth-child(2)  { animation-delay: 0.06s; }
+    li.exercise-item:nth-child(3)  { animation-delay: 0.09s; }
+    li.exercise-item:nth-child(4)  { animation-delay: 0.12s; }
+    li.exercise-item:nth-child(5)  { animation-delay: 0.15s; }
+    li.exercise-item:nth-child(6)  { animation-delay: 0.18s; }
+    li.exercise-item:nth-child(7)  { animation-delay: 0.21s; }
+    li.exercise-item:nth-child(8)  { animation-delay: 0.24s; }
+    li.exercise-item:nth-child(9)  { animation-delay: 0.27s; }
+    li.exercise-item:nth-child(10) { animation-delay: 0.30s; }
+
+    li.exercise-item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        120deg,
+        rgba(245,158,11,0.25),
+        rgba(248,113,113,0.3),
+        transparent 70%
+      );
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
     }
 
     li.exercise-item:hover {
       transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(239,68,68,0.5);
-      border-color: var(--accent);
-      background: radial-gradient(circle at top left, rgba(248,113,113,0.2), #020617);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.9);
+      border-color: rgba(248,113,113,0.9);
+      background: radial-gradient(circle at top left, rgba(248,113,113,0.14), #020617);
+    }
+
+    li.exercise-item:hover::before {
+      opacity: 1;
+    }
+
+    /* VISITED STATE (from tracker) */
+    li.exercise-item.is-viewed {
+      border-color: rgba(245,158,11,0.95);
+      background: radial-gradient(circle at top left, rgba(250,204,21,0.16), #020617);
+      opacity: 0.98;
+    }
+
+    li.exercise-item.is-viewed .exercise-tagline {
+      color: #fef9c3;
+    }
+
+    li.exercise-item.is-viewed .badge-num {
+      background: radial-gradient(circle at top, #22c55e, #16a34a);
+      box-shadow: 0 0 14px rgba(22,163,74,0.9);
+    }
+
+    li.exercise-item.is-viewed::after {
+      content: "Done";
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(22,163,74,0.22);
+      border: 1px solid rgba(34,197,94,0.9);
+      color: #bbf7d0;
     }
 
     .badge-num {
@@ -242,7 +399,7 @@
       font-size: 0.9rem;
       font-weight: 700;
       flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(249,115,22,0.6);
+      box-shadow: 0 4px 10px rgba(248,113,113,0.5);
     }
 
     .exercise-meta {
@@ -253,7 +410,7 @@
     }
 
     .exercise-meta a {
-      color: var(--primary);
+      color: #fed7aa;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.98rem;
@@ -261,7 +418,7 @@
     }
 
     .exercise-meta a:hover {
-      color: var(--hover);
+      color: #fffbeb;
       text-decoration: underline;
     }
 
@@ -273,9 +430,10 @@
     .code-icon {
       margin-left: auto;
       flex-shrink: 0;
-      font-size: 1.1rem;
-      color: #fb923c;
+      font-size: 1.05rem;
+      color: #f97316;
       opacity: 0.8;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
     li.exercise-item:hover .code-icon {
@@ -307,18 +465,19 @@
       border-radius: 999px;
       padding: 0.4rem 0.6rem;
       border: 1px solid rgba(148,163,184,0.7);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
     }
 
     .quick-nav .nav-link {
       color: #e5e7eb;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       padding: 0.35rem 0.9rem;
       border-radius: 999px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       white-space: nowrap;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
     .quick-nav .nav-link i {
@@ -356,15 +515,20 @@
 
     .search-hint {
       font-size: 0.78rem;
-      color: #9ca3af;
+      color: var(--muted);
       margin-top: 0.3rem;
     }
 
+    .search-hint i {
+      font-size: 0.76rem;
+    }
+
+    /* Footer (unused visually but kept for consistency) */
     footer {
       text-align: center;
       margin-top: 3rem;
       padding: 2rem 1rem;
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      background: linear-gradient(to right, #f59e0b, #ef4444);
       color: white;
       border-radius: 16px;
       font-size: 0.95rem;
@@ -374,7 +538,7 @@
     }
 
     footer a {
-      color: #fee2e2;
+      color: #e5f2ff;
       text-decoration: none;
       font-weight: 600;
     }
@@ -385,14 +549,74 @@
 
     .footer-small {
       margin-top: 10px;
-      color: #fee2e2;
+      color: #e5e7eb;
       font-size: 0.8rem;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      .top-bar {
+        padding-inline: 12px;
+      }
+
+      .top-bar-sub {
+        font-size: 0.78rem;
+      }
+
+      .top-right-actions {
+        gap: 6px;
+      }
+
+      .home-btn span,
+      .back-to-top span {
+        display: none;
+      }
+
+      .home-btn,
+      .back-to-top {
+        padding-inline: 10px;
+      }
+
+      .card-shell {
+        padding-inline: 1.35rem;
+      }
+
+      li.exercise-item {
+        align-items: flex-start;
+      }
+
+      .code-icon {
+        align-self: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .quick-nav-wrapper {
+        margin-top: 1.2rem;
+      }
+
+      .quick-nav {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .search-input {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Bar -->
+  <!-- Top Bar with Home + Top -->
   <div class="top-bar">
     <div>
       <div class="top-bar-title">
@@ -405,10 +629,9 @@
     </div>
 
     <div class="top-right-actions">
-      <!-- Adjust href if your homepage path is different -->
       <a href="../index.html" class="home-btn">
         <i class="fa-solid fa-house"></i>
-        Home
+        <span>Home</span>
       </a>
 
       <button
@@ -417,7 +640,7 @@
         onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
       >
         <i class="fa-solid fa-arrow-up"></i>
-        Top
+        <span>Top</span>
       </button>
     </div>
   </div>
@@ -438,7 +661,7 @@
           Decision Making, Loops, Patterns &amp; Control Flow
         </div>
 
-        <p style="color:#e5e7eb;font-size:0.9rem;">
+        <p style="color:#fde68a;font-size:0.9rem;max-width:560px;margin:0 auto;">
           Practice how C decides, repeats, and exits — then compare with clean reference implementations to level up your logic.
         </p>
       </section>
@@ -501,6 +724,23 @@
 
       <section class="card-shell">
 
+        <!-- PROGRESS TRACKER (same layout/JS pattern as Module 2) -->
+        <div class="progress-wrapper">
+          <div class="progress-header">
+            <span id="progressText">
+              <i class="fa-solid fa-circle-dot"></i>
+              You've viewed 0/64 solutions
+            </span>
+            <span id="progressReset" title="Reset your progress">
+              <i class="fa-solid fa-rotate-left"></i>
+              Reset
+            </span>
+          </div>
+          <div class="progress-bar-shell" aria-hidden="true">
+            <div id="progressBar"></div>
+          </div>
+        </div>
+
         <!-- Decision Making -->
         <div id="decision-making">
           <h2 class="section-title">
@@ -511,7 +751,7 @@
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.1.c">Check if Rectangle is Square</a>
+                <a data-problem-id="3.1.1" href="./code/viewer.html?file=3.1.1.c">Check if Rectangle is Square</a>
                 <span class="exercise-tagline">Compare sides and branch based on equality</span>
               </div>
               <i class="fa-solid fa-vector-square code-icon"></i>
@@ -519,7 +759,7 @@
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.2.c">Greatest of Three Numbers using Nested if</a>
+                <a data-problem-id="3.1.2" href="./code/viewer.html?file=3.1.2.c">Greatest of Three Numbers using Nested if</a>
                 <span class="exercise-tagline">Nested conditions to find maximum value</span>
               </div>
               <i class="fa-solid fa-arrow-up-wide-short code-icon"></i>
@@ -527,7 +767,7 @@
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.3.c">Categorize Temperature (Hot/Warm/Cold)</a>
+                <a data-problem-id="3.1.3" href="./code/viewer.html?file=3.1.3.c">Categorize Temperature (Hot/Warm/Cold)</a>
                 <span class="exercise-tagline">Multi-range classification using if-else ladder</span>
               </div>
               <i class="fa-solid fa-temperature-half code-icon"></i>
@@ -535,15 +775,15 @@
             <li class="exercise-item">
               <span class="badge-num">4</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.4.c">Check Senior Citizen (Age ≥ 60)</a>
-                <span class="exercise-tagline">Simple threshold comparison with >=</span>
+                <a data-problem-id="3.1.4" href="./code/viewer.html?file=3.1.4.c">Check Senior Citizen (Age ≥ 60)</a>
+                <span class="exercise-tagline">Simple threshold comparison with ≥</span>
               </div>
               <i class="fa-solid fa-person-cane code-icon"></i>
             </li>
             <li class="exercise-item">
               <span class="badge-num">5</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.5.c">Multiple if-else with Relational Operators</a>
+                <a data-problem-id="3.1.5" href="./code/viewer.html?file=3.1.5.c">Multiple if-else with Relational Operators</a>
                 <span class="exercise-tagline">Practice chaining relational checks correctly</span>
               </div>
               <i class="fa-solid fa-code-compare code-icon"></i>
@@ -551,7 +791,7 @@
             <li class="exercise-item">
               <span class="badge-num">6</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.6.c">Multiple Independent if Statements</a>
+                <a data-problem-id="3.1.6" href="./code/viewer.html?file=3.1.6.c">Multiple Independent if Statements</a>
                 <span class="exercise-tagline">Separate conditions that can all trigger</span>
               </div>
               <i class="fa-solid fa-diagram-project code-icon"></i>
@@ -559,7 +799,7 @@
             <li class="exercise-item">
               <span class="badge-num">7</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.7.c">Check Voting Eligibility (Age ≥ 18)</a>
+                <a data-problem-id="3.1.7" href="./code/viewer.html?file=3.1.7.c">Check Voting Eligibility (Age ≥ 18)</a>
                 <span class="exercise-tagline">Basic boolean decision-making</span>
               </div>
               <i class="fa-solid fa-person-booth code-icon"></i>
@@ -567,7 +807,7 @@
             <li class="exercise-item">
               <span class="badge-num">8</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.8.c">Calculate Electricity Bill (Tiered Pricing)</a>
+                <a data-problem-id="3.1.8" href="./code/viewer.html?file=3.1.8.c">Calculate Electricity Bill (Tiered Pricing)</a>
                 <span class="exercise-tagline">Slab-wise billing with if-else ladder</span>
               </div>
               <i class="fa-solid fa-bolt code-icon"></i>
@@ -575,7 +815,7 @@
             <li class="exercise-item">
               <span class="badge-num">9</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.9.c">Arithmetic Operations using if-else Ladder</a>
+                <a data-problem-id="3.1.9" href="./code/viewer.html?file=3.1.9.c">Arithmetic Operations using if-else Ladder</a>
                 <span class="exercise-tagline">Menu-like decisions without switch</span>
               </div>
               <i class="fa-solid fa-calculator code-icon"></i>
@@ -583,7 +823,7 @@
             <li class="exercise-item">
               <span class="badge-num">10</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.1.10.c">Calculate Grade from Percentage</a>
+                <a data-problem-id="3.1.10" href="./code/viewer.html?file=3.1.10.c">Calculate Grade from Percentage</a>
                 <span class="exercise-tagline">Ranges and grading logic with conditions</span>
               </div>
               <i class="fa-solid fa-clipboard-check code-icon"></i>
@@ -601,7 +841,7 @@
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.2.1.c">Print Multiplication Table</a>
+                <a data-problem-id="3.2.1" href="./code/viewer.html?file=3.2.1.c">Print Multiplication Table</a>
                 <span class="exercise-tagline">Iterate fixed times with a counter</span>
               </div>
               <i class="fa-solid fa-table-cells-large code-icon"></i>
@@ -609,7 +849,7 @@
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.2.2.c">Sum of First N Natural Numbers</a>
+                <a data-problem-id="3.2.2" href="./code/viewer.html?file=3.2.2.c">Sum of First N Natural Numbers</a>
                 <span class="exercise-tagline">Accumulating totals inside a loop</span>
               </div>
               <i class="fa-solid fa-plus code-icon"></i>
@@ -617,7 +857,7 @@
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.2.3.c">Print Alphabets A to Z</a>
+                <a data-problem-id="3.2.3" href="./code/viewer.html?file=3.2.3.c">Print Alphabets A to Z</a>
                 <span class="exercise-tagline">Iterating through character ranges</span>
               </div>
               <i class="fa-solid fa-a code-icon"></i>
@@ -627,8 +867,8 @@
               <div class="exercise-meta">
                 Uppercase to Lowercase
                 <span>
-                  <a href="./code/viewer.html?file=3.2.4.1.c" class="multi">[Method 1]</a>
-                  <a href="./code/viewer.html?file=3.2.4.2.c" class="multi">[Method 2]</a>
+                  <a data-problem-id="3.2.4.1" href="./code/viewer.html?file=3.2.4.1.c" class="multi">[Method 1]</a>
+                  <a data-problem-id="3.2.4.2" href="./code/viewer.html?file=3.2.4.2.c" class="multi">[Method 2]</a>
                 </span>
                 <span class="exercise-tagline">Multiple approaches to case conversion</span>
               </div>
@@ -637,7 +877,7 @@
             <li class="exercise-item">
               <span class="badge-num">5</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.2.5.c">Factorial of a Number</a>
+                <a data-problem-id="3.2.5" href="./code/viewer.html?file=3.2.5.c">Factorial of a Number</a>
                 <span class="exercise-tagline">Classic loop-based factorial logic</span>
               </div>
               <i class="fa-solid fa-xmarks-lines code-icon"></i>
@@ -645,7 +885,7 @@
             <li class="exercise-item">
               <span class="badge-num">6</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.2.6.c">Fibonacci Series</a>
+                <a data-problem-id="3.2.6" href="./code/viewer.html?file=3.2.6.c">Fibonacci Series</a>
                 <span class="exercise-tagline">Iterative generation of sequences</span>
               </div>
               <i class="fa-solid fa-wave-square code-icon"></i>
@@ -653,7 +893,7 @@
             <li class="exercise-item">
               <span class="badge-num">7</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.2.7.c">Reverse a Number</a>
+                <a data-problem-id="3.2.7" href="./code/viewer.html?file=3.2.7.c">Reverse a Number</a>
                 <span class="exercise-tagline">Extract digits and rebuild in reverse</span>
               </div>
               <i class="fa-solid fa-arrow-rotate-left code-icon"></i>
@@ -661,7 +901,7 @@
             <li class="exercise-item">
               <span class="badge-num">8</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.2.8.c">Check Prime Number</a>
+                <a data-problem-id="3.2.8" href="./code/viewer.html?file=3.2.8.c">Check Prime Number</a>
                 <span class="exercise-tagline">Divisibility checks with loop limits</span>
               </div>
               <i class="fa-solid fa-hashtag code-icon"></i>
@@ -669,7 +909,7 @@
             <li class="exercise-item">
               <span class="badge-num">9</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.2.9.c">Check Palindrome Number</a>
+                <a data-problem-id="3.2.9" href="./code/viewer.html?file=3.2.9.c">Check Palindrome Number</a>
                 <span class="exercise-tagline">Compare original and reversed value</span>
               </div>
               <i class="fa-solid fa-rotate code-icon"></i>
@@ -677,8 +917,8 @@
             <li class="exercise-item">
               <span class="badge-num">10</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.2.10.c">String Length without strlen()</a>
-                <span class="exercise-tagline">Manual traversal until '\\0'</span>
+                <a data-problem-id="3.2.10" href="./code/viewer.html?file=3.2.10.c">String Length without strlen()</a>
+                <span class="exercise-tagline">Manual traversal until '\0'</span>
               </div>
               <i class="fa-solid fa-ruler code-icon"></i>
             </li>
@@ -695,7 +935,7 @@
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.1.c">Sum of Digits using while</a>
+                <a data-problem-id="3.3.1" href="./code/viewer.html?file=3.3.1.c">Sum of Digits using while</a>
                 <span class="exercise-tagline">Repeated extraction until number becomes 0</span>
               </div>
               <i class="fa-solid fa-layer-group code-icon"></i>
@@ -703,7 +943,7 @@
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.2.c">Check Even/Odd</a>
+                <a data-problem-id="3.3.2" href="./code/viewer.html?file=3.3.2.c">Check Even/Odd</a>
                 <span class="exercise-tagline">Loop and condition combination</span>
               </div>
               <i class="fa-solid fa-circle-half-stroke code-icon"></i>
@@ -711,7 +951,7 @@
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.3.c">Check Prime Number</a>
+                <a data-problem-id="3.3.3" href="./code/viewer.html?file=3.3.3.c">Check Prime Number</a>
                 <span class="exercise-tagline">Prime logic using while instead of for</span>
               </div>
               <i class="fa-solid fa-gem code-icon"></i>
@@ -719,7 +959,7 @@
             <li class="exercise-item">
               <span class="badge-num">4</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.4.c">Reverse a Number</a>
+                <a data-problem-id="3.3.4" href="./code/viewer.html?file=3.3.4.c">Reverse a Number</a>
                 <span class="exercise-tagline">Loop until there are no digits left</span>
               </div>
               <i class="fa-solid fa-arrow-rotate-right code-icon"></i>
@@ -727,7 +967,7 @@
             <li class="exercise-item">
               <span class="badge-num">5</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.5.c">Fibonacci Sequence</a>
+                <a data-problem-id="3.3.5" href="./code/viewer.html?file=3.3.5.c">Fibonacci Sequence</a>
                 <span class="exercise-tagline">while-based sequence construction</span>
               </div>
               <i class="fa-solid fa-chart-line code-icon"></i>
@@ -735,7 +975,7 @@
             <li class="exercise-item">
               <span class="badge-num">6</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.6.c">Count Number of Digits</a>
+                <a data-problem-id="3.3.6" href="./code/viewer.html?file=3.3.6.c">Count Number of Digits</a>
                 <span class="exercise-tagline">Increment counter until number ends</span>
               </div>
               <i class="fa-solid fa-sort-numeric-up code-icon"></i>
@@ -743,7 +983,7 @@
             <li class="exercise-item">
               <span class="badge-num">7</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.7.c">Factorial using while</a>
+                <a data-problem-id="3.3.7" href="./code/viewer.html?file=3.3.7.c">Factorial using while</a>
                 <span class="exercise-tagline">Multiplicative pattern with while loop</span>
               </div>
               <i class="fa-solid fa-xmark code-icon"></i>
@@ -751,7 +991,7 @@
             <li class="exercise-item">
               <span class="badge-num">8</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.8.c">Check Armstrong Number</a>
+                <a data-problem-id="3.3.8" href="./code/viewer.html?file=3.3.8.c">Check Armstrong Number</a>
                 <span class="exercise-tagline">Sum of powers of digits vs original</span>
               </div>
               <i class="fa-solid fa-cubes code-icon"></i>
@@ -759,7 +999,7 @@
             <li class="exercise-item">
               <span class="badge-num">9</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.9.c">Calculate Power (x^n)</a>
+                <a data-problem-id="3.3.9" href="./code/viewer.html?file=3.3.9.c">Calculate Power (x^n)</a>
                 <span class="exercise-tagline">Repeated multiplication with while</span>
               </div>
               <i class="fa-solid fa-superscript code-icon"></i>
@@ -767,7 +1007,7 @@
             <li class="exercise-item">
               <span class="badge-num">10</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.3.10.c">Find GCD of Two Numbers</a>
+                <a data-problem-id="3.3.10" href="./code/viewer.html?file=3.3.10.c">Find GCD of Two Numbers</a>
                 <span class="exercise-tagline">Euclid-style loop until remainder is zero</span>
               </div>
               <i class="fa-solid fa-diagram-venn code-icon"></i>
@@ -785,7 +1025,7 @@
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.1.c">Print "Hello World" 5 Times</a>
+                <a data-problem-id="3.4.1" href="./code/viewer.html?file=3.4.1.c">Print "Hello World" 5 Times</a>
                 <span class="exercise-tagline">At-least-once execution demo</span>
               </div>
               <i class="fa-solid fa-message code-icon"></i>
@@ -793,7 +1033,7 @@
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.2.c">Basic do-while Demo</a>
+                <a data-problem-id="3.4.2" href="./code/viewer.html?file=3.4.2.c">Basic do-while Demo</a>
                 <span class="exercise-tagline">Structure and control flow illustration</span>
               </div>
               <i class="fa-solid fa-diagram-next code-icon"></i>
@@ -801,7 +1041,7 @@
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.3.c">Run Until User Enters 0</a>
+                <a data-problem-id="3.4.3" href="./code/viewer.html?file=3.4.3.c">Run Until User Enters 0</a>
                 <span class="exercise-tagline">Menu-like looping with exit condition</span>
               </div>
               <i class="fa-solid fa-circle-stop code-icon"></i>
@@ -809,7 +1049,7 @@
             <li class="exercise-item">
               <span class="badge-num">4</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.4.c">Factorial using do-while</a>
+                <a data-problem-id="3.4.4" href="./code/viewer.html?file=3.4.4.c">Factorial using do-while</a>
                 <span class="exercise-tagline">Factorial with do-while variant</span>
               </div>
               <i class="fa-solid fa-square-xmark code-icon"></i>
@@ -817,7 +1057,7 @@
             <li class="exercise-item">
               <span class="badge-num">5</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.5.c">Sum of Natural Numbers</a>
+                <a data-problem-id="3.4.5" href="./code/viewer.html?file=3.4.5.c">Sum of Natural Numbers</a>
                 <span class="exercise-tagline">Sum loop that runs at least once</span>
               </div>
               <i class="fa-solid fa-list-ol code-icon"></i>
@@ -825,7 +1065,7 @@
             <li class="exercise-item">
               <span class="badge-num">6</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.6.c">Reverse a Number</a>
+                <a data-problem-id="3.4.6" href="./code/viewer.html?file=3.4.6.c">Reverse a Number</a>
                 <span class="exercise-tagline">Reversal with do-while pattern</span>
               </div>
               <i class="fa-solid fa-arrows-spin code-icon"></i>
@@ -833,7 +1073,7 @@
             <li class="exercise-item">
               <span class="badge-num">7</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.7.c">Count Digits in Number</a>
+                <a data-problem-id="3.4.7" href="./code/viewer.html?file=3.4.7.c">Count Digits in Number</a>
                 <span class="exercise-tagline">Correctly handle number 0 as well</span>
               </div>
               <i class="fa-solid fa-hashtag code-icon"></i>
@@ -841,7 +1081,7 @@
             <li class="exercise-item">
               <span class="badge-num">8</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.8.c">Sum of Even &amp; Odd Numbers Separately</a>
+                <a data-problem-id="3.4.8" href="./code/viewer.html?file=3.4.8.c">Sum of Even &amp; Odd Numbers Separately</a>
                 <span class="exercise-tagline">Classifying values in a do-while loop</span>
               </div>
               <i class="fa-solid fa-scale-unbalanced-flip code-icon"></i>
@@ -849,7 +1089,7 @@
             <li class="exercise-item">
               <span class="badge-num">9</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.9.c">Continue Until Negative Number</a>
+                <a data-problem-id="3.4.9" href="./code/viewer.html?file=3.4.9.c">Continue Until Negative Number</a>
                 <span class="exercise-tagline">Sentinel-controlled looping</span>
               </div>
               <i class="fa-solid fa-circle-notch code-icon"></i>
@@ -857,7 +1097,7 @@
             <li class="exercise-item">
               <span class="badge-num">10</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.4.10.c">Menu-Driven Calculator</a>
+                <a data-problem-id="3.4.10" href="./code/viewer.html?file=3.4.10.c">Menu-Driven Calculator</a>
                 <span class="exercise-tagline">Realistic do-while based menu program</span>
               </div>
               <i class="fa-solid fa-list-check code-icon"></i>
@@ -875,7 +1115,7 @@
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.1.c">Right-Angled Triangle (Asterisks)</a>
+                <a data-problem-id="3.5.1" href="./code/viewer.html?file=3.5.1.c">Right-Angled Triangle (Asterisks)</a>
                 <span class="exercise-tagline">Basic row-column nested loop pattern</span>
               </div>
               <i class="fa-solid fa-triangle-exclamation code-icon"></i>
@@ -883,7 +1123,7 @@
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.2.c">Inverted Triangle Pattern</a>
+                <a data-problem-id="3.5.2" href="./code/viewer.html?file=3.5.2.c">Inverted Triangle Pattern</a>
                 <span class="exercise-tagline">Reverse ordering with decreasing stars</span>
               </div>
               <i class="fa-solid fa-turn-down code-icon"></i>
@@ -891,7 +1131,7 @@
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.3.c">Pyramid Star Pattern</a>
+                <a data-problem-id="3.5.3" href="./code/viewer.html?file=3.5.3.c">Pyramid Star Pattern</a>
                 <span class="exercise-tagline">Center-aligned star pyramid</span>
               </div>
               <i class="fa-solid fa-mountain-sun code-icon"></i>
@@ -899,7 +1139,7 @@
             <li class="exercise-item">
               <span class="badge-num">4</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.4.c">Number Triangle (1 to n)</a>
+                <a data-problem-id="3.5.4" href="./code/viewer.html?file=3.5.4.c">Number Triangle (1 to n)</a>
                 <span class="exercise-tagline">Triangular numeric layout</span>
               </div>
               <i class="fa-solid fa-sort-numeric-down code-icon"></i>
@@ -907,7 +1147,7 @@
             <li class="exercise-item">
               <span class="badge-num">5</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.5.c">Incremental Number Pattern</a>
+                <a data-problem-id="3.5.5" href="./code/viewer.html?file=3.5.5.c">Incremental Number Pattern</a>
                 <span class="exercise-tagline">Numbers increasing across rows</span>
               </div>
               <i class="fa-solid fa-stairs code-icon"></i>
@@ -915,7 +1155,7 @@
             <li class="exercise-item">
               <span class="badge-num">6</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.6.c">Hollow Rectangle</a>
+                <a data-problem-id="3.5.6" href="./code/viewer.html?file=3.5.6.c">Hollow Rectangle</a>
                 <span class="exercise-tagline">Borders only with nested conditions</span>
               </div>
               <i class="fa-solid fa-border-all code-icon"></i>
@@ -923,7 +1163,7 @@
             <li class="exercise-item">
               <span class="badge-num">7</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.7.c">Right-Angled Triangle with Numbers</a>
+                <a data-problem-id="3.5.7" href="./code/viewer.html?file=3.5.7.c">Right-Angled Triangle with Numbers</a>
                 <span class="exercise-tagline">Mixing numeric values with pattern logic</span>
               </div>
               <i class="fa-solid fa-sort-numeric-up code-icon"></i>
@@ -931,7 +1171,7 @@
             <li class="exercise-item">
               <span class="badge-num">8</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.8.c">Diamond Star Pattern</a>
+                <a data-problem-id="3.5.8" href="./code/viewer.html?file=3.5.8.c">Diamond Star Pattern</a>
                 <span class="exercise-tagline">Symmetric star shape with nested loops</span>
               </div>
               <i class="fa-solid fa-gem code-icon"></i>
@@ -939,7 +1179,7 @@
             <li class="exercise-item">
               <span class="badge-num">9</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.9.c">Center-Aligned Number Triangle</a>
+                <a data-problem-id="3.5.9" href="./code/viewer.html?file=3.5.9.c">Center-Aligned Number Triangle</a>
                 <span class="exercise-tagline">Spacing plus numbering for alignment</span>
               </div>
               <i class="fa-solid fa-indent code-icon"></i>
@@ -947,7 +1187,7 @@
             <li class="exercise-item">
               <span class="badge-num">10</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.5.10.c">Pascal's Triangle (Center-Aligned)</a>
+                <a data-problem-id="3.5.10" href="./code/viewer.html?file=3.5.10.c">Pascal's Triangle (Center-Aligned)</a>
                 <span class="exercise-tagline">Combinatorics + pattern printing</span>
               </div>
               <i class="fa-solid fa-circle-nodes code-icon"></i>
@@ -965,7 +1205,7 @@
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.1.c">Stop on Vowel Encounter</a>
+                <a data-problem-id="3.6.1" href="./code/viewer.html?file=3.6.1.c">Stop on Vowel Encounter</a>
                 <span class="exercise-tagline">Use break to terminate early</span>
               </div>
               <i class="fa-solid fa-stop code-icon"></i>
@@ -973,7 +1213,7 @@
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.2.c">Break in for Loop</a>
+                <a data-problem-id="3.6.2" href="./code/viewer.html?file=3.6.2.c">Break in for Loop</a>
                 <span class="exercise-tagline">Conditionally exiting a counted loop</span>
               </div>
               <i class="fa-solid fa-circle-stop code-icon"></i>
@@ -981,7 +1221,7 @@
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.3.c">Infinite while(1) with break</a>
+                <a data-problem-id="3.6.3" href="./code/viewer.html?file=3.6.3.c">Infinite while(1) with break</a>
                 <span class="exercise-tagline">Manual loop termination from inside</span>
               </div>
               <i class="fa-solid fa-infinity code-icon"></i>
@@ -989,7 +1229,7 @@
             <li class="exercise-item">
               <span class="badge-num">4</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.4.c">Prompt Until Valid Input</a>
+                <a data-problem-id="3.6.4" href="./code/viewer.html?file=3.6.4.c">Prompt Until Valid Input</a>
                 <span class="exercise-tagline">Loop until user meets constraints</span>
               </div>
               <i class="fa-solid fa-circle-question code-icon"></i>
@@ -997,7 +1237,7 @@
             <li class="exercise-item">
               <span class="badge-num">5</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.5.c">Continue Taking Input</a>
+                <a data-problem-id="3.6.5" href="./code/viewer.html?file=3.6.5.c">Continue Taking Input</a>
                 <span class="exercise-tagline">Continue cycles until stop condition</span>
               </div>
               <i class="fa-solid fa-arrow-rotate-left code-icon"></i>
@@ -1005,7 +1245,7 @@
             <li class="exercise-item">
               <span class="badge-num">6</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.6.c">Skip Even Numbers using continue</a>
+                <a data-problem-id="3.6.6" href="./code/viewer.html?file=3.6.6.c">Skip Even Numbers using continue</a>
                 <span class="exercise-tagline">Skip certain iterations selectively</span>
               </div>
               <i class="fa-solid fa-forward-step code-icon"></i>
@@ -1013,7 +1253,7 @@
             <li class="exercise-item">
               <span class="badge-num">7</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.7.c">goto Statement Demo (Sum &amp; Diff)</a>
+                <a data-problem-id="3.6.7" href="./code/viewer.html?file=3.6.7.c">goto Statement Demo (Sum &amp; Diff)</a>
                 <span class="exercise-tagline">Jumping to labels (for learning only!)</span>
               </div>
               <i class="fa-solid fa-location-arrow code-icon"></i>
@@ -1021,7 +1261,7 @@
             <li class="exercise-item">
               <span class="badge-num">8</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.8.c">Skip Non-Prime with continue</a>
+                <a data-problem-id="3.6.8" href="./code/viewer.html?file=3.6.8.c">Skip Non-Prime with continue</a>
                 <span class="exercise-tagline">Optimize by skipping unneeded work</span>
               </div>
               <i class="fa-solid fa-forward-fast code-icon"></i>
@@ -1029,7 +1269,7 @@
             <li class="exercise-item">
               <span class="badge-num">9</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.9.c">continue in do-while</a>
+                <a data-problem-id="3.6.9" href="./code/viewer.html?file=3.6.9.c">continue in do-while</a>
                 <span class="exercise-tagline">Re-check condition after skipping work</span>
               </div>
               <i class="fa-solid fa-rotate-right code-icon"></i>
@@ -1037,7 +1277,7 @@
             <li class="exercise-item">
               <span class="badge-num">10</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.6.10.c">goto in Nested Loops</a>
+                <a data-problem-id="3.6.10" href="./code/viewer.html?file=3.6.10.c">goto in Nested Loops</a>
                 <span class="exercise-tagline">Jumping out of multiple levels</span>
               </div>
               <i class="fa-solid fa-diagram-predecessor code-icon"></i>
@@ -1055,7 +1295,7 @@
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.7.1.c">Even or Odd using if-else</a>
+                <a data-problem-id="3.7.1" href="./code/viewer.html?file=3.7.1.c">Even or Odd using if-else</a>
                 <span class="exercise-tagline">Fundamental conditional logic review</span>
               </div>
               <i class="fa-solid fa-toggle-on code-icon"></i>
@@ -1063,7 +1303,7 @@
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.7.2.c">Countdown Timer using while</a>
+                <a data-problem-id="3.7.2" href="./code/viewer.html?file=3.7.2.c">Countdown Timer using while</a>
                 <span class="exercise-tagline">Reverse counting with delay-style logic</span>
               </div>
               <i class="fa-solid fa-hourglass-end code-icon"></i>
@@ -1071,7 +1311,7 @@
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=3.7.3.c">Print All Prime Numbers in Range (with continue)</a>
+                <a data-problem-id="3.7.3" href="./code/viewer.html?file=3.7.3.c">Print All Prime Numbers in Range (with continue)</a>
                 <span class="exercise-tagline">Combine loops, conditions and continue effectively</span>
               </div>
               <i class="fa-solid fa-list-ol code-icon"></i>
@@ -1082,22 +1322,22 @@
       </section>
     </div>
 
-    <!-- Footer -->
-    <footer>
-      <p style="margin-bottom: 6px;">
-        Made with ❤️ for C Programming Learners<br>
-        <strong>Author:</strong> Param Vishwakarma
-      </p>
-      <p>
-        <strong>LinkedIn:</strong>
-        <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
-          Pramatma Vishwakarma ↗
-        </a>
-      </p>
-      <p class="footer-small">
-        Last updated: November 2025 · Module 3 · Practice Solutions
-      </p>
-    </footer>
+    <!-- Footer web component -->
+    <script src="../assets/js/site-footer.js" defer></script>
+    <site-footer
+        module="3"
+        updated="November 2025"
+        course="Control Statements in C · Module 3"
+        author-name="Param Vishwakarma"
+        author-github="https://github.com/pramdevgan"
+        author-linkedin="https://www.linkedin.com/in/vpramatma/"
+        author-img1="https://avatars.githubusercontent.com/u/61196674?v=4"
+        author-img2="https://i.ibb.co/d0rhZgNQ/Me1.jpg"
+        maint-name="Devansh Tiwari"
+        maint-github="https://github.com/mrinfotech369-sys"
+        maint-img1="https://avatars.githubusercontent.com/u/227535288?v=4"
+        maint-img2="https://i.ibb.co/8DP02FV3/Devansh-2.png"
+    ></site-footer>
   </main>
 
   <!-- Bootstrap JS Bundle -->
@@ -1105,7 +1345,40 @@
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
   ></script>
 
-  <!-- Shared JS for search + quick nav (same as other modules) -->
+  <!-- Simple inline search (same pattern as Module 2 fallback) -->
+  <script>
+    (function() {
+      var searchInput = document.getElementById('exerciseSearch');
+      if (!searchInput) return;
+
+      searchInput.addEventListener('input', function () {
+        var term = this.value.toLowerCase().trim();
+        var items = document.querySelectorAll('.exercise-item');
+
+        items.forEach(function (item) {
+          var text = item.innerText.toLowerCase();
+          item.style.display = text.indexOf(term) !== -1 ? '' : 'none';
+        });
+      });
+    })();
+  </script>
+
+  <!-- Shared progress tracker (same API as Module 2) -->
+  <script src="../assets/js/progress-tracker.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      initModuleProgressTracker({
+        storageKey: 'c_course_module3_all',
+        itemSelector: '.exercise-item',
+        linkSelector: '.exercise-meta a',
+        progressTextSelector: '#progressText',
+        progressBarSelector: '#progressBar',
+        resetButtonSelector: '#progressReset'
+      });
+    });
+  </script>
+
+  <!-- Your existing shared behaviours -->
   <script src="../assets/js/module-common.js"></script>
 </body>
 </html>

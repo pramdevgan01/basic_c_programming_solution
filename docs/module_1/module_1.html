@@ -19,361 +19,42 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
+  <link
+    rel="stylesheet"
+    href="../assets/css/module-common.css"
+  />
 
   <style>
     :root {
-      --bg: #0f172a;
-      --bg-soft: #020617;
+      --bg: #020617;
+      --bg-soft: #0b1220;
       --text: #e2e8f0;
+      --muted: #9ca3af;
       --primary: #10b981;
       --accent: #3b82f6;
-      --card: #0b1220;
+      --accent-soft: #38bdf8;
+      --card: #020617;
       --border: #1f2937;
       --code: #022c22;
       --hover: #059669;
+      --danger: #f97316;
+      --radius-xl: 18px;
+      --radius-lg: 14px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: radial-gradient(circle at top left, #1e293b 0%, #020617 45%, #020617 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background:
+        radial-gradient(circle at top left, #1f2937 0%, transparent 45%),
+        radial-gradient(circle at bottom right, #020617 0%, transparent 55%),
+        linear-gradient(135deg, #020617 0%, #020617 100%);
       color: var(--text);
       line-height: 1.7;
       margin: 0;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
-
-    /* Top bar similar to main page */
-    .top-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(15, 23, 42, 0.97);
-      backdrop-filter: blur(12px);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 9999;
-      border-bottom: 1px solid rgba(16,185,129,0.4);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-    }
-
-    .top-bar-title {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #e2e8f0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .top-bar-title i {
-      color: var(--primary);
-    }
-
-    .top-bar-sub {
-      font-size: 0.85rem;
-      color: #9ca3af;
-    }
-
-    .top-right-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .home-btn,
-    .back-to-top {
-      border: none;
-      padding: 8px 18px;
-      border-radius: 999px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .home-btn {
-      background: linear-gradient(45deg, #3b82f6, #10b981);
-      color: white;
-      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.4);
-    }
-
-    .home-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px rgba(59,130,246,0.6);
-      color: #fff;
-    }
-
-    .back-to-top {
-      background: linear-gradient(45deg, #10b981, #3b82f6);
-      color: white;
-      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
-    }
-
-    .back-to-top:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px rgba(16, 185, 129, 0.6);
-      color: #fff;
-    }
-
-    .main-wrapper {
-      padding-top: 90px; /* for fixed top bar */
-      padding-bottom: 40px;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: clamp(2.1rem, 4vw, 2.8rem);
-      margin-bottom: 0.5rem;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 900;
-    }
-
-    .hero-subtitle {
-      background: linear-gradient(90deg, #10b981, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
-    .page-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 0.45rem 1.2rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      font-size: 0.85rem;
-      color: #cbd5f5;
-      margin-bottom: 0.8rem;
-    }
-
-    .page-pill i {
-      color: var(--primary);
-    }
-
-    .container-main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding-inline: 1.25rem;
-    }
-
-    .card-shell {
-      background: radial-gradient(circle at top left, rgba(16,185,129,0.15), rgba(15,23,42,1));
-      border-radius: 18px;
-      padding: 2rem 1.5rem;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-    }
-
-    @media (min-width: 768px) {
-      .card-shell {
-        padding: 2.5rem 2.5rem;
-      }
-    }
-
-    h2.section-title {
-      font-size: 1.5rem;
-      color: var(--accent);
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: 0.5rem;
-      margin-top: 1.5rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    h2.section-title i {
-      color: var(--primary);
-      font-size: 1.3rem;
-    }
-
-    ul.exercise-list {
-      list-style: none;
-      padding: 0;
-      margin: 1.5rem 0 0;
-    }
-
-    li.exercise-item {
-      margin: 0.9rem 0;
-      padding: 1rem 1.3rem;
-      background: rgba(15, 23, 42, 0.9);
-      border-radius: 12px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      transition: all 0.25s ease;
-      box-shadow: 0 5px 18px rgba(15, 118, 110, 0.35);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    li.exercise-item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 38px rgba(16,185,129,0.35);
-      border-color: var(--accent);
-      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,1));
-    }
-
-    .badge-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: white;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      font-size: 0.9rem;
-      font-weight: 700;
-      flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(59,130,246,0.5);
-    }
-
-    .exercise-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 0;
-    }
-
-    .exercise-meta a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.98rem;
-      word-wrap: break-word;
-    }
-
-    .exercise-meta a:hover {
-      color: var(--hover);
-      text-decoration: underline;
-    }
-
-    .exercise-tagline {
-      font-size: 0.8rem;
-      color: #9ca3af;
-    }
-
-    .code-icon {
-      margin-left: auto;
-      flex-shrink: 0;
-      font-size: 1.1rem;
-      color: #22c55e;
-      opacity: 0.8;
-    }
-
-    li.exercise-item:hover .code-icon {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    /* Quick nav + search (same pattern as other modules) */
-    .quick-nav-wrapper {
-      margin: 1.5rem auto 0.5rem;
-      max-width: 1100px;
-    }
-
-    .quick-nav {
-      background: rgba(15,23,42,0.95);
-      border-radius: 999px;
-      padding: 0.4rem 0.6rem;
-      border: 1px solid rgba(148,163,184,0.7);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    }
-
-    .quick-nav .nav-link {
-      color: #e5e7eb;
-      font-size: 0.82rem;
-      padding: 0.35rem 0.9rem;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-
-    .quick-nav .nav-link i {
-      font-size: 0.8rem;
-      color: #6ee7b7;
-    }
-
-    .quick-nav .nav-link.active,
-    .quick-nav .nav-link:hover {
-      background: linear-gradient(90deg, #10b981, #3b82f6);
-      color: #fff;
-    }
-
-    .search-wrapper {
-      margin-top: 1rem;
-      text-align: center;
-    }
-
-    .search-input {
-      max-width: 420px;
-      margin: 0.3rem auto 0;
-      background: #020617;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.8);
-      padding: 0.45rem 1rem;
-      color: #e5e7eb;
-      font-size: 0.9rem;
-    }
-
-    .search-input:focus {
-      outline: none;
-      border-color: #10b981;
-      box-shadow: 0 0 0 1px #10b981;
-    }
-
-    .search-hint {
-      font-size: 0.78rem;
-      color: #9ca3af;
-      margin-top: 0.3rem;
-    }
-
-    footer {
-  text-align: center;
-  margin-top: 3rem;
-  padding: 2rem 1rem;
-  background: linear-gradient(to right, var(--primary), var(--accent));
-  color: #ffffff;
-  border-radius: 16px;
-  font-size: 0.95rem;
-  max-width: 1100px;
-  margin-inline: auto;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.5);
-}
-
-footer a {
-  color: #e5f2ff;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-.footer-small {
-  margin-top: 10px;
-  color: #e5e7eb;
-  font-size: 0.8rem;
-}
 
   </style>
 </head>
@@ -392,10 +73,10 @@ footer a:hover {
     </div>
 
     <div class="top-right-actions">
-      <!-- 🔹 HOME BUTTON: update href if your homepage path is different -->
+      <!-- HOME BUTTON -->
       <a href="../index.html" class="home-btn">
         <i class="fa-solid fa-house"></i>
-        Home
+        <span>Home</span>
       </a>
 
       <button
@@ -404,7 +85,7 @@ footer a:hover {
         onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
       >
         <i class="fa-solid fa-arrow-up"></i>
-        Top
+        <span>Top</span>
       </button>
     </div>
   </div>
@@ -425,12 +106,12 @@ footer a:hover {
           Input/Output, Basics &amp; Debugging
         </div>
 
-        <p class="text-muted" style="color:#cbd5f5;font-size:0.92rem;">
+        <p class="hero-text">
           Solve in your own IDE, then compare with these clean, industry-style C solutions.
         </p>
       </section>
 
-      <!-- Quick Navigation + Search (even though only one section, keeps UX consistent) -->
+      <!-- Quick Navigation + Search -->
       <div class="quick-nav-wrapper">
         <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2">
           <ul class="nav nav-pills quick-nav flex-wrap justify-content-center">
@@ -461,6 +142,27 @@ footer a:hover {
           <i class="fa-solid fa-keyboard"></i>
           Input and Output in C + Error Types
         </h2>
+        <div class="section-meta">
+          <span><i class="fa-regular fa-circle-check"></i> 10 practice problems</span>
+          <span><i class="fa-solid fa-signal"></i> Level: Beginner</span>
+        </div>
+
+        <!-- PROGRESS TRACKER UI -->
+        <div class="progress-wrapper">
+          <div class="progress-header">
+            <span id="progressText">
+              <i class="fa-solid fa-circle-dot"></i>
+              You've viewed 0/10 solutions
+            </span>
+            <span id="progressReset" title="Reset your progress">
+              <i class="fa-solid fa-rotate-left"></i>
+              Reset
+            </span>
+          </div>
+          <div class="progress-bar-shell" aria-hidden="true">
+            <div id="progressBar"></div>
+          </div>
+        </div>
 
         <ul class="exercise-list">
 
@@ -471,6 +173,10 @@ footer a:hover {
                 Print "Hello" and "World" on separate lines
               </a>
               <span class="exercise-tagline">Basics of <code>printf</code> and newline characters</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill">Output</span>
+                <span class="exercise-tag-pill">Syntax</span>
+              </div>
             </div>
             <i class="fa-solid fa-code code-icon"></i>
           </li>
@@ -482,6 +188,10 @@ footer a:hover {
                 Swap Two Float Values Using a Temporary Variable
               </a>
               <span class="exercise-tagline">Understanding variables, input, and assignments</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill">Variables</span>
+                <span class="exercise-tag-pill">Input</span>
+              </div>
             </div>
             <i class="fa-solid fa-code code-icon"></i>
           </li>
@@ -493,6 +203,10 @@ footer a:hover {
                 Demonstrate Case Sensitivity in Identifiers
               </a>
               <span class="exercise-tagline">Why <code>Age</code>, <code>age</code>, and <code>AGE</code> are all different</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill">Concept</span>
+                <span class="exercise-tag-pill">Identifiers</span>
+              </div>
             </div>
             <i class="fa-solid fa-code code-icon"></i>
           </li>
@@ -504,6 +218,10 @@ footer a:hover {
                 Single-line and Multi-line Comments Example
               </a>
               <span class="exercise-tagline">Write clear, readable code with comments</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill">Comments</span>
+                <span class="exercise-tag-pill">Readability</span>
+              </div>
             </div>
             <i class="fa-solid fa-code code-icon"></i>
           </li>
@@ -515,6 +233,10 @@ footer a:hover {
                 Demonstrate All Escape Sequences (\n, \t, \b, etc.)
               </a>
               <span class="exercise-tagline">Mastering formatted output and special characters</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill">Escape sequences</span>
+                <span class="exercise-tag-pill">Formatting</span>
+              </div>
             </div>
             <i class="fa-solid fa-code code-icon"></i>
           </li>
@@ -526,6 +248,10 @@ footer a:hover {
                 Take College Address as Input and Display Formatted
               </a>
               <span class="exercise-tagline">Multi-line input, spacing, and clean printing</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill">Input</span>
+                <span class="exercise-tag-pill">Formatting</span>
+              </div>
             </div>
             <i class="fa-solid fa-code code-icon"></i>
           </li>
@@ -537,6 +263,10 @@ footer a:hover {
                 Input First &amp; Last Name → Print on Separate Lines
               </a>
               <span class="exercise-tagline">Working with strings and basic formatting</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill">Strings</span>
+                <span class="exercise-tag-pill">Input</span>
+              </div>
             </div>
             <i class="fa-solid fa-code code-icon"></i>
           </li>
@@ -548,6 +278,10 @@ footer a:hover {
                 BMI Calculator with Weight &amp; Height Input + Validation
               </a>
               <span class="exercise-tagline">Simple math, input validation, and conditions</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill">Math</span>
+                <span class="exercise-tag-pill">Validation</span>
+              </div>
             </div>
             <i class="fa-solid fa-code code-icon"></i>
           </li>
@@ -559,6 +293,10 @@ footer a:hover {
                 Identify &amp; Fix Errors in Circle Area Calculation Program
               </a>
               <span class="exercise-tagline">Spotting syntax vs. logical mistakes</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill exercise-tag-pill--debug">Debugging</span>
+                <span class="exercise-tag-pill">Logic</span>
+              </div>
             </div>
             <i class="fa-solid fa-bug code-icon"></i>
           </li>
@@ -570,6 +308,10 @@ footer a:hover {
                 Debug a Faulty Tax Calculator Program (Syntax + Logic Errors)
               </a>
               <span class="exercise-tagline">Real-world style debugging with multiple error types</span>
+              <div class="exercise-tags">
+                <span class="exercise-tag-pill exercise-tag-pill--debug">Debugging</span>
+                <span class="exercise-tag-pill">Conditions</span>
+              </div>
             </div>
             <i class="fa-solid fa-bug code-icon"></i>
           </li>
@@ -579,22 +321,22 @@ footer a:hover {
 
     </div>
 
-    <!-- Footer -->
-    <footer>
-  <p>
-    Made with ❤️ for C Programming Learners<br>
-    <strong>Author:</strong> Param Vishwakarma
-  </p>
-  <p>
-    <strong>LinkedIn:</strong>
-    <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
-      Pramatma Vishwakarma ↗
-    </a>
-  </p>
-  <p class="footer-small">
-    Last updated: November 2025 · Module 1 · Practice Solutions
-  </p>
-</footer>
+    <!-- Footer Web Component -->
+    <script src="../assets/js/site-footer.js" defer></script>
+    <site-footer
+        module="1"
+        updated="November 2025"
+        course="Getting Started with C · Module 1"
+        author-name="Param Vishwakarma"
+        author-github="https://github.com/pramdevgan"
+        author-linkedin="https://www.linkedin.com/in/vpramatma/"
+        author-img1="https://avatars.githubusercontent.com/u/61196674?v=4"
+        author-img2="https://i.ibb.co/d0rhZgNQ/Me1.jpg"
+        maint-name="Devansh Tiwari"
+        maint-github="https://github.com/mrinfotech369-sys"
+        maint-img1="https://avatars.githubusercontent.com/u/227535288?v=4"
+        maint-img2="https://i.ibb.co/8DP02FV3/Devansh-2.png"
+    ></site-footer>
 
   </main>
 
@@ -603,7 +345,42 @@ footer a:hover {
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
   ></script>
 
-  <!-- Shared JS for search + quick nav (same file used in other modules) -->
+  <!-- Inline search (fallback if module-common.js doesn't handle search) -->
+  <script>
+    (function() {
+      var searchInput = document.getElementById('exerciseSearch');
+      if (!searchInput) return;
+
+      searchInput.addEventListener('input', function () {
+        var term = this.value.toLowerCase().trim();
+        var items = document.querySelectorAll('.exercise-item');
+
+        items.forEach(function (item) {
+          var text = item.innerText.toLowerCase();
+          item.style.display = text.indexOf(term) !== -1 ? '' : 'none';
+        });
+      });
+    })();
+  </script>
+
+  <!-- PROGRESS TRACKER LOGIC with localStorage "student cache" -->
+    <script src="../assets/js/progress-tracker.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        initModuleProgressTracker({
+          storageKey: 'c_course_module1_io',      // 🔑 unique per module/page
+          itemSelector: '.exercise-item',         // where each exercise lives
+          linkSelector: '.exercise-meta a',       // clickable element to mark "viewed"
+          progressTextSelector: '#progressText',  // "You've viewed X/Y..."
+          progressBarSelector: '#progressBar',    // progress bar div
+          resetButtonSelector: '#progressReset'   // reset button span
+        });
+      });
+    </script>
+
+
+  <!-- Shared JS for other behaviours if you have it -->
   <script src="../assets/js/module-common.js"></script>
 </body>
 </html>

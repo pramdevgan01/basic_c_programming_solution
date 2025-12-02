@@ -101,8 +101,7 @@
                             class="fa-solid fa-arrow-left"></i></button>
                     <div style="display:flex;flex-direction:column;min-width:0">
                         <div class="filename" id="fileTabName">loading.c</div>
-                        <div class="subtle small" id="fileSub">Module 1 · C
-                            file</div>
+                        <div class="subtle small" id="fileSub">Module 7 · C file</div>
                     </div>
                 </div>
 
@@ -143,7 +142,7 @@
                     <button id="moduleBtn" class="tool-btn primary"
                         title="Back to module"> <i
                             class="fa-solid fa-graduation-cap"></i> Module
-                        1</button>
+                        7</button>
                 </div>
             </div>
 
@@ -238,7 +237,7 @@
     const fallbackModule = (function(){
       const q = new URLSearchParams(location.search).get('file') || '';
       const m = q.match(/^(\d+)\./);
-      return m ? `../module_${m[1]}.html` : '../module_1.html';
+      return m ? `../module_${m[1]}.html` : '../module_7.html';
     })();
 
     backBtn.addEventListener('click', ()=> { if(history.length>1) history.back(); else location.href = fallbackModule; });
@@ -306,7 +305,7 @@
 
     safeFile = String(fileParam).replace(/(\.\.[\/\\])+/g,'').replace(/^\/+/,'');
     fileTabName.textContent = safeFile; statusFile.textContent = safeFile;
-    fileSub.textContent = 'Module 1 · C file';
+    fileSub.textContent = 'Module 7 · C file';
     metaInfo.textContent='Loading…'; statusMsg.textContent='Fetching…';
     const fileUrl = new URL(safeFile, location.href).href;
 

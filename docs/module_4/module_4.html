@@ -187,12 +187,81 @@
       }
     }
 
+    /* === PROGRESS TRACKER (same layout as Module 2, inside card-shell) === */
+    .progress-wrapper {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+    }
+
+    .progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: #9ca3af;
+      margin-bottom: 0.35rem;
+    }
+
+    #progressText {
+      font-weight: 500;
+      color: #e5e7eb;
+    }
+
+    #progressText i {
+      color: #22c55e;
+      margin-right: 5px;
+    }
+
+    #progressReset {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15,23,42,0.85);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      visibility: hidden; /* toggled by JS */
+    }
+
+    #progressReset i {
+      font-size: 0.8rem;
+    }
+
+    #progressReset:hover {
+      background: rgba(248,113,113,0.14);
+      border-color: rgba(248,113,113,0.85);
+      transform: translateY(-1px);
+      color: #fecaca;
+    }
+
+    .progress-bar-shell {
+      width: 100%;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(31,41,55,1);
+      overflow: hidden;
+    }
+
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #0ea5e9, #6366f1);
+      box-shadow: 0 0 12px rgba(59,130,246,0.85);
+      transition: width 0.25s ease;
+    }
+
     h2.section-title {
       font-size: 1.4rem;
       color: var(--accent);
       border-bottom: 2px solid var(--primary);
       padding-bottom: 0.4rem;
-      margin-top: 1.6rem;
+      margin-top: 1.4rem;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -229,6 +298,45 @@
       border-color: var(--accent);
       background: radial-gradient(circle at top left, rgba(99,102,241,0.22), #020617);
     }
+    /* VISITED STATE (from progress tracker, same idea as Module 2) */
+    li.exercise-item.is-viewed {
+      border-color: rgba(56,189,248,0.95); /* cyan-ish border */
+      background: radial-gradient(
+        circle at top left,
+        rgba(56,189,248,0.16),
+        #020617
+      );
+      opacity: 0.98;
+    }
+
+    li.exercise-item.is-viewed .exercise-tagline {
+      color: #e0f2fe; /* lighter text when done */
+    }
+
+    li.exercise-item.is-viewed .badge-num {
+      background: radial-gradient(circle at top, #22c55e, #16a34a); /* green badge */
+      box-shadow: 0 0 14px rgba(34,197,94,0.9);
+    }
+
+    li.exercise-item.is-viewed::after {
+      content: "Done";
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(22,163,74,0.22);
+      border: 1px solid rgba(34,197,94,0.9);
+      color: #bbf7d0;
+    }
+
+    /* make sure exercise-item is positioned for the ::after pill */
+    li.exercise-item {
+      position: relative; /* add this if not already there */
+    }
+
 
     .badge-num {
       display: inline-flex;
@@ -411,7 +519,6 @@
     </div>
 
     <div class="top-right-actions">
-      <!-- Adjust href if your homepage path is different -->
       <a href="../index.html" class="home-btn">
         <i class="fa-solid fa-house"></i>
         Home
@@ -502,6 +609,23 @@
       </div>
 
       <section class="card-shell">
+
+        <!-- PROGRESS TRACKER (same layout/JS pattern as Module 2 & 3) -->
+        <div class="progress-wrapper">
+          <div class="progress-header">
+            <span id="progressText">
+              <i class="fa-solid fa-circle-dot"></i>
+              You've viewed 0/51 solutions
+            </span>
+            <span id="progressReset" title="Reset your progress">
+              <i class="fa-solid fa-rotate-left"></i>
+              Reset
+            </span>
+          </div>
+          <div class="progress-bar-shell" aria-hidden="true">
+            <div id="progressBar"></div>
+          </div>
+        </div>
 
         <!-- Introduction to Arrays -->
         <div id="intro-arrays">
@@ -1004,21 +1128,21 @@
     </div>
 
     <!-- Footer -->
-    <footer>
-      <p style="margin-bottom: 6px;">
-        Made with ❤️ for C Programming Learners<br>
-        <strong>Author:</strong> Param Vishwakarma
-      </p>
-      <p>
-        <strong>LinkedIn:</strong>
-        <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
-          Pramatma Vishwakarma ↗
-        </a>
-      </p>
-      <p class="footer-small">
-        Last updated: November 2025 · Module 4 · Practice Solutions
-      </p>
-    </footer>
+    <script src="../assets/js/site-footer.js" defer></script>
+    <site-footer
+      module="4"
+      updated="November 2025"
+      course="Arrays & Strings in C · Module 4"
+      author-name="Param Vishwakarma"
+      author-github="https://github.com/pramdevgan"
+      author-linkedin="https://www.linkedin.com/in/vpramatma/"
+      author-img1="https://avatars.githubusercontent.com/u/61196674?v=4"
+      author-img2="https://i.ibb.co/d0rhZgNQ/Me1.jpg"
+      maint-name="Devansh Tiwari"
+      maint-github="https://github.com/mrinfotech369-sys"
+      maint-img1="https://avatars.githubusercontent.com/u/227535288?v=4"
+      maint-img2="https://i.ibb.co/8DP02FV3/Devansh-2.png"
+    ></site-footer>
   </main>
 
   <!-- Bootstrap JS Bundle -->
@@ -1026,7 +1150,38 @@
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
   ></script>
 
-  <!-- Shared JS for search + quick nav (same as Module 5) -->
+  <!-- Shared JS for search + quick nav -->
   <script src="../assets/js/module-common.js"></script>
+
+  <!-- Shared progress tracker (same as Module 2 & 3) -->
+  <script src="../assets/js/progress-tracker.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Module 4 progress (same pattern as Module 2)
+      if (typeof initModuleProgressTracker === 'function') {
+        initModuleProgressTracker({
+          storageKey: 'c_course_module4_all',
+          itemSelector: '.exercise-item',
+          linkSelector: '.exercise-meta a',
+          progressTextSelector: '#progressText',
+          progressBarSelector: '#progressBar',
+          resetButtonSelector: '#progressReset'
+        });
+      }
+
+      // Simple search
+      var searchInput = document.getElementById('exerciseSearch');
+      if (searchInput) {
+        searchInput.addEventListener('input', function () {
+          var term = this.value.toLowerCase().trim();
+          var items = document.querySelectorAll('.exercise-item');
+          items.forEach(function (item) {
+            var text = item.innerText.toLowerCase();
+            item.style.display = text.indexOf(term) !== -1 ? '' : 'none';
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>

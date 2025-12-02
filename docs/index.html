@@ -29,8 +29,11 @@
       --danger: #ef4444;
       --info: #06b6d4;
       --dark: #0f172a;
-      --card: #1e293b;
+      --card: #020617;
+      --card-soft: #020617f2;
       --text: #e2e8f0;
+      --muted: #9ca3af;
+      --radius-xl: 1.5rem;
     }
 
     * {
@@ -38,21 +41,37 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+      background:
+        radial-gradient(circle at top left, #1d2435 0, transparent 55%),
+        radial-gradient(circle at bottom right, #0f172a 0, transparent 55%),
+        linear-gradient(135deg, #020617 0%, #020617 100%);
       color: var(--text);
       line-height: 1.7;
       min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Fixed top bar without visitor counter */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* Fixed top bar */
     .top-bar {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
@@ -63,197 +82,590 @@
     }
 
     .top-bar-title {
-      font-weight: 700;
-      font-size: 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
       color: #e2e8f0;
       display: flex;
       align-items: center;
       gap: 8px;
+      letter-spacing: 0.03em;
     }
 
     .top-bar-title i {
       color: var(--primary);
+      font-size: 1.1rem;
     }
 
     .back-to-top {
-      background: linear-gradient(45deg, #ec4899, #f43f5e);
+      background: linear-gradient(45deg, #ec4899, #f97316);
       color: white;
       border: none;
       padding: 8px 18px;
       border-radius: 999px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 6px 18px rgba(236, 72, 153, 0.4);
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 18px rgba(236, 72, 153, 0.35);
       font-size: 0.9rem;
       display: inline-flex;
       align-items: center;
       gap: 8px;
     }
 
+    .back-to-top i {
+      font-size: 0.85rem;
+    }
+
     .back-to-top:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px rgba(236, 72, 153, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(236, 72, 153, 0.5);
     }
 
     .main-wrapper {
-      padding-top: 80px; /* for fixed top bar */
+      padding-top: 90px; /* for fixed top bar */
       padding-bottom: 40px;
     }
 
+    .container {
+      max-width: 1100px;
+    }
+
+    /* Hero */
     h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
       text-align: center;
-      background: linear-gradient(90deg, #8b5cf6, #ec4899, #f59e0b);
+      background: linear-gradient(120deg, #a855f7, #ec4899, #f97316);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 20px 0 10px;
+      margin: 16px 0 8px;
       font-weight: 900;
+      letter-spacing: 0.03em;
     }
 
     h3.hero-subtitle {
-      font-size: clamp(1.1rem, 2.5vw, 1.9rem);
+      font-size: clamp(1.05rem, 2.2vw, 1.6rem);
       text-align: center;
-      color: #94a3b8;
-      margin-bottom: 20px;
+      color: #9ca3af;
+      margin-bottom: 14px;
     }
 
     .hero-text {
-      font-size: 1.1rem;
+      font-size: 1rem;
+      color: #e5e7eb;
+    }
+
+    .hero-text strong {
+      font-weight: 700;
+    }
+
+    .hero-logo {
+      filter: drop-shadow(0 0 18px rgba(59, 130, 246, 0.4));
+    }
+
+    /* Stats Section */
+    .stats {
+      margin-top: 10px;
     }
 
     .stats .badge-pill {
       border-radius: 999px;
-      padding: 0.6rem 1.6rem;
-      font-size: 0.95rem;
-      background: rgba(139, 92, 246, 0.2);
-      border: 1px solid #8b5cf6;
+      padding: 0.55rem 1.4rem;
+      font-size: 0.92rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
       color: #e5e7eb;
-      transition: 0.3s;
+      transition: transform 0.25s ease, border-color 0.25s ease,
+        box-shadow 0.25s ease, background 0.25s ease;
       display: inline-flex;
       align-items: center;
       gap: 8px;
     }
 
-    .stats .badge-pill:hover {
-      transform: translateY(-6px) scale(1.02);
-      background: #8b5cf6;
+    .stats .badge-pill i {
+      font-size: 0.9rem;
+      color: #a5b4fc;
     }
 
-    .module-card {
-      background: var(--card);
-      border-radius: 1.5rem;
-      text-align: center;
-      padding: 2.2rem 1.5rem;
-      transition: 0.4s;
-      border: 2px solid transparent;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      cursor: pointer;
-      height: 100%;
-      position: relative;
+    .stats .badge-pill:hover {
+      transform: translateY(-3px);
+      border-color: rgba(129, 140, 248, 0.9);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.7);
+      background: radial-gradient(circle at top, #111827, #020617);
+    }
+
+    /* === Course-wide progress (index.html) === */
+    .course-progress-shell {
+      max-width: 900px;
+      margin: 0 auto 30px;
+      padding: 1rem 1.4rem;
+      border-radius: 18px;
+      background: radial-gradient(circle at top left, rgba(139,92,246,0.2), rgba(15,23,42,1));
+      border: 1px solid rgba(148,163,184,0.5);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+    }
+
+    .course-progress-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.55rem;
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    .course-progress-header i {
+      color: #22c55e;
+      font-size: 1rem;
+    }
+
+    .course-progress-sub {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .course-progress-bar-shell {
+      margin-top: 0.6rem;
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(31,41,55,1);
       overflow: hidden;
     }
 
+    .course-progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #10b981, #3b82f6, #ec4899);
+      box-shadow: 0 0 10px rgba(59,130,246,0.9);
+      transition: width 0.25s ease;
+    }
+
+    /* Modules Grid */
+    .modules-section {
+      margin-top: 30px;
+    }
+
+    .module-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      padding: 1px; /* for gradient border */
+      background: transparent;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, translate 0.25s ease;
+      cursor: pointer;
+      height: 100%;
+      isolation: isolate;
+    }
+
+    .module-card-inner {
+      background: radial-gradient(circle at top, #020617, #020617f2);
+      border-radius: inherit;
+      padding: 1.9rem 1.5rem;
+      text-align: center;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.85);
+    }
+
     .module-card:hover {
-      transform: translateY(-12px) scale(1.02);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
-      border-color: var(--accent);
+      transform: translateY(-8px);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.9);
     }
 
     .module-num {
-      font-size: 4rem;
+      font-size: 3rem;
       font-weight: 900;
-      background: linear-gradient(45deg, #ffffff, #d1d5db);
+      background: linear-gradient(135deg, #ffffff, #cbd5f5);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.06em;
     }
 
     .module-title {
-      font-size: 1.4rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
+      color: #e5e7eb;
     }
 
     .module-desc {
       opacity: 0.9;
-      font-size: 1rem;
-      margin-bottom: 1.2rem;
+      font-size: 0.96rem;
+      margin-bottom: 1rem;
+      color: #cbd5f5;
     }
 
     .module-btn {
       border-radius: 999px;
-      padding: 0.7rem 1.8rem;
+      padding: 0.65rem 1.6rem;
       font-weight: 600;
-      font-size: 1rem;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+      font-size: 0.97rem;
       border: none;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
+      background: #f9fafb;
+      color: #111827;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      margin-top: 1rem;
     }
 
     .module-btn i {
       font-size: 0.9rem;
     }
 
-    footer {
-    text-align: center;
-    padding: 30px 10px;
-    color: #94a3b8;
-    font-size: 1rem;
+    .module-btn:hover {
+      transform: translateY(-2px);
+      background: #e5e7eb;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.85);
     }
 
-    footer a {
-    color: #e5f2ff;
-    text-decoration: none;
-    font-weight: 600;
+    /* Gradient border per module using background */
+    .module-card.bg-module-1 {
+      background: linear-gradient(135deg, #10b981, #22c55e);
     }
 
-    footer a:hover {
-    text-decoration: underline;
+    .module-card.bg-module-2 {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
     }
 
-    .footer-small {
-    margin-top: 8px;
-    color: #cbd5f5;
-    font-size: 0.85rem;
-    }
-
-
-    /* Gradient backgrounds tailored per module */
-    .bg-module-1 {
-      background: linear-gradient(135deg, #10b981, #059669);
-    }
-
-    .bg-module-2 {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-    }
-
-    .bg-module-3 {
+    .module-card.bg-module-3 {
       background: linear-gradient(135deg, #f59e0b, #f97316);
     }
 
-    .bg-module-4 {
-      background: linear-gradient(135deg, #06b6d4, #0891b2);
+    .module-card.bg-module-4 {
+      background: linear-gradient(135deg, #22d3ee, #0ea5e9);
     }
 
-    .bg-module-5 {
-      background: linear-gradient(135deg, #ec4899, #e11d48);
+    .module-card.bg-module-5 {
+      background: linear-gradient(135deg, #ec4899, #fb7185);
     }
 
-    .bg-module-6 {
-      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    .module-card.bg-module-6 {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
     }
 
-    .bg-module-7 {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
+    .module-card.bg-module-7 {
+      background: linear-gradient(135deg, #fb7185, #ef4444);
+    }
+
+    /* Large last module tweaks */
+    .module-card.bg-module-7 .module-card-inner {
+      padding-block: 2.4rem;
+    }
+
+    .module-card.bg-module-7 .module-title {
+      font-size: 1.5rem;
+    }
+
+    .module-card.bg-module-7 .module-desc {
+      font-size: 1.02rem;
+    }
+
+    /* Per-module progress pill on each card */
+    .module-progress {
+      margin-top: 1.1rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.7);
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(6px);
+    }
+
+    .module-progress-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #e5e7eb;
+    }
+
+    .module-progress-label i {
+      font-size: 0.75rem;
+      color: #a5b4fc;
+    }
+
+    .module-progress-text {
+      font-weight: 600;
+      color: #bbf7d0;
+      white-space: nowrap;
+    }
+
+    .module-progress-bar {
+      flex: 1;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.95);
+      overflow: hidden;
+    }
+
+    .module-progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #22c55e, #38bdf8);
+      transition: width 0.25s ease;
+    }
+
+    /* Footer */
+    footer.cc-footer {
+      max-width: 1100px;
+      margin: 34px auto 8px;
+      padding: 22px 20px;
+      color: white;
+      border-radius: 1.25rem;
+      background: radial-gradient(circle at top left, #a855f7, #ec4899);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.4);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+    }
+
+    .cc-footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 22px;
+    }
+
+    /* People (Left) */
+    .cc-people {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 250px;
+    }
+
+    .cc-person-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+      padding: 8px 10px;
+      border-radius: 12px;
+      transition: background 0.22s ease, transform 0.22s ease,
+        box-shadow 0.22s ease;
+    }
+
+    .cc-person-card:hover {
+      background: rgba(15, 23, 42, 0.22);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.5);
+    }
+
+    .cc-avatar {
+      position: relative;
+      overflow: hidden;
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      flex-shrink: 0;
+    }
+
+    .cc-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cc-img-hover {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .cc-avatar:hover .cc-img-hover,
+    .cc-avatar:focus-within .cc-img-hover {
+      opacity: 1;
+    }
+
+    .cc-avatar:hover .cc-img-base,
+    .cc-avatar:focus-within .cc-img-base {
+      opacity: 0;
+    }
+
+    .cc-person-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .cc-person-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .cc-person-role {
+      font-size: 0.83rem;
+      opacity: 0.92;
+    }
+
+    .cc-gh-icon {
+      font-size: 0.9rem;
+      margin-top: 3px;
+      opacity: 0.9;
+    }
+
+    /* Right Info Section */
+    .cc-info {
+      text-align: right;
+      min-width: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cc-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      opacity: 0.95;
+    }
+
+    .cc-icon-heart {
+      color: #ffb4d6;
+      font-size: 1.1rem;
+      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
+    }
+
+    .cc-social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.14);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s ease, transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .cc-social-link:hover {
+      background: rgba(15, 23, 42, 0.22);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.7);
+    }
+
+    .cc-icon-ln {
+      font-size: 1.05rem;
+      color: #0a66c2;
+      background: #fff;
+      padding: 3px;
+      border-radius: 4px;
+    }
+
+    .cc-update {
+      font-size: 0.82rem;
+      opacity: 0.92;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .cc-icon-clock {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .cc-course-label {
+      font-weight: 600;
+      opacity: 0.96;
+    }
+
+    .footer-small {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      opacity: 0.9;
+      text-align: center;
+    }
+
+    .footer-small a {
+      color: #e5f2ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-small a:hover {
+      text-decoration: underline;
+    }
+
+    /* Visitor counter block in footer */
+    .cc-traffic {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+
+    .cc-traffic-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cc-traffic-label i {
+      font-size: 0.9rem;
+    }
+
+    .cc-traffic-counter {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.28);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      .top-bar-title span {
+        display: none;
+      }
+
+      .top-bar {
+        padding-inline: 12px;
+      }
+
+      .module-card-inner {
+        padding: 1.6rem 1.3rem;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .cc-footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .cc-info {
+        text-align: left;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Bar (no visitor counter) -->
+  <!-- Top Bar -->
   <div class="top-bar">
     <div class="top-bar-title">
       <i class="fa-solid fa-code"></i>
@@ -274,12 +686,12 @@
     <div class="container">
 
       <!-- Hero Section -->
-      <section class="text-center mb-5">
+      <section class="text-center mb-4">
         <img
           src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/C.svg"
           alt="C Programming"
-          width="140"
-          class="img-fluid mb-3"
+          width="120"
+          class="img-fluid mb-3 hero-logo"
         />
 
         <h1>Basic C Programming Course</h1>
@@ -287,13 +699,13 @@
           The Complete 7-Module Mastery Path for Engineering Students
         </h3>
 
-        <p class="hero-text text-light mt-3">
+        <p class="hero-text mt-2">
           <strong>300+ Problems • 3+ Real Projects • 100% Placement Ready</strong>
         </p>
       </section>
 
       <!-- Stats Section -->
-      <section class="stats text-center mb-5">
+      <section class="stats text-center mb-4">
         <div class="d-flex flex-wrap justify-content-center gap-2">
           <span class="badge-pill">
             <i class="fa-solid fa-layer-group"></i> Modules: 7
@@ -316,115 +728,252 @@
         </div>
       </section>
 
+      <!-- Course-wide progress (reads from localStorage of each module) -->
+      <section class="course-progress-shell">
+        <div class="course-progress-header">
+          <i class="fa-solid fa-chart-line"></i>
+          <div>
+            <div id="courseProgressSummaryText">
+              You've viewed 0/73 solutions (0% of these modules).
+            </div>
+            <div class="course-progress-sub">
+              Progress is saved in your browser (this device only).
+            </div>
+          </div>
+        </div>
+        <div class="course-progress-bar-shell">
+          <div id="courseProgressBarFill" class="course-progress-bar-fill"></div>
+        </div>
+      </section>
+
       <!-- Modules Grid -->
-      <section class="mb-5">
+      <section class="modules-section mb-4">
         <div class="row g-4">
 
           <!-- Module 1 -->
           <div class="col-12 col-md-6 col-lg-4">
             <div class="module-card bg-module-1">
-              <div class="module-num">01</div>
-              <h3 class="module-title">Introduction to C &amp; Setup</h3>
-              <p class="module-desc">
-                First Program • I/O • Comments • GCC
-              </p>
-              <a href="module_1/module_1.html" class="btn btn-light module-btn text-success">
-                <i class="fa-solid fa-play"></i>
-                Start Module 1
-              </a>
+              <div class="module-card-inner">
+                <div>
+                  <div class="module-num">01</div>
+                  <h3 class="module-title">Introduction to C &amp; Setup</h3>
+                  <p class="module-desc">
+                    First Program • I/O • Comments • GCC
+                  </p>
+
+                  <!-- Module 1 progress (linked to storageKey c_course_module1_io) -->
+                  <div class="module-progress" data-module-progress="1">
+                    <div class="module-progress-label">
+                      <i class="fa-solid fa-circle-dot"></i>
+                      <span>Module Progress</span>
+                    </div>
+                    <div class="module-progress-bar">
+                      <div class="module-progress-bar-fill"></div>
+                    </div>
+                    <span class="module-progress-text">0/10 done</span>
+                  </div>
+                </div>
+                <a href="module_1/module_1.html" class="module-btn" style="color:#14532d;">
+                  <i class="fa-solid fa-play"></i>
+                  Start Module 1
+                </a>
+              </div>
             </div>
           </div>
 
           <!-- Module 2 -->
           <div class="col-12 col-md-6 col-lg-4">
             <div class="module-card bg-module-2">
-              <div class="module-num">02</div>
-              <h3 class="module-title">Variables &amp; Operators</h3>
-              <p class="module-desc">
-                Data Types • Type Casting • Bitwise • const
-              </p>
-              <a href="module_2/module_2.html" class="btn btn-light module-btn text-primary">
-                <i class="fa-solid fa-play"></i>
-                Start Module 2
-              </a>
+              <div class="module-card-inner">
+                <div>
+                  <div class="module-num">02</div>
+                  <h3 class="module-title">Variables &amp; Operators</h3>
+                  <p class="module-desc">
+                    Data Types • Type Casting • Bitwise • const
+                  </p>
+
+                  <!-- Module 2 progress (linked to storageKey c_course_module2_all) -->
+                  <div class="module-progress" data-module-progress="2">
+                    <div class="module-progress-label">
+                      <i class="fa-solid fa-circle-dot"></i>
+                      <span>Module Progress</span>
+                    </div>
+                    <div class="module-progress-bar">
+                      <div class="module-progress-bar-fill"></div>
+                    </div>
+                    <span class="module-progress-text">0/63 done</span>
+                  </div>
+                </div>
+                <a href="module_2/module_2.html" class="module-btn" style="color:#1d4ed8;">
+                  <i class="fa-solid fa-play"></i>
+                  Start Module 2
+                </a>
+              </div>
             </div>
           </div>
 
           <!-- Module 3 -->
           <div class="col-12 col-md-6 col-lg-4">
             <div class="module-card bg-module-3">
-              <div class="module-num">03</div>
-              <h3 class="module-title">Control Statements</h3>
-              <p class="module-desc">
-                if-else • Loops • Patterns • break/continue
-              </p>
-              <a href="module_3/module_3.html" class="btn btn-light module-btn text-warning">
-                <i class="fa-solid fa-play"></i>
-                Start Module 3
-              </a>
+              <div class="module-card-inner">
+                <div>
+                  <div class="module-num">03</div>
+                  <h3 class="module-title">Control Statements</h3>
+                  <p class="module-desc">
+                    if-else • Loops • Patterns • break/continue
+                  </p>
+
+                  <!-- Module 3 progress (wired to localStorage key used in module_3.html) -->
+                  <div
+                    class="module-progress"
+                    data-module-progress="3"
+                    data-storage-key="c_course_module3_all"
+                    data-total-items="64"
+                  >
+                    <div class="module-progress-label">
+                      <i class="fa-solid fa-circle-dot"></i>
+                      <span>Module Progress</span>
+                    </div>
+                    <div class="module-progress-bar">
+                      <div class="module-progress-bar-fill" style="width: 0%;"></div>
+                    </div>
+                    <span class="module-progress-text">0/64 solved (0%)</span>
+                  </div>
+                </div>
+
+                <a href="module_3/module_3.html" class="module-btn" style="color:#92400e;">
+                  <i class="fa-solid fa-play"></i>
+                  Start Module 3
+                </a>
+              </div>
             </div>
           </div>
+
 
           <!-- Module 4 -->
           <div class="col-12 col-md-6 col-lg-4">
             <div class="module-card bg-module-4">
-              <div class="module-num">04</div>
-              <h3 class="module-title">Arrays &amp; Strings</h3>
-              <p class="module-desc">
-                1D/2D Arrays • String Functions • Matrix Ops
-              </p>
-              <a href="module_4/module_4.html" class="btn btn-light module-btn text-info">
-                <i class="fa-solid fa-play"></i>
-                Start Module 4
-              </a>
+              <div class="module-card-inner">
+                <div>
+                  <div class="module-num">04</div>
+                  <h3 class="module-title">Arrays &amp; Strings</h3>
+                  <p class="module-desc">
+                    1D/2D Arrays • String Functions • Matrix Ops
+                  </p>
+
+                  <!-- Progress placeholder -->
+                  <div class="module-progress" data-module-progress="4">
+                    <div class="module-progress-label">
+                      <i class="fa-solid fa-circle-dot"></i>
+                      <span>Module Progress</span>
+                    </div>
+                    <div class="module-progress-bar">
+                      <div class="module-progress-bar-fill"></div>
+                    </div>
+                    <span class="module-progress-text">Not tracked yet</span>
+                  </div>
+                </div>
+                <a href="module_4/module_4.html" class="module-btn" style="color:#075985;">
+                  <i class="fa-solid fa-play"></i>
+                  Start Module 4
+                </a>
+              </div>
             </div>
           </div>
 
           <!-- Module 5 -->
           <div class="col-12 col-md-6 col-lg-4">
             <div class="module-card bg-module-5">
-              <div class="module-num">05</div>
-              <h3 class="module-title">Functions &amp; Recursion</h3>
-              <p class="module-desc">
-                Scope • Storage Classes • Header Files
-              </p>
-              <a href="module_5/module_5.html" class="btn btn-light module-btn" style="color:#ec4899;">
-                <i class="fa-solid fa-play"></i>
-                Start Module 5
-              </a>
+              <div class="module-card-inner">
+                <div>
+                  <div class="module-num">05</div>
+                  <h3 class="module-title">Functions &amp; Recursion</h3>
+                  <p class="module-desc">
+                    Scope • Storage Classes • Header Files
+                  </p>
+
+                  <!-- Progress placeholder -->
+                  <div class="module-progress" data-module-progress="5">
+                    <div class="module-progress-label">
+                      <i class="fa-solid fa-circle-dot"></i>
+                      <span>Module Progress</span>
+                    </div>
+                    <div class="module-progress-bar">
+                      <div class="module-progress-bar-fill"></div>
+                    </div>
+                    <span class="module-progress-text">Not tracked yet</span>
+                  </div>
+                </div>
+                <a href="module_5/module_5.html" class="module-btn" style="color:#9d174d;">
+                  <i class="fa-solid fa-play"></i>
+                  Start Module 5
+                </a>
+              </div>
             </div>
           </div>
 
           <!-- Module 6 -->
           <div class="col-12 col-md-6 col-lg-4">
             <div class="module-card bg-module-6">
-              <div class="module-num">06</div>
-              <h3 class="module-title">Pointers &amp; Memory</h3>
-              <p class="module-desc">
-                Address • Pointer Arithmetic • Dynamic Memory
-              </p>
-              <a href="module_6/module_6.html" class="btn btn-light module-btn" style="color:#8b5cf6;">
-                <i class="fa-solid fa-play"></i>
-                Start Module 6
-              </a>
+              <div class="module-card-inner">
+                <div>
+                  <div class="module-num">06</div>
+                  <h3 class="module-title">Pointers &amp; Memory</h3>
+                  <p class="module-desc">
+                    Address • Pointer Arithmetic • Dynamic Memory
+                  </p>
+
+                  <!-- Progress placeholder -->
+                  <div class="module-progress" data-module-progress="6">
+                    <div class="module-progress-label">
+                      <i class="fa-solid fa-circle-dot"></i>
+                      <span>Module Progress</span>
+                    </div>
+                    <div class="module-progress-bar">
+                      <div class="module-progress-bar-fill"></div>
+                    </div>
+                    <span class="module-progress-text">Not tracked yet</span>
+                  </div>
+                </div>
+                <a href="module_6/module_6.html" class="module-btn" style="color:#4c1d95;">
+                  <i class="fa-solid fa-play"></i>
+                  Start Module 6
+                </a>
+              </div>
             </div>
           </div>
 
-          <!-- Module 7 (Full-width on all screens) -->
+          <!-- Module 7 (Full-width) -->
           <div class="col-12">
             <div class="module-card bg-module-7">
-              <div class="module-num">07</div>
-              <h2 class="module-title fs-1">
-                Structs, Unions &amp; File I/O
-              </h2>
-              <p class="module-desc fs-5">
-                Custom Data Types • Binary/Text Files • Real-World Data Handling
-              </p>
+              <div class="module-card-inner">
+                <div>
+                  <div class="module-num">07</div>
+                  <h2 class="module-title">
+                    Structs, Unions &amp; File I/O
+                  </h2>
+                  <p class="module-desc">
+                    Custom Data Types • Binary/Text Files • Real-World Data Handling
+                  </p>
 
-              <button class="btn btn-light module-btn" style="color:#ef4444;" disabled>
-                <i class="fa-solid fa-rocket"></i>
-                Launching Soon – Become a C Master
-              </button>
+                  <!-- Progress placeholder -->
+                  <div class="module-progress" data-module-progress="7">
+                    <div class="module-progress-label">
+                      <i class="fa-solid fa-circle-dot"></i>
+                      <span>Module Progress</span>
+                    </div>
+                    <div class="module-progress-bar">
+                      <div class="module-progress-bar-fill"></div>
+                    </div>
+                    <span class="module-progress-text">Not tracked yet</span>
+                  </div>
+                </div>
+
+                <a href="module_7/module_7.html" class="module-btn" style="color:#7f1d1d;">
+                  <i class="fa-solid fa-play"></i>
+                  Start Module 7
+                </a>
+              </div>
             </div>
           </div>
 
@@ -467,264 +1016,71 @@
           </div>
 
           <!-- RIGHT SECTION: Project Info -->
-          <!-- RIGHT SECTION: Project Info (Enhanced) -->
           <div class="cc-info">
-            
-            <!-- Title -->
+
             <div class="cc-title">
               <i class="fa-solid fa-heart-circle-bolt cc-icon-heart"></i>
               Crafted with passion for C Programming Learners
             </div>
 
-            <!-- Social Link -->
             <div class="cc-social">
-              <a href="https://www.linkedin.com/in/vpramatma/" 
-                class="cc-social-link" 
-                target="_blank" 
+              <a href="https://www.linkedin.com/in/vpramatma/"
+                class="cc-social-link"
+                target="_blank"
                 title="Visit Author LinkedIn">
                 <i class="fa-brands fa-linkedin cc-icon-ln"></i>
                 Connect on LinkedIn
               </a>
             </div>
 
-            <!-- Update text -->
             <div class="cc-update">
               <i class="fa-regular fa-clock cc-icon-clock"></i>
-              Last Updated: <strong>November 2025</strong>  
+              Last Updated: <strong>November 2025</strong>
               <span class="cc-course-label">· Basic C Programming Course</span>
             </div>
+
+            <!-- Visitor counter -->
+            <div class="cc-traffic">
+              <div class="cc-traffic-label">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Total Visitors</span>
+              </div>
+              <div class="cc-traffic-counter">
+                <script type="text/javascript" src="https://cdn.livetrafficfeed.com/static/static-counter/live.v2.js?ro=1&tz=Asia%2FKolkata"></script>
+                <noscript id="LTF_counter_href">
+                  <a href="https://livetrafficfeed.com/website-counter">Traffic Count</a>
+                </noscript>
+              </div>
+            </div>
+
           </div>
         </div>
 
-      <!-- Footer CSS -->
-      <style>
-        .cc-footer {
-          max-width: 1200px;
-          margin: 28px auto;
-          padding: 22px;
-          color: white;
-          border-radius: 16px;
-          background: linear-gradient(135deg, #7c3aed, #ec4899);
-          box-shadow: 0 18px 60px rgba(0,0,0,0.35);
-          font-family: Inter, system-ui, sans-serif;
-        }
-
-        .cc-footer-inner {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          flex-wrap: wrap;
-          gap: 22px;
-        }
-
-        /* People (Left) */
-        .cc-people {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          min-width: 260px;
-        }
-
-        .cc-person-card {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          text-decoration: none;
-          color: white;
-          padding: 8px 12px;
-          border-radius: 12px;
-          transition: background .22s ease, transform .22s ease;
-        }
-        .cc-person-card:hover {
-          background: rgba(255,255,255,0.12);
-          transform: translateY(-3px);
-        }
-
-        .cc-avatar {
-          position: relative;
-          overflow: hidden;
-          width: 56px;
-          height: 56px;
-          border-radius: 999px;
-          border: 2px solid rgba(255,255,255,0.22);
-          flex-shrink: 0;
-        }
-
-        .cc-avatar img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-
-        .cc-img-hover {
-          position: absolute;
-          inset: 0;
-          opacity: 0;
-          transition: opacity .25s ease;
-        }
-
-        .cc-avatar:hover .cc-img-hover,
-        .cc-avatar:focus-within .cc-img-hover {
-          opacity: 1;
-        }
-
-        .cc-avatar:hover .cc-img-base,
-        .cc-avatar:focus-within .cc-img-base {
-          opacity: 0;
-        }
-
-        .cc-person-meta {
-          display: flex;
-          flex-direction: column;
-          gap: 1px;
-        }
-
-        .cc-person-name {
-          font-size: 1rem;
-          font-weight: 700;
-        }
-
-        .cc-person-role {
-          font-size: 0.85rem;
-          opacity: 0.9;
-        }
-
-        .cc-gh-icon {
-          font-size: 1rem;
-          margin-top: 2px;
-          opacity: 0.85;
-        }
-
-        /* Right Section */
-        .cc-info {
-          text-align: right;
-          min-width: 260px;
-        }
-
-        .cc-title {
-          font-size: 1rem;
-          font-weight: 700;
-          margin-bottom: 6px;
-        }
-
-        .cc-linkedin a {
-          color: #fff;
-          font-weight: 600;
-          text-decoration: underline;
-        }
-
-        .cc-update {
-          margin-top: 6px;
-          opacity: 0.92;
-          font-size: 0.86rem;
-        }
-
-        /* Responsive */
-        @media(max-width:700px){
-          .cc-footer-inner {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-          .cc-info { text-align: left; }
-        }
-        /* Right Info Section */
-    .cc-info {
-      text-align: right;
-      min-width: 260px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    /* Title */
-    .cc-title {
-      font-size: 1rem;
-      font-weight: 700;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      opacity: 0.95;
-    }
-
-    .cc-icon-heart {
-      color: #ffb4d6;
-      font-size: 1.1rem;
-      filter: drop-shadow(0 0 4px rgba(255,255,255,0.3));
-    }
-
-    /* Social Links */
-    .cc-social-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.12);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background .2s ease, transform .2s ease;
-    }
-
-    .cc-social-link:hover {
-      background: rgba(255,255,255,0.18);
-      transform: translateY(-2px);
-    }
-
-    .cc-icon-ln {
-      font-size: 1.1rem;
-      color: #0A66C2;
-      background: #fff;
-      padding: 4px;
-      border-radius: 4px;
-    }
-
-    /* Update info */
-    .cc-update {
-      font-size: 0.87rem;
-      opacity: 0.9;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .cc-icon-clock {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-
-    .cc-course-label {
-      font-weight: 600;
-      opacity: 0.95;
-    }
-
-    /* Responsive */
-    @media(max-width:700px) {
-      .cc-info {
-        text-align: left;
-      }
-    }
-
-          </style>
-    </footer>
-
-
-
-
+        <div class="footer-small">
+          &copy; <span id="year"></span> <a href="https://github.com/pramdevgan" target="_blank">Param Vishwakarma</a>. All rights reserved.
         </div>
-      </main>
+      </footer>
 
-      <!-- Bootstrap JS Bundle -->
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      ></script>
-      <script>
-        (function(){
-          const t = document.getElementById('code').textContent;
-          console.log(t.split("\n").length);
-        })();
+    </div>
+  </main>
 
+  <!-- Bootstrap JS Bundle -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <!-- Course-wide progress logic (reads localStorage from modules) -->
+  <script src="./assets/js/course-progress.js"></script>
+  <script>
+    // Small helper to keep footer year current
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Initialize course-wide progress dashboard
+    if (typeof initCourseProgress === 'function') {
+      document.addEventListener('DOMContentLoaded', function () {
+        initCourseProgress();
+      });
+    }
   </script>
 </body>
 </html>

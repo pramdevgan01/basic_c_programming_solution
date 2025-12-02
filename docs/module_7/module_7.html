@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Module 7 · Structs, Unions & File I/O — Advanced C</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+  <style>
+  /* ===========================
+     Teal Midnight Dark Theme
+     =========================== */
+  :root{
+    --bg-900: #03151a;
+    --bg-800: #062427;
+    --panel: #0b2f35;
+    --muted: #9ac7c0;
+    --text: #e6fbf9;
+    --primary: #06b6d4; /* cyan-teal */
+    --accent: #14b8a6;  /* sea green */
+    --card-glass: rgba(255,255,255,0.02);
+    --border: rgba(10,40,45,0.5);
+    --glow: rgba(6,182,212,0.12);
+    --radius: 14px;
+    --max-width: 1200px;
+    --done-bg: rgba(34,197,94,0.08);
+    --done-border: rgba(34,197,94,0.6);
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(900px 400px at 8% 12%, rgba(6,182,212,0.03), transparent 8%),
+      linear-gradient(180deg, var(--bg-900) 0%, var(--bg-800) 60%, #021213 100%);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.6;
+    padding-bottom:56px;
+  }
+
+  /* Top bar (fixed) */
+  .top-bar{
+    position:fixed;left:0;right:0;top:0;height:72px;padding:10px 22px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    background: linear-gradient(180deg, rgba(2,12,14,0.8), rgba(1,7,10,0.9));
+    border-bottom:1px solid rgba(6,182,212,0.05);
+    backdrop-filter: blur(6px);
+    z-index:9999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  }
+  .top-left{display:flex;align-items:center;gap:12px}
+  .brand{
+    display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none;
+    font-weight:800;font-size:0.98rem;
+  }
+  .brand i{color:var(--accent);font-size:1.25rem;}
+  .top-sub{font-size:0.82rem;color:var(--muted);opacity:0.95;margin-top:2px}
+
+  .top-actions{display:flex;align-items:center;gap:10px}
+  .btn-pill{
+    border-radius:999px;padding:8px 14px;font-weight:700;font-size:0.9rem;display:inline-flex;align-items:center;gap:8px;
+    border:none;cursor:pointer;text-decoration:none;color:white;
+  }
+  .btn-home{background:linear-gradient(90deg,var(--primary),var(--accent));box-shadow:0 8px 26px var(--glow)}
+  .btn-top{background:linear-gradient(90deg,#06b6d4,#14b8a6);box-shadow:0 8px 26px rgba(20,200,190,0.08)}
+
+  /* Page wrapper */
+  main{padding-top:100px;max-width:var(--max-width);margin:0 auto;padding-left:20px;padding-right:20px;}
+
+  /* Hero */
+  .hero{text-align:center;margin-bottom:18px}
+  .page-pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(6,182,212,0.04);font-weight:700}
+  .page-title{font-size:clamp(2rem,4.2vw,3.2rem);margin:10px 0 6px;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900}
+  .hero-sub{color:var(--muted);font-weight:600}
+
+  /* Card container */
+  .card-shell{
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    border-radius:var(--radius);padding:26px;border:1px solid var(--border);
+    box-shadow: 0 22px 60px rgba(3,6,8,0.65);
+    margin-bottom:36px;
+  }
+
+  /* Quick nav & search */
+  .quick-nav-wrapper{display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+  .quick-nav{
+    display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+    padding:6px;background:var(--card-glass);border-radius:12px;
+    border:1px solid rgba(6,182,212,0.04)
+  }
+  .quick-nav a{
+    padding:8px 12px;border-radius:999px;
+    color:var(--text);text-decoration:none;font-weight:700
+  }
+  .quick-nav a.active,
+  .quick-nav a:hover{
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    color:white;
+    box-shadow:0 8px 30px rgba(6,182,212,0.06)
+  }
+
+  .search-wrapper{display:flex;justify-content:center}
+  .search-input{
+    max-width:520px;padding:10px 12px;border-radius:999px;
+    border:1px solid rgba(255,255,255,0.04);
+    background:transparent;color:var(--text);outline:none
+  }
+
+  /* === PROGRESS TRACKER (Module-2 style) === */
+  .progress-wrapper{
+    margin: 8px 0 18px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(1,18,20,0.85);
+    border: 1px solid rgba(6,182,212,0.18);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  }
+  .progress-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    font-size:0.86rem;
+    color:var(--muted);
+  }
+  #progressText i{color:var(--primary);margin-right:6px;}
+  #progressReset{
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-weight:600;
+    color:#f97373;
+  }
+  #progressReset i{font-size:0.8rem;}
+  #progressReset:hover{color:#fecaca;}
+
+  .progress-bar-shell{
+    margin-top:8px;
+    width:100%;
+    height:8px;
+    border-radius:999px;
+    background:rgba(15,118,110,0.4);
+    overflow:hidden;
+  }
+  #progressBar{
+    width:0;
+    height:100%;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    transition:width .25s ease-out;
+  }
+
+  /* Section titles */
+  h2.section-title{
+    font-size:1.15rem;color:var(--accent);
+    display:inline-flex;align-items:center;gap:10px;
+    padding-bottom:6px;border-bottom:2px solid rgba(6,182,212,0.04);
+    margin-top:18px;font-weight:800
+  }
+  h2.section-title i{color:var(--primary);font-size:1.05rem}
+
+  /* Exercise list styling — Module 6 animation, Module 7 theme */
+  ul.exercise-list{
+    list-style:none;
+    padding:0;
+    margin:10px 0 0;
+  }
+
+  li.exercise-item{
+    margin:0.9rem 0;
+    padding:1.1rem 1.5rem;
+    background: var(--panel);
+    border-radius:14px;
+    border:1px solid rgba(6,182,212,0.18);
+    box-shadow:0 5px 18px var(--glow);
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    color:var(--text);
+    flex-wrap:wrap;
+    transform-origin:center;
+    will-change:transform, box-shadow;
+    transition:
+      transform .35s cubic-bezier(.2,.9,.2,1),
+      box-shadow .35s ease,
+      background .35s ease,
+      border-color .35s ease;
+  }
+
+  li.exercise-item:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+      0 30px 60px rgba(0,0,0,0.7),
+      0 20px 50px var(--glow);
+    border-color:var(--accent);
+    background:linear-gradient(180deg, rgba(6,182,212,0.08), var(--panel));
+  }
+
+  /* DONE state (after viewing) */
+  li.exercise-item.exercise-done{
+    border-color:var(--done-border);
+    background:linear-gradient(180deg,var(--done-bg),var(--panel));
+    box-shadow:0 16px 40px rgba(22,163,74,0.28);
+  }
+  li.exercise-item.exercise-done .badge-num{
+    background:linear-gradient(135deg,#22c55e,#4ade80);
+    box-shadow:0 8px 22px rgba(22,163,74,0.55);
+  }
+  li.exercise-item.exercise-done .exercise-meta a{
+    color:#bbf7d0;
+  }
+
+  .badge-num{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,var(--primary),var(--accent));
+    color:white;
+    font-weight:900;
+    font-size:0.9rem;
+    flex-shrink:0;
+    box-shadow:0 4px 10px rgba(6,182,212,0.28);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+
+  li.exercise-item:hover .badge-num{
+    transform:translateY(-6px) rotate(-6deg);
+    box-shadow:0 14px 30px rgba(6,182,212,0.32);
+  }
+
+  .exercise-meta{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    min-width:0;
+    flex:1;
+  }
+
+  .exercise-meta a{
+    color:var(--primary);
+    text-decoration:none;
+    font-weight:700;
+    font-size:0.98rem;
+    word-wrap:break-word;
+    transition:color .18s ease;
+  }
+
+  .exercise-meta a:hover{
+    color:var(--accent);
+    text-decoration:underline;
+  }
+
+  .exercise-tagline{
+    font-size:0.8rem;
+    color:var(--muted);
+    opacity:0.95;
+  }
+
+  .exercise-meta small{
+    color:var(--muted);
+    font-size:0.84rem;
+  }
+
+  .code-icon{
+    margin-left:auto;
+    flex-shrink:0;
+    font-size:1.1rem;
+    color:var(--primary);
+    opacity:0.85;
+    transition:transform .25s ease, opacity .25s ease;
+  }
+
+  li.exercise-item:hover .code-icon{
+    opacity:1;
+    transform:translateY(-4px) scale(1.08);
+  }
+
+  .multi{
+    font-size:0.9rem;
+    color:#a5f3fc;
+    font-weight:600;
+    margin-left:8px;
+    text-decoration:none;
+  }
+
+  .file-list{
+    font-size:0.86rem;
+    color:#7dd3fc;
+    margin-left:6px;
+    text-decoration:none;
+    font-weight:600;
+  }
+
+  .file-list:hover{
+    color:#e0f2fe;
+    text-decoration:underline;
+  }
+</style>
+
+
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-left">
+      <a href="../index.html" class="brand" aria-label="Home">
+        <i class="fa-solid fa-code"></i>
+        <div>
+          <div style="font-weight:900">Basic C Programming Course</div>
+          <div class="top-sub">Module 7 · Structs, Unions & File I/O</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="top-actions">
+      <a class="btn-pill btn-home" href="../index.html"><i class="fa-solid fa-house"></i> Home</a>
+      <button class="btn-pill btn-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-arrow-up"></i> Top</button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <main>
+    <div class="hero">
+      <span class="page-pill"><i class="fa-solid fa-graduation-cap"></i> Advanced C Topics · Module 7</span>
+      <h1 class="page-title">Structs, Unions & File I/O in C</h1>
+      <div class="hero-sub">Custom Types • Binary & Text Files • Robust Error Handling</div>
+      <p style="color:var(--muted);max-width:900px;margin:10px auto 0;">
+        Hands-on solved exercises covering struct design, nested records, memory-efficient unions, enumerations,
+        and file I/O patterns used in real-world C programs. Click any item to open the full source in the code viewer.
+      </p>
+    </div>
+
+    <section class="card-shell">
+
+      <!-- quick nav + search -->
+      <div class="quick-nav-wrapper">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <nav class="quick-nav" aria-label="Module quick nav">
+            <a class="nav-link active" href="#intro-struct"><i class="fa-solid fa-diagram-project"></i>&nbsp;Intro</a>
+            <a class="nav-link" href="#nested"><i class="fa-solid fa-sitemap"></i>&nbsp;Nested</a>
+            <a class="nav-link" href="#enums"><i class="fa-solid fa-list-ol"></i>&nbsp;Enums</a>
+            <a class="nav-link" href="#unions"><i class="fa-solid fa-layer-group"></i>&nbsp;Unions</a>
+            <a class="nav-link" href="#file-io"><i class="fa-solid fa-file-lines"></i>&nbsp;File I/O</a>
+            <a class="nav-link" href="#errors"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Error Handling</a>
+            <a class="nav-link" href="#switchcase"><i class="fa-solid fa-code-branch"></i>&nbsp;switch-case</a>
+          </nav>
+
+          <div class="search-wrapper" style="flex:1;display:flex;justify-content:flex-end">
+            <input id="exerciseSearch" class="search-input" placeholder="Search problems (e.g., file, enum, nested)" aria-label="Search exercises">
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS TRACKER (Module-2 like) -->
+      <div class="progress-wrapper">
+        <div class="progress-header">
+          <span id="progressText">
+            <i class="fa-solid fa-circle-dot"></i>
+            You've viewed 0/60 solutions
+          </span>
+          <span id="progressReset" title="Reset your Module 7 progress">
+            <i class="fa-solid fa-rotate-left"></i>
+            Reset
+          </span>
+        </div>
+        <div class="progress-bar-shell" aria-hidden="true">
+          <div id="progressBar"></div>
+        </div>
+      </div>
+
+      <!-- INTRO -->
+      <div id="intro-struct">
+        <h2 class="section-title"><i class="fa-solid fa-boxes-packing"></i> Introduction to Structure</h2>
+        <ul class="exercise-list">
+          <li class="exercise-item">
+            <div class="badge-num">1</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.1.c">Area of a Rhombus</a>
+              <div class="exercise-tagline">Simple struct usage to organize geometry inputs.</div>
+            </div>
+            <i class="fa-solid fa-diamond code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">2</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.2.c">Employee Details</a>
+              <div class="exercise-tagline">Define and print employee records using structs.</div>
+            </div>
+            <i class="fa-solid fa-id-badge code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">3</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.3.c">Area of Rectangle</a>
+              <div class="exercise-tagline">Struct-based rectangle computations.</div>
+            </div>
+            <i class="fa-solid fa-square-full code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">4</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.4.c">Structure of an Array</a>
+              <div class="exercise-tagline">Learn arrays of structs & traversal patterns.</div>
+            </div>
+            <i class="fa-solid fa-layer-group code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">5</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.5.c">Create & Initialize Structure</a>
+              <div class="exercise-tagline">Multiple initialization techniques for structs.</div>
+            </div>
+            <i class="fa-solid fa-wand-magic-sparkles code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">6</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.6.c">Details of Student</a>
+              <div class="exercise-tagline">Store and display student records cleanly.</div>
+            </div>
+            <i class="fa-solid fa-user-graduate code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">7</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.7.c">Volume of a Cylinder</a>
+              <div class="exercise-tagline">Use struct fields to compute volume.</div>
+            </div>
+            <i class="fa-solid fa-wine-bottle code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">8</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.8.c">Print Student Record</a>
+              <div class="exercise-tagline">Formatted printing of struct members.</div>
+            </div>
+            <i class="fa-solid fa-clipboard-list code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">9</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.9.c">Employee Details Display</a>
+              <div class="exercise-tagline">Looping & printing arrays of struct records.</div>
+            </div>
+            <i class="fa-solid fa-people-group code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">10</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.1.10.c">Average of Student Marks</a>
+              <div class="exercise-tagline">Compute averages across struct arrays.</div>
+            </div>
+            <i class="fa-solid fa-chart-column code-icon"></i>
+          </li>
+        </ul>
+      </div>
+
+      <!-- NESTED -->
+      <div id="nested">
+        <h2 class="section-title"><i class="fa-solid fa-sitemap"></i> Nested Structure & Array of Struct</h2>
+        <ul class="exercise-list">
+          <li class="exercise-item">
+            <div class="badge-num">1</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.1.c">Eligibility of Scholarship</a>
+              <div class="exercise-tagline">Use nested struct fields for eligibility logic.</div>
+            </div>
+            <i class="fa-solid fa-graduation-cap code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">2</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.2.c">Trainer Details</a>
+              <div class="exercise-tagline">Store trainer info in arrays of structs.</div>
+            </div>
+            <i class="fa-solid fa-chalkboard-user code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">3</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.3.c">Book Information</a>
+              <div class="exercise-tagline">Complex nested data example.</div>
+            </div>
+            <i class="fa-solid fa-book code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">4</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.4.c">Capital Letters and Return It</a>
+              <div class="exercise-tagline">String processing within structures.</div>
+            </div>
+            <i class="fa-solid fa-font code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">5</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.5.c">Nested Structure</a>
+              <div class="exercise-tagline">Practice nested definitions & access patterns.</div>
+            </div>
+            <i class="fa-solid fa-diagram-project code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">6</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.6.c">Access Nested Structure</a>
+              <div class="exercise-tagline">Safe access of nested fields.</div>
+            </div>
+            <i class="fa-solid fa-diagram-next code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">7</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.7.c">Multiple Books</a>
+              <div class="exercise-tagline">Manage arrays of complex structs.</div>
+            </div>
+            <i class="fa-solid fa-book-open code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">8</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.8.c">Store Book Details</a>
+              <div class="exercise-tagline">Ideas for file-friendly storage of structs.</div>
+            </div>
+            <i class="fa-solid fa-database code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">9</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.9.c">Student and Address Info</a>
+              <div class="exercise-tagline">Nested structures for addresses.</div>
+            </div>
+            <i class="fa-solid fa-map-location-dot code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">10</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.2.10.c">Library Book Manager</a>
+              <div class="exercise-tagline">Mini project using struct arrays & files.</div>
+            </div>
+            <i class="fa-solid fa-building-columns code-icon"></i>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ENUMS -->
+      <div id="enums">
+        <h2 class="section-title"><i class="fa-solid fa-list-ol"></i> Enumerations & typedef</h2>
+        <ul class="exercise-list">
+          <li class="exercise-item">
+            <div class="badge-num">1</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.1.c">Enum Data Type for Seasons</a>
+              <div class="exercise-tagline">Basic enum usage patterns.</div>
+            </div>
+            <i class="fa-solid fa-cloud-sun-rain code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">2</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.2.c">Enum Data Type for Months</a>
+              <div class="exercise-tagline">Enums mapped to values.</div>
+            </div>
+            <i class="fa-solid fa-calendar-days code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">3</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.3.c">Days of the Week</a>
+              <div class="exercise-tagline">Iterating enums & mapping to strings.</div>
+            </div>
+            <i class="fa-solid fa-calendar-week code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">4</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.4.c">Traffic Lights</a>
+              <div class="exercise-tagline">State machine example with enums.</div>
+            </div>
+            <i class="fa-solid fa-traffic-light code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">5</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.5.c">Compass Directions</a>
+              <div class="exercise-tagline">Typed directions via enums.</div>
+            </div>
+            <i class="fa-solid fa-compass code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">6</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.6.c">Grades</a>
+              <div class="exercise-tagline">Enum-driven grading logic.</div>
+            </div>
+            <i class="fa-solid fa-ranking-star code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">7</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.7.c">Planets in the Solar System</a>
+              <div class="exercise-tagline">Large enum & mapping example.</div>
+            </div>
+            <i class="fa-solid fa-globe code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">8</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.8.c">Currency Denominations</a>
+              <div class="exercise-tagline">Enums for currency types.</div>
+            </div>
+            <i class="fa-solid fa-coins code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">9</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.9.c">Reverse String Using Typedef</a>
+              <div class="exercise-tagline">typedef + function pointer example.</div>
+            </div>
+            <i class="fa-solid fa-arrow-rotate-left code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">10</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.3.10.c">Role Pattern with Enum & Typedef</a>
+              <div class="exercise-tagline">Practical combined usage.</div>
+            </div>
+            <i class="fa-solid fa-user-gear code-icon"></i>
+          </li>
+        </ul>
+      </div>
+
+      <!-- UNIONS -->
+      <div id="unions">
+        <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Unions in C</h2>
+        <ul class="exercise-list">
+          <li class="exercise-item">
+            <div class="badge-num">1</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.1.c">Contact Management System Using Struct</a>
+              <div class="exercise-tagline">Union + struct example.</div>
+            </div>
+            <i class="fa-solid fa-address-book code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">2</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.2.c">Contact Management</a>
+              <div class="exercise-tagline">Union-switched fields for variants.</div>
+            </div>
+            <i class="fa-solid fa-phone code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">3</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.3.c">Union Declaration</a>
+              <div class="exercise-tagline">Basic union declaration & usage.</div>
+            </div>
+            <i class="fa-solid fa-square-root-variable code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">4</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.4.c">Union Inside Structure</a>
+              <div class="exercise-tagline">Union as member of struct.</div>
+            </div>
+            <i class="fa-solid fa-box-archive code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">5</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.5.c">Size of Union</a>
+              <div class="exercise-tagline">Memory layout & sizeof examples.</div>
+            </div>
+            <i class="fa-solid fa-weight-hanging code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">6</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.6.c">Nested Union</a>
+              <div class="exercise-tagline">Complex nested union patterns.</div>
+            </div>
+            <i class="fa-solid fa-diagram-predecessor code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">7</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.7.c">Represent Currency</a>
+              <div class="exercise-tagline">Use union for multiple representations.</div>
+            </div>
+            <i class="fa-solid fa-money-bill-wave code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">8</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.8.c">Date Information</a>
+              <div class="exercise-tagline">Union + struct for date formatting.</div>
+            </div>
+            <i class="fa-solid fa-calendar code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">9</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.9.c">Represent Dimensions</a>
+              <div class="exercise-tagline">Memory efficient representations.</div>
+            </div>
+            <i class="fa-solid fa-ruler-combined code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">10</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.4.10.c">Employee Salary & Bonus</a>
+              <div class="exercise-tagline">Union for alternate salary types.</div>
+            </div>
+            <i class="fa-solid fa-wallet code-icon"></i>
+          </li>
+        </ul>
+      </div>
+
+      <!-- FILE I/O -->
+      <div id="file-io">
+        <h2 class="section-title"><i class="fa-solid fa-file-lines"></i> File Types, fopen, fclose, Modes</h2>
+        <p style="margin:8px 0">
+          <span style="display:inline-block;background:rgba(6,182,212,0.03);color:var(--accent);padding:6px 10px;border-radius:8px;font-weight:800;margin-right:8px">External Lab</span>
+          <a href="https://bytexl.app/lab/43juyg7em" target="_blank" style="color:var(--accent);font-weight:800;text-decoration:underline">
+            <i class="fa-solid fa-flask"></i> File Handling Lab
+          </a>
+        </p>
+        <ul class="exercise-list">
+          <li class="exercise-item">
+            <div class="badge-num">1</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.5.1.c">Count Lines in a File</a>
+              <div class="exercise-tagline">Read file line-by-line safely.</div>
+            </div>
+            <i class="fa-solid fa-lines-leaning code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">2</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.5.2.c">Merge Two Files</a>
+              <div class="exercise-tagline">Concatenate files & modes.</div>
+            </div>
+            <i class="fa-solid fa-file-circle-plus code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">3</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.5.3.c">Delete a Line from File</a>
+              <div class="exercise-tagline">Temp-file deletion approach.</div>
+            </div>
+            <i class="fa-solid fa-file-circle-minus code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">4</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.5.4.c">Copy a File</a>
+              <div class="exercise-tagline">Buffered copy with error checks.</div>
+            </div>
+            <i class="fa-solid fa-copy code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">5</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.5.5.c">Print File in Lower Case</a>
+              <div class="exercise-tagline">Transform file bytes to lower-case.</div>
+            </div>
+            <i class="fa-solid fa-arrow-down-a-z code-icon"></i>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ERRORS -->
+      <div id="errors">
+        <h2 class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> Error Handling Basics</h2>
+        <ul class="exercise-list">
+          <li class="exercise-item">
+            <div class="badge-num">1</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.6.1.c">Divide-by-Zero Error</a>
+              <div class="exercise-tagline">Detect & avoid arithmetic errors.</div>
+            </div>
+            <i class="fa-solid fa-divide code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">2</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.6.2.c">Strerror() Function</a>
+              <div class="exercise-tagline">Interpret errno with strerror.</div>
+            </div>
+            <i class="fa-solid fa-circle-info code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">3</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.6.3.c">Command Line Usage</a>
+              <div class="exercise-tagline">Validate argc/argv & parse args.</div>
+            </div>
+            <i class="fa-solid fa-terminal code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">4</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.6.4.c">Array Bounds Check</a>
+              <div class="exercise-tagline">Simple defensive checks & examples.</div>
+            </div>
+            <i class="fa-solid fa-brackets-curly code-icon"></i>
+          </li>
+          <li class="exercise-item">
+            <div class="badge-num">5</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.6.5.c">Sum of Command-Line Args</a>
+              <div class="exercise-tagline">Parse numbers from argv safely.</div>
+            </div>
+            <i class="fa-solid fa-list-ol code-icon"></i>
+          </li>
+        </ul>
+      </div>
+
+      <!-- SWITCH CASE (10 questions) -->
+      <div id="switchcase">
+        <h2 class="section-title"><i class="fa-solid fa-code-branch"></i> switch-case</h2>
+        <ul class="exercise-list">
+          <li class="exercise-item">
+            <div class="badge-num">1</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.1.c">Calculator by Switch Case</a>
+              <div class="exercise-tagline">Menu-driven example using switch for basic operations.</div>
+            </div>
+            <i class="fa-solid fa-calculator code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <div class="badge-num">2</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.2.c">Upper Nearest Even Number</a>
+              <div class="exercise-tagline">Use switch to round a number up to the nearest even value.</div>
+            </div>
+            <i class="fa-solid fa-arrow-up-9-1 code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <div class="badge-num">3</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.3.c">Switch-Case Demo</a>
+              <div class="exercise-tagline">Basic switch-case examples and control-flow behavior.</div>
+            </div>
+            <i class="fa-solid fa-diagram-project code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <div class="badge-num">4</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.4.c">Arithmetic Operations</a>
+              <div class="exercise-tagline">Perform different arithmetic tasks based on user choice.</div>
+            </div>
+            <i class="fa-solid fa-square-root-variable code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <div class="badge-num">5</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.5.c">Leap Year & Days in Month</a>
+              <div class="exercise-tagline">Combine leap year logic and month-days using switch-case.</div>
+            </div>
+            <i class="fa-solid fa-calendar-check code-icon"></i>
+          </li>
+
+          <!-- Extra 5 (placeholder names Ok to change) -->
+          <li class="exercise-item">
+            <div class="badge-num">6</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.6.c">Grade Calculator using Switch</a>
+              <div class="exercise-tagline">Convert numeric marks into letter grades via switch-case.</div>
+            </div>
+            <i class="fa-solid fa-graduation-cap code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <div class="badge-num">7</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.7.c">Menu-Driven Area Calculator</a>
+              <div class="exercise-tagline">Choose shapes and compute area using a switch menu.</div>
+            </div>
+            <i class="fa-solid fa-draw-polygon code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <div class="badge-num">8</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.8.c">Day Name from Number</a>
+              <div class="exercise-tagline">Map integers (1–7) to weekday names with switch-case.</div>
+            </div>
+            <i class="fa-solid fa-calendar-day code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <div class="badge-num">9</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.9.c">Simple Unit Converter</a>
+              <div class="exercise-tagline">Provide a switch-based menu for unit conversions.</div>
+            </div>
+            <i class="fa-solid fa-scale-balanced code-icon"></i>
+          </li>
+
+          <li class="exercise-item">
+            <div class="badge-num">10</div>
+            <div class="exercise-meta">
+              <a href="./code/viewer.html?file=7.7.10.c">Vowel or Consonant Checker</a>
+              <div class="exercise-tagline">Use switch-case to classify characters as vowels or consonants.</div>
+            </div>
+            <i class="fa-solid fa-font case-upper code-icon"></i>
+          </li>
+        </ul>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Inline Footer (self-contained) -->
+  <script src="../assets/js/site-footer.js" defer></script>
+  <site-footer
+    module="7"
+    updated="November 2025"
+    course="Structs, Unions & File I/O · Module 7"
+    author-name="Param Vishwakarma"
+    author-github="https://github.com/pramdevgan"
+    author-linkedin="https://www.linkedin.com/in/vpramatma/"
+    author-img1="https://avatars.githubusercontent.com/u/61196674?v=4"
+    author-img2="https://i.ibb.co/d0rhZgNQ/Me1.jpg"
+    maint-name="Devansh Tiwari"
+    maint-github="https://github.com/mrinfotech369-sys"
+    maint-img1="https://avatars.githubusercontent.com/u/227535288?v=4"
+    maint-img2="https://i.ibb.co/8DP02FV3/Devansh-2.png"
+  ></site-footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Page JS: quick nav highlighting + search + MODULE PROGRESS -->
+  <script>
+    (function(){
+      // smooth scroll + active toggling
+      document.querySelectorAll('.quick-nav a').forEach(link=>{
+        link.addEventListener('click', (e)=>{
+          e.preventDefault();
+          document.querySelectorAll('.quick-nav a').forEach(x=>x.classList.remove('active'));
+          link.classList.add('active');
+          const id = link.getAttribute('href');
+          const el = document.querySelector(id);
+          if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+
+      // search filter (title + tagline)
+      const search = document.getElementById('exerciseSearch');
+      if(search){
+        search.addEventListener('input', ()=> {
+          const q = search.value.trim().toLowerCase();
+          document.querySelectorAll('.exercise-list li.exercise-item').forEach(li=>{
+            const title = (li.querySelector('.exercise-meta a')?.textContent || '').toLowerCase();
+            const tag = (li.querySelector('.exercise-tagline')?.textContent || '').toLowerCase();
+            li.style.display = (q === '' || title.includes(q) || tag.includes(q)) ? '' : 'none';
+          });
+        });
+      }
+
+      // update nav active on scroll
+      const sectionEls = Array.from(document.querySelectorAll('section.card-shell > div[id]'));
+      function onScroll(){
+        const y = window.scrollY + 140;
+        let current = sectionEls[0];
+        for(const s of sectionEls){
+          if(s.offsetTop <= y) current = s;
+        }
+        const id = current?.id || '';
+        document.querySelectorAll('.quick-nav a').forEach(a=>{
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+
+      // ========= Module 7 progress tracker (Module 2 style) =========
+      const STORAGE_KEY = 'c_course_module7_all';
+      const TOTAL = 60; // 10 + 10 + 10 + 10 + 5 + 5 + 10
+
+      function safeParse(json){
+        try{
+          const data = JSON.parse(json);
+          return Array.isArray(data) ? data : [];
+        }catch(e){
+          return [];
+        }
+      }
+
+      function loadViewed(){
+        if(typeof localStorage === 'undefined') return [];
+        return safeParse(localStorage.getItem(STORAGE_KEY));
+      }
+
+      function saveViewed(list){
+        if(typeof localStorage === 'undefined') return;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      }
+
+      function getAllExerciseLinks(){
+        // track only viewer links (solutions)
+        return Array.from(document.querySelectorAll('.exercise-item a[href*="viewer.html"]'));
+      }
+
+      function fileKeyFromHref(href){
+        const idx = href.indexOf('file=');
+        if(idx === -1) return href;
+        return href.slice(idx + 5);
+      }
+
+      function updateProgressUI(){
+        const textEl = document.getElementById('progressText');
+        const barEl = document.getElementById('progressBar');
+        const viewed = loadViewed();
+        const viewedSet = new Set(viewed);
+        const count = viewedSet.size;
+        const pct = TOTAL ? Math.min(100, (count / TOTAL) * 100) : 0;
+
+        if(textEl){
+          textEl.innerHTML =
+            '<i class="fa-solid fa-circle-dot"></i>' +
+            "You've viewed " + count + '/' + TOTAL + ' solutions';
+        }
+        if(barEl){
+          barEl.style.width = pct + '%';
+        }
+
+        // mark completed ones
+        getAllExerciseLinks().forEach(a => {
+          const key = fileKeyFromHref(a.getAttribute('href') || '');
+          const li = a.closest('.exercise-item');
+          if(!li) return;
+          if(viewedSet.has(key)){
+            li.classList.add('exercise-done');
+          }else{
+            li.classList.remove('exercise-done');
+          }
+        });
+      }
+
+      // hook link clicks
+      getAllExerciseLinks().forEach(a=>{
+        a.addEventListener('click', () => {
+          const key = fileKeyFromHref(a.getAttribute('href') || '');
+          if(!key) return;
+          const viewed = loadViewed();
+          if(!viewed.includes(key)){
+            viewed.push(key);
+            saveViewed(viewed);
+            updateProgressUI();
+          }
+        });
+      });
+
+      // reset handler
+      const resetEl = document.getElementById('progressReset');
+      if(resetEl){
+        resetEl.addEventListener('click', () => {
+          if(confirm('Reset your progress for Module 7?')){
+            saveViewed([]);
+            updateProgressUI();
+          }
+        });
+      }
+
+      // initial render
+      updateProgressUI();
+
+    })();
+  </script>
+
+</body>
+</html>

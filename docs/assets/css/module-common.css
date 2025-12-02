@@ -1,0 +1,589 @@
+/* =========================================
+   module-common.css
+   Shared layout & components for modules
+   -----------------------------------------
+   Per-module pages should only define:
+     - :root { theme colors }
+     - body background (if unique)
+   Everything else reuses these styles.
+   ========================================= */
+
+/* ---------- Global reset / basics ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+/* Default CSS variables (can be overridden per module) */
+:root {
+  --bg: #020617;
+  --text: #e5e7eb;
+  --primary: #0ea5e9;
+  --accent: #6366f1;
+  --card: #020617;
+  --border: #1f2937;
+  --code: #020617;
+  --hover: #38bdf8;
+  --muted: #9ca3af;
+  --glow: rgba(37,99,235,0.28);
+  --done-bg: rgba(34,197,94,0.08);
+  --done-border: rgba(34,197,94,0.6);
+  --max-width: 1200px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* ---------- Top bar (shared) ---------- */
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
+
+.top-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 800;
+  font-size: 0.98rem;
+}
+
+.brand i {
+  color: var(--primary);
+  font-size: 1.25rem;
+}
+
+.top-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  opacity: 0.95;
+  margin-top: 2px;
+}
+
+.top-bar-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-bar-title i {
+  color: var(--primary);
+}
+
+.top-bar-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.top-right-actions,
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* pill buttons (home/top) */
+
+.home-btn,
+.back-to-top,
+.btn-pill {
+  border: none;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.home-btn,
+.btn-home {
+  background: linear-gradient(45deg, var(--primary), var(--accent));
+  box-shadow: 0 6px 18px var(--glow);
+}
+
+.home-btn:hover,
+.btn-home:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px var(--glow);
+}
+
+.back-to-top,
+.btn-top {
+  background: linear-gradient(45deg, var(--accent), var(--primary));
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.back-to-top:hover,
+.btn-top:hover {
+  transform: translateY(-3px);
+}
+
+/* ---------- Layout shell ---------- */
+
+.main-wrapper {
+  padding-top: 90px;
+  padding-bottom: 40px;
+}
+
+.container-main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: 1.25rem;
+}
+
+/* For pages that use <main> directly (Module 7 style) */
+main {
+  padding-top: 100px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* ---------- Hero / page header ---------- */
+
+.hero,
+.hero-center,
+.text-center-hero {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.page-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 0.45rem 1.2rem;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-bottom: 0.8rem;
+}
+
+.page-pill i {
+  color: var(--primary);
+}
+
+.page-title {
+  text-align: center;
+  font-size: clamp(2.4rem, 4.8vw, 3.2rem);
+  margin-bottom: 0.6rem;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+}
+
+.hero-sub,
+.hero-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* ---------- Card shell (main content panel) ---------- */
+
+.card-shell {
+  background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.1), rgba(15, 23, 42, 1));
+  border-radius: 18px;
+  padding: 2.4rem 2rem;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .card-shell {
+    padding: 2.8rem 2.6rem;
+  }
+}
+
+/* ---------- Section titles ---------- */
+
+.section-title {
+  font-size: 1.15rem;
+  color: var(--accent);
+  border-bottom: 2px solid rgba(148, 163, 184, 0.4);
+  padding-bottom: 0.4rem;
+  margin-top: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+}
+
+.section-title i {
+  color: var(--primary);
+  font-size: 1.05rem;
+}
+
+/* ---------- Quick nav + search ---------- */
+
+.quick-nav-wrapper {
+  margin: 1.5rem auto 0.75rem;
+  max-width: var(--max-width);
+}
+
+.quick-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 999px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.quick-nav .nav-link {
+  color: var(--text);
+  font-size: 0.82rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.quick-nav .nav-link i {
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.quick-nav .nav-link.active,
+.quick-nav .nav-link:hover {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.search-wrapper {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.search-input {
+  max-width: 420px;
+  margin: 0.3rem auto 0;
+  background: #020617;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  padding: 0.45rem 1rem;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--hover);
+  box-shadow: 0 0 0 1px var(--hover);
+}
+
+.search-hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+/* ---------- Exercise list & items ---------- */
+
+.exercise-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.2rem 0 0;
+}
+
+/* animated card (Module 6/7 style, but neutral colors) */
+.exercise-item {
+  margin: 0.9rem 0;
+  padding: 1.1rem 1.5rem;
+  background: var(--code);
+  border-radius: 14px;
+  border: 1px solid rgba(55, 65, 81, 0.9);
+  transition:
+    transform 0.35s cubic-bezier(.2,.9,.2,1),
+    box-shadow 0.35s ease,
+    background 0.35s ease,
+    border-color 0.35s ease;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text);
+  flex-wrap: wrap;
+  transform-origin: center;
+  will-change: transform, box-shadow;
+}
+
+.exercise-item:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+  background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.22), #020617);
+}
+
+/* done state (after viewed) */
+.exercise-item.exercise-done {
+  border-color: var(--done-border);
+  background: linear-gradient(180deg, var(--done-bg), var(--code));
+  box-shadow: 0 16px 40px rgba(22, 163, 74, 0.4);
+}
+
+.badge-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.exercise-item:hover .badge-num {
+  transform: translateY(-6px) rotate(-6deg);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.8);
+}
+
+.exercise-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.exercise-meta a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.98rem;
+  word-wrap: break-word;
+  transition: color 0.18s ease;
+}
+
+.exercise-meta a:hover {
+  color: var(--hover);
+  text-decoration: underline;
+}
+
+.exercise-tagline {
+  font-size: 0.8rem;
+  color: var(--muted);
+  opacity: 0.95;
+}
+
+.code-icon {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: var(--primary);
+  opacity: 0.85;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.exercise-item:hover .code-icon {
+  opacity: 1;
+  transform: translateY(-4px) scale(1.08);
+}
+
+/* multi-solution / file links */
+
+.multi {
+  font-size: 0.9rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-left: 8px;
+  text-decoration: none;
+}
+
+.multi:hover {
+  color: var(--hover);
+  text-decoration: underline;
+}
+
+.file-list {
+  font-size: 0.86rem;
+  color: var(--muted);
+  margin-left: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.file-list:hover {
+  color: var(--hover);
+  text-decoration: underline;
+}
+
+/* Coming soon text (Module 4 style) */
+
+.coming-soon {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* ---------- Module-level progress tracker (Module 2/7 style) ---------- */
+
+.progress-wrapper {
+  margin: 8px 0 18px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+#progressText i {
+  color: var(--primary);
+  margin-right: 6px;
+}
+
+#progressReset {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: #f97373;
+}
+
+#progressReset i {
+  font-size: 0.8rem;
+}
+
+#progressReset:hover {
+  color: #fecaca;
+}
+
+.progress-bar-shell {
+  margin-top: 8px;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.4);
+  overflow: hidden;
+}
+
+#progressBar {
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.25s ease-out;
+}
+
+/* ---------- Footer (optional shared style) ---------- */
+
+footer,
+site-footer {
+  font-size: 0.9rem;
+}
+
+
+
+/* ========= DONE STATE (same as Module 2) ========= */
+
+li.exercise-item {
+  position: relative; /* required for badge placement */
+}
+
+/* When viewed */
+li.exercise-item.is-viewed {
+  border-color: #22c55e !important;
+  background: radial-gradient(circle at top left,
+    rgba(34,197,94,0.15),
+    var(--card)
+  );
+  opacity: 0.98;
+}
+
+/* Green badge bubble */
+li.exercise-item.is-viewed::after {
+  content: "Done";
+  position: absolute;
+  bottom: 8px;
+  right: 14px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(34,197,94,0.25);
+  border: 1px solid rgba(34,197,94,0.9);
+  color: #bbf7d0;
+}
+
+/* Badge changes to green */
+li.exercise-item.is-viewed .badge-num {
+  background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+  box-shadow: 0 0 14px rgba(34,197,94,0.6);
+}
+
+/* Meta text lighter after done */
+li.exercise-item.is-viewed .exercise-tagline {
+  color: #d1fae5 !important;
+}
+

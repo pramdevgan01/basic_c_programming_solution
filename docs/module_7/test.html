@@ -15,13 +15,14 @@
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
 
   <style>
     :root {
-      /* Theme C — Blue / Indigo (Module 6) */
+      /* Theme C — Blue / Indigo */
       --bg: #071029;
       --text: #e6eef6;
       --primary: #3b82f6; /* blue */
@@ -34,11 +35,7 @@
       --glow: rgba(99,102,241,0.12);
     }
 
-    * {
-      box-sizing: border-box;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -67,15 +64,17 @@
     }
 
     .top-bar-title {
-      font-weight:700;
-      font-size:1rem;
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      gap:10px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
+
     .top-bar-title i { color: var(--primary); }
-    .top-bar-sub { font-size:.85rem; color:var(--muted); }
+
+    .top-bar-sub { font-size: 0.85rem; color: var(--muted); }
 
     .top-right-actions { display:flex; align-items:center; gap:10px; }
 
@@ -85,22 +84,22 @@
       border-radius: 999px;
       font-weight: 600;
       cursor: pointer;
-      transition: transform .22s ease, box-shadow .22s ease;
+      transition: all 0.3s;
       font-size: 0.9rem;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      text-decoration: none;
       color: #fff;
-      text-decoration:none;
+      white-space: nowrap;
     }
+
     .home-btn {
       background: linear-gradient(45deg, var(--primary), var(--accent));
       box-shadow: 0 6px 18px var(--glow);
     }
-    .home-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px var(--glow);
-    }
+
+    .home-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 24px var(--glow); }
 
     .back-to-top {
       background: linear-gradient(45deg, #06b6d4, var(--accent));
@@ -109,6 +108,7 @@
     .back-to-top:hover { transform: translateY(-3px); }
 
     .main-wrapper { padding-top: 90px; padding-bottom: 40px; }
+
     .container-main { max-width: 1200px; margin: 0 auto; padding-inline: 1.25rem; }
 
     h1.page-title {
@@ -141,6 +141,7 @@
       color: var(--text);
       margin-bottom: 0.8rem;
     }
+    .page-pill i { color: var(--primary); }
 
     .card-shell {
       background: radial-gradient(circle at top left, rgba(59,130,246,0.06), rgba(4,12,26,0.95));
@@ -164,36 +165,25 @@
     h2.section-title i { color: var(--primary); font-size:1.2rem; }
 
     ul.exercise-list { list-style: none; padding: 0; margin: 1.2rem 0 0; }
-
-    /* Exercise items */
     li.exercise-item {
       margin: 0.9rem 0;
       padding: 1.1rem 1.5rem;
       background: var(--code);
       border-radius: 14px;
       border: 1px solid rgba(30,58,138,0.12);
-      transition:
-        transform .35s cubic-bezier(.2,.9,.2,1),
-        box-shadow .35s ease,
-        background .35s ease,
-        border-color .35s ease,
-        opacity .25s ease;
-      box-shadow: 0 5px 18px rgba(59,130,246,0.06);
+      transition: all 0.25s ease;
+      box-shadow: 0 5px 18px rgba(59,130,246,0.12);
       display: flex;
       align-items: flex-start;
       gap: 12px;
       color: var(--text);
       flex-wrap: wrap;
-      transform-origin: center;
-      will-change: transform, box-shadow;
-      position: relative;
     }
-
     li.exercise-item:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 30px 60px rgba(59,130,246,0.18);
+      transform: translateY(-4px);
+      box-shadow: 0 22px 44px rgba(59,130,246,0.16);
       border-color: var(--accent);
-      background: linear-gradient(180deg, rgba(59,130,246,0.04), var(--code));
+      background: linear-gradient(180deg, rgba(59,130,246,0.03), var(--code));
     }
 
     .badge-num {
@@ -209,56 +199,26 @@
       font-weight: 700;
       flex-shrink: 0;
       box-shadow: 0 4px 10px rgba(59,130,246,0.18);
-      transition: transform .25s ease, box-shadow .25s ease;
-    }
-    li.exercise-item:hover .badge-num {
-      transform: translateY(-6px) rotate(-6deg);
-      box-shadow: 0 14px 30px rgba(59,130,246,0.18);
     }
 
-    .exercise-meta {
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      min-width:0;
-      flex:1;
-    }
+    .exercise-meta { display:flex; flex-direction:column; gap:4px; min-width:0; flex:1; }
     .exercise-meta a {
       color: var(--primary);
       text-decoration: none;
       font-weight: 700;
       font-size: 0.98rem;
       word-wrap: break-word;
-      transition: color .18s ease;
     }
     .exercise-meta a:hover { color: var(--hover); text-decoration: underline; }
 
     .exercise-tagline { font-size: 0.8rem; color: var(--muted); opacity: 0.95; }
 
-    .code-icon {
-      margin-left: auto;
-      flex-shrink: 0;
-      font-size: 1.1rem;
-      color: #60a5fa;
-      opacity: 0.85;
-      transition: transform .25s ease, opacity .25s ease;
-    }
-    li.exercise-item:hover .code-icon { opacity: 1; transform: translateY(-4px) scale(1.08); }
+    .code-icon { margin-left: auto; flex-shrink: 0; font-size: 1.1rem; color: #60a5fa; opacity: 0.85; }
+    li.exercise-item:hover .code-icon { opacity: 1; transform: scale(1.08); }
 
-    .multi {
-      font-size: 0.9rem;
-      color: #93c5fd;
-      font-weight: 600;
-      margin-left: 8px;
-      text-decoration: none;
-    }
-    .file-list {
-      font-size: 0.86rem;
-      color: #9fb3d9;
-      margin-left: 6px;
-      text-decoration: none;
-      font-weight: 600;
-    }
+    .multi { font-size: 0.9rem; color: #93c5fd; font-weight: 600; margin-left: 8px; text-decoration: none; }
+    .file-list { font-size: 0.86rem; color: #9fb3d9; margin-left: 6px; text-decoration: none; font-weight: 600; }
+
     .file-list:hover { color: #c7ddff; text-decoration: underline; }
 
     /* Quick nav + search */
@@ -279,14 +239,11 @@
       align-items: center;
       gap: 6px;
       white-space: nowrap;
-      transition: background .18s ease, color .18s ease, transform .18s ease;
     }
     .quick-nav .nav-link i { font-size:0.8rem; color:#93c5fd; }
-    .quick-nav .nav-link.active,
-    .quick-nav .nav-link:hover {
+    .quick-nav .nav-link.active, .quick-nav .nav-link:hover {
       background: linear-gradient(90deg, var(--primary), var(--accent));
       color: #fff;
-      transform: translateY(-2px);
     }
 
     .search-wrapper { margin-top: 1rem; text-align: center; }
@@ -300,117 +257,25 @@
       color: var(--text);
       font-size: 0.9rem;
     }
-    .search-input:focus {
-      outline: none;
-      border-color: var(--hover);
-      box-shadow: 0 0 0 1px rgba(96,165,250,0.15);
-    }
-    .search-hint {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 0.3rem;
-    }
+    .search-input:focus { outline: none; border-color: var(--hover); box-shadow: 0 0 0 1px rgba(96,165,250,0.15); }
 
-    /* PROGRESS TRACKER (Module 2 style, themed for Module 6) */
-    .progress-wrapper {
-      margin-top: 0.5rem;
-      margin-bottom: 1.2rem;
-    }
+    .search-hint { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
 
-    .progress-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 0.35rem;
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2.5rem 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      max-width: 1200px;
+      margin-inline: auto;
+      box-shadow: 0 18px 40px rgba(2,6,23,0.5);
     }
-
-    #progressText {
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    #progressText i {
-      color: #22c55e;
-      margin-right: 5px;
-    }
-
-    #progressReset {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      font-size: 0.8rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(4,12,26,0.9);
-      transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease,
-        color 0.2s ease;
-      visibility: hidden; /* becomes visible after user has progress */
-    }
-
-    #progressReset i { font-size: 0.8rem; }
-
-    #progressReset:hover {
-      background: rgba(248,113,113,0.14);
-      border-color: rgba(248,113,113,0.85);
-      transform: translateY(-1px);
-      color: #fecaca;
-    }
-
-    .progress-bar-shell {
-      width: 100%;
-      height: 7px;
-      border-radius: 999px;
-      background: rgba(4,12,26,0.96);
-      border: 1px solid rgba(15,23,42,1);
-      overflow: hidden;
-    }
-
-    #progressBar {
-      height: 100%;
-      width: 0%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--primary), var(--accent), #22c55e);
-      box-shadow: 0 0 12px rgba(59,130,246,0.6);
-      transition: width 0.25s ease;
-    }
-
-    /* VISITED STATE (like Module 2 / 5, themed) */
-    li.exercise-item.is-viewed {
-      border-color: rgba(56,189,248,0.85);
-      background: radial-gradient(circle at top left, rgba(59,130,246,0.16), #020617);
-      opacity: 0.98;
-    }
-
-    li.exercise-item.is-viewed .exercise-tagline {
-      color: #bfdbfe;
-    }
-
-    li.exercise-item.is-viewed .badge-num {
-      background: radial-gradient(circle at top, #22c55e, #16a34a);
-      box-shadow: 0 0 14px rgba(22,163,74,0.9);
-    }
-
-    li.exercise-item.is-viewed::after {
-      content: "Done";
-      position: absolute;
-      bottom: 8px;
-      right: 12px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(22,163,74,0.22);
-      border: 1px solid rgba(34,197,94,0.9);
-      color: #bbf7d0;
-    }
+    footer a { color: #e6f2ff; text-decoration: none; font-weight: 600; }
+    footer a:hover { text-decoration: underline; }
+    .footer-small { margin-top: 10px; color: rgba(255,255,255,0.93); font-size: 0.8rem; }
   </style>
 </head>
 <body>
@@ -422,9 +287,7 @@
         <i class="fa-solid fa-memory"></i>
         <span>Module 6 · Pointers &amp; Memory Basics in C</span>
       </div>
-      <div class="top-bar-sub">
-        Practice Solutions · Pointers · DMA · Function Pointers
-      </div>
+      <div class="top-bar-sub">Practice Solutions · Pointers · DMA · Function Pointers</div>
     </div>
 
     <div class="top-right-actions">
@@ -471,36 +334,12 @@
       <div class="quick-nav-wrapper">
         <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2">
           <ul class="nav nav-pills quick-nav flex-wrap justify-content-center">
-            <li class="nav-item">
-              <a class="nav-link active" href="#intro-pointer">
-                <i class="fa-solid fa-hand-pointer"></i> Intro
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#pointer-arrays">
-                <i class="fa-solid fa-code-branch"></i> Pointer &amp; Arrays
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#pointer-strings">
-                <i class="fa-solid fa-font"></i> Pointer &amp; Strings
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#dma">
-                <i class="fa-solid fa-memory"></i> Dynamic Memory
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#func-ptr">
-                <i class="fa-solid fa-diagram-project"></i> Pointer to Functions
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#module-test">
-                <i class="fa-solid fa-flask"></i> Module Test
-              </a>
-            </li>
+            <li class="nav-item"><a class="nav-link active" href="#intro-pointer"><i class="fa-solid fa-hand-pointer"></i> Intro</a></li>
+            <li class="nav-item"><a class="nav-link" href="#pointer-arrays"><i class="fa-solid fa-code-branch"></i> Pointer &amp; Arrays</a></li>
+            <li class="nav-item"><a class="nav-link" href="#pointer-strings"><i class="fa-solid fa-font"></i> Pointer &amp; Strings</a></li>
+            <li class="nav-item"><a class="nav-link" href="#dma"><i class="fa-solid fa-memory"></i> Dynamic Memory</a></li>
+            <li class="nav-item"><a class="nav-link" href="#func-ptr"><i class="fa-solid fa-diagram-project"></i> Pointer to Functions</a></li>
+            <li class="nav-item"><a class="nav-link" href="#module-test"><i class="fa-solid fa-flask"></i> Module Test</a></li>
           </ul>
 
           <div class="search-wrapper w-100 w-lg-auto">
@@ -519,23 +358,6 @@
       </div>
 
       <section class="card-shell">
-
-        <!-- PROGRESS TRACKER -->
-        <div class="progress-wrapper">
-          <div class="progress-header">
-            <span id="progressText">
-              <i class="fa-solid fa-circle-dot"></i>
-              You've viewed 0/50 solutions
-            </span>
-            <span id="progressReset" title="Reset your progress">
-              <i class="fa-solid fa-rotate-left"></i>
-              Reset
-            </span>
-          </div>
-          <div class="progress-bar-shell" aria-hidden="true">
-            <div id="progressBar"></div>
-          </div>
-        </div>
 
         <!-- Introduction to Pointer -->
         <div id="intro-pointer">
@@ -636,306 +458,306 @@
           </ul>
         </div>
 
-        <!-- Pointer & Arrays -->
+        <!-- Pointer and Arrays -->
         <div id="pointer-arrays">
-          <h2 class="section-title">
-            <i class="fa-solid fa-code-branch"></i>
-            Pointer &amp; Arrays
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-layer-group"></i>
+            Pointer and Arrays
           </h2>
           <ul class="exercise-list">
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.1.c">Traverse Array using Pointer Notation</a>
-                <span class="exercise-tagline">Use <code>*(ptr + i)</code> instead of <code>arr[i]</code> for traversal.</span>
+                <a href="./code/viewer.html?file=6.2.1.c">Pointer Arithmetic with Arrays</a>
+                <span class="exercise-tagline">Index-less traversal using pointer increments.</span>
               </div>
-              <i class="fa-solid fa-arrow-right-arrow-left code-icon"></i>
+              <i class="fa-solid fa-arrows-left-right code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.2.c">Reverse Array using Pointers</a>
-                <span class="exercise-tagline">Use two pointers moving from both ends towards center.</span>
+                <a href="./code/viewer.html?file=6.2.2.c">Pointer Input Values into Array</a>
+                <span class="exercise-tagline">Fill arrays using pointer operations.</span>
               </div>
-              <i class="fa-solid fa-right-left code-icon"></i>
+              <i class="fa-solid fa-keyboard code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.3.c">Find Minimum &amp; Maximum via Pointers</a>
-                <span class="exercise-tagline">Iterate with a pointer and track both extremes.</span>
+                <a href="./code/viewer.html?file=6.2.3.c">Input an Array Using the Pointer</a>
+                <span class="exercise-tagline">Practice pointer-based array I/O.</span>
               </div>
-              <i class="fa-solid fa-arrows-up-down code-icon"></i>
+              <i class="fa-solid fa-file-import code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">4</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.4.c">Copy One Array into Another using Pointers</a>
-                <span class="exercise-tagline">Perform element-wise copy using pointer arithmetic.</span>
+                <a href="./code/viewer.html?file=6.2.4.c">Store and Print the Elements</a>
+                <span class="exercise-tagline">Storing and iterating with pointers.</span>
               </div>
-              <i class="fa-solid fa-copy code-icon"></i>
+              <i class="fa-solid fa-print code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">5</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.5.c">Sum of Array Elements using Pointer</a>
-                <span class="exercise-tagline">Accumulate values using a walking pointer.</span>
+                <a href="./code/viewer.html?file=6.2.5.c">Copy Elements from One Array to Another</a>
+                <span class="exercise-tagline">Use pointers to copy ranges efficiently.</span>
               </div>
-              <i class="fa-solid fa-plus code-icon"></i>
+              <i class="fa-solid fa-clone code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">6</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.6.c">Search Element in Array (Pointer Version)</a>
-                <span class="exercise-tagline">Sequential search implemented via pointer comparison.</span>
+                <a href="./code/viewer.html?file=6.2.6.c">Largest Element</a>
+                <span class="exercise-tagline">Find largest item with pointer traversal.</span>
               </div>
-              <i class="fa-solid fa-magnifying-glass code-icon"></i>
+              <i class="fa-solid fa-caret-up code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">7</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.7.c">Pointer to an Array vs Array of Pointers</a>
-                <span class="exercise-tagline">Demonstrate the difference via a small example.</span>
-              </div>
-              <i class="fa-solid fa-layer-group code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
-              <span class="badge-num">8</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.8.c">Pass Array to Function via Pointer</a>
-                <span class="exercise-tagline">Implement a function that computes stats from the array.</span>
-              </div>
-              <i class="fa-solid fa-diagram-project code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
-              <span class="badge-num">9</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.9.c">2D Array Access using Pointer to Array</a>
-                <span class="exercise-tagline">Use <code>(*p)[COLS]</code> style pointer to walk a matrix.</span>
-              </div>
-              <i class="fa-solid fa-border-all code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
-              <span class="badge-num">10</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.2.10.c">Sum of Each Row using Pointer Arithmetic</a>
-                <span class="exercise-tagline">Traverse 2D array rows with pointer arithmetic for practice.</span>
-              </div>
-              <i class="fa-solid fa-table-list code-icon"></i>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Pointer & Strings -->
-        <div id="pointer-strings">
-          <h2 class="section-title">
-            <i class="fa-solid fa-font"></i>
-            Pointer &amp; Strings
-          </h2>
-          <ul class="exercise-list">
-            <li class="exercise-item">
-              <span class="badge-num">1</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.1.c">Print String using Pointer</a>
-                <span class="exercise-tagline">Use a char pointer to walk until <code>'\0'</code>.</span>
-              </div>
-              <i class="fa-solid fa-quote-right code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
-              <span class="badge-num">2</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.2.c">Find Length of String using Pointer</a>
-                <span class="exercise-tagline">Manual <code>strlen</code> using pointer movement only.</span>
-              </div>
-              <i class="fa-solid fa-ruler-horizontal code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
-              <span class="badge-num">3</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.3.c">Copy String using Pointers (No strcpy)</a>
-                <span class="exercise-tagline">Character by character copy using two pointers.</span>
-              </div>
-              <i class="fa-solid fa-copy code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
-              <span class="badge-num">4</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.4.c">Concatenate Two Strings using Pointers</a>
-                <span class="exercise-tagline">Implement <code>strcat</code>-style behavior manually.</span>
-              </div>
-              <i class="fa-solid fa-link code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
-              <span class="badge-num">5</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.5.c">Compare Two Strings using Pointers</a>
-                <span class="exercise-tagline">Return negative, zero or positive like <code>strcmp</code>.</span>
+                <a href="./code/viewer.html?file=6.2.7.c">Average of Elements</a>
+                <span class="exercise-tagline">Compute average using pointers and size.</span>
               </div>
               <i class="fa-solid fa-scale-balanced code-icon"></i>
             </li>
 
             <li class="exercise-item">
-              <span class="badge-num">6</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.6.c">Reverse String using Two Pointers</a>
-                <span class="exercise-tagline">Swap characters from both ends until they meet.</span>
-              </div>
-              <i class="fa-solid fa-arrows-rotate code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
-              <span class="badge-num">7</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.7.c">Count Vowels, Consonants &amp; Digits</a>
-                <span class="exercise-tagline">Categorize characters as you move the pointer.</span>
-              </div>
-              <i class="fa-solid fa-chart-column code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
               <span class="badge-num">8</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.8.c">Remove Spaces from String (Pointer Write Index)</a>
-                <span class="exercise-tagline">Use read and write pointers to filter characters.</span>
+                <a href="./code/viewer.html?file=6.2.8.c">Sum of Array Using Pointers</a>
+                <span class="exercise-tagline">Accumulate values with pointer loops.</span>
               </div>
-              <i class="fa-solid fa-filter-circle-xmark code-icon"></i>
+              <i class="fa-solid fa-sum code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">9</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.9.c">Tokenize String using Pointer Walk</a>
-                <span class="exercise-tagline">Split by spaces without using <code>strtok</code>.</span>
+                <a href="./code/viewer.html?file=6.2.9.c">Access Array Elements Using Pointer Only</a>
+                <span class="exercise-tagline">No index usage — pure pointer addressing.</span>
               </div>
-              <i class="fa-solid fa-grip-lines code-icon"></i>
+              <i class="fa-solid fa-hand-pointer code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">10</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.3.10.c">Check Palindrome String using Pointers</a>
-                <span class="exercise-tagline">Compare characters from start and end using pointers.</span>
+                <a href="./code/viewer.html?file=6.2.10.c">Reverse Array Using Pointer Traversal</a>
+                <span class="exercise-tagline">Two-pointer technique to reverse in-place.</span>
               </div>
-              <i class="fa-solid fa-arrows-left-right-to-line code-icon"></i>
+              <i class="fa-solid fa-rotate-left code-icon"></i>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pointer and Strings -->
+        <div id="pointer-strings">
+          <h2 class="section-title mt-4">
+            <i class="fa-solid fa-font"></i>
+            Pointer and Strings
+          </h2>
+          <ul class="exercise-list">
+            <li class="exercise-item">
+              <span class="badge-num">1</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.1.c">Length of String using Pointer</a>
+                <span class="exercise-tagline">Implement strlen-style logic with pointers.</span>
+              </div>
+              <i class="fa-solid fa-ruler code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.2.c">Copy String using Pointer</a>
+                <span class="exercise-tagline">Implement strcpy equivalent using pointers.</span>
+              </div>
+              <i class="fa-solid fa-copy code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
+              <span class="badge-num">3</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.3.c">Find First Occurrence of Character in String</a>
+                <span class="exercise-tagline">Implement strchr-style function with pointers.</span>
+              </div>
+              <i class="fa-solid fa-magnifying-glass code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
+              <span class="badge-num">4</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.4.c">Count Vowels in String using Pointer</a>
+                <span class="exercise-tagline">Scan and count vowel chars via pointer increments.</span>
+              </div>
+              <i class="fa-solid fa-vote-yea code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
+              <span class="badge-num">5</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.5.c">Convert String to Lowercase using Pointer</a>
+                <span class="exercise-tagline">Transform characters in-place using pointers.</span>
+              </div>
+              <i class="fa-solid fa-arrow-down-to-line code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
+              <span class="badge-num">6</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.6.c">Concatenate Two Strings using Pointers</a>
+                <span class="exercise-tagline">Append one string to another via pointer traversal.</span>
+              </div>
+              <i class="fa-solid fa-link code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
+              <span class="badge-num">7</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.7.c">Count Vowels and Consonants Using Pointers</a>
+                <span class="exercise-tagline">Two counters updated while traversing the string.</span>
+              </div>
+              <i class="fa-solid fa-text-height code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
+              <span class="badge-num">8</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.8.c">Reverse String Using Pointers</a>
+                <span class="exercise-tagline">Swap characters using two-pointer technique.</span>
+              </div>
+              <i class="fa-solid fa-rotate code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
+              <span class="badge-num">9</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.9.c">Compare Two Strings Using Pointers</a>
+                <span class="exercise-tagline">Implement strcmp-style comparison using pointers.</span>
+              </div>
+              <i class="fa-solid fa-scale code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
+              <span class="badge-num">10</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.3.10.c">Print Words from a String Using Pointer</a>
+                <span class="exercise-tagline">Tokenize with pointer arithmetic (no strtok usage).</span>
+              </div>
+              <i class="fa-solid fa-list code-icon"></i>
             </li>
           </ul>
         </div>
 
         <!-- Dynamic Memory Allocation -->
         <div id="dma">
-          <h2 class="section-title">
+          <h2 class="section-title mt-4">
             <i class="fa-solid fa-memory"></i>
-            Dynamic Memory Allocation
+            Dynamic Memory Allocation in C
           </h2>
           <ul class="exercise-list">
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.1.c">Allocate Array using malloc()</a>
-                <span class="exercise-tagline">Dynamically allocate memory for N integers and fill them.</span>
+                <a href="./code/viewer.html?file=6.4.1.c">Integer Array and Squaring Values</a>
+                <span class="exercise-tagline">Use malloc/free for dynamic arrays.</span>
               </div>
-              <i class="fa-solid fa-database code-icon"></i>
+              <i class="fa-solid fa-hashtag code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.2.c">Sum of Dynamically Allocated Array</a>
-                <span class="exercise-tagline">Allocate, read, sum and free the memory.</span>
+                <a href="./code/viewer.html?file=6.4.2.c">2nd Largest Element</a>
+                <span class="exercise-tagline">Handle edge cases and dynamic sizes.</span>
               </div>
-              <i class="fa-solid fa-plus-minus code-icon"></i>
+              <i class="fa-solid fa-award code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.3.c">Use calloc() for Zero-Initialized Array</a>
-                <span class="exercise-tagline">Demonstrate difference between <code>malloc</code> and <code>calloc</code>.</span>
+                <a href="./code/viewer.html?file=6.4.3.c">Loan Details Using Dynamic Memory Allocation</a>
+                <span class="exercise-tagline">Store records dynamically using structs and malloc.</span>
               </div>
-              <i class="fa-solid fa-droplet-slash code-icon"></i>
+              <i class="fa-solid fa-file-invoice-dollar code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">4</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.4.c">Resize Array using realloc()</a>
-                <span class="exercise-tagline">Grow array dynamically based on user input.</span>
+                <a href="./code/viewer.html?file=6.4.4.c">Sum of the Products</a>
+                <span class="exercise-tagline">Combine dynamic arrays in arithmetic computations.</span>
               </div>
-              <i class="fa-solid fa-expand-arrows-alt code-icon"></i>
+              <i class="fa-solid fa-calculator code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">5</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.5.c">Dynamic 2D Matrix Allocation</a>
-                <span class="exercise-tagline">Allocate array of pointers and each row separately.</span>
+                <a href="./code/viewer.html?file=6.4.5.c">String Reversal</a>
+                <span class="exercise-tagline">Allocate temporary buffers dynamically then free them.</span>
               </div>
-              <i class="fa-solid fa-table-cells-large code-icon"></i>
+              <i class="fa-solid fa-reply code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">6</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.6.c">Free 2D Matrix Properly</a>
-                <span class="exercise-tagline">Loop over rows and free memory safely.</span>
+                <a href="./code/viewer.html?file=6.4.6.c">Merging Two Arrays</a>
+                <span class="exercise-tagline">Create merged array dynamically.</span>
               </div>
-              <i class="fa-solid fa-trash-arrow-up code-icon"></i>
+              <i class="fa-solid fa-link code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">7</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.7.c">Dynamic String using malloc()</a>
-                <span class="exercise-tagline">Allocate just enough memory for a user-entered string.</span>
+                <a href="./code/viewer.html?file=6.4.7.c">Sum of Diagonal Elements</a>
+                <span class="exercise-tagline">Dynamically allocate a square matrix and compute diagonals.</span>
               </div>
-              <i class="fa-solid fa-i-cursor code-icon"></i>
+              <i class="fa-solid fa-border-all code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">8</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.8.c">Array of Structures using Dynamic Memory</a>
-                <span class="exercise-tagline">Store records like students or employees dynamically.</span>
+                <a href="./code/viewer.html?file=6.4.8.c">2D Integer Array Using DMA</a>
+                <span class="exercise-tagline">Allocate rows and columns at runtime and free safely.</span>
               </div>
-              <i class="fa-solid fa-id-card-clip code-icon"></i>
+              <i class="fa-solid fa-th code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">9</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.9.c">Check malloc() Failure Handling</a>
-                <span class="exercise-tagline">Gracefully handle <code>NULL</code> return from allocation.</span>
+                <a href="./code/viewer.html?file=6.4.9.c">Array Operation with Function Pointer</a>
+                <span class="exercise-tagline">Combine DMA and function pointers for flexible ops.</span>
               </div>
-              <i class="fa-solid fa-triangle-exclamation code-icon"></i>
+              <i class="fa-solid fa-gears code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">10</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.4.10.c">Implement Simple Dynamic Array (Push Elements)</a>
-                <span class="exercise-tagline">Grow capacity as more elements are added (like a vector).</span>
+                <a href="./code/viewer.html?file=6.4.10.c">Calculator with Function Pointer Array</a>
+                <span class="exercise-tagline">Capstone: DMA + function pointer array for operations.</span>
               </div>
-              <i class="fa-solid fa-list-check code-icon"></i>
+              <i class="fa-solid fa-calculator code-icon"></i>
             </li>
           </ul>
         </div>
 
         <!-- Pointer to Functions -->
         <div id="func-ptr">
-          <h2 class="section-title">
+          <h2 class="section-title mt-4">
             <i class="fa-solid fa-diagram-project"></i>
             Pointer to Functions
           </h2>
@@ -943,133 +765,127 @@
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.1.c">Basic Function Pointer Example</a>
-                <span class="exercise-tagline">Store address of a function and call it via pointer.</span>
-              </div>
-              <i class="fa-solid fa-arrow-pointer code-icon"></i>
-            </li>
-
-            <li class="exercise-item">
-              <span class="badge-num">2</span>
-              <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.2.c">Function Pointer for Arithmetic Operations</a>
-                <span class="exercise-tagline">Switch between add, subtract, multiply using function pointers.</span>
+                <a href="./code/viewer.html?file=6.5.1.c">Arithmetic Operations using Function Pointers</a>
+                <span class="exercise-tagline">Dispatch functions via pointer tables.</span>
               </div>
               <i class="fa-solid fa-calculator code-icon"></i>
             </li>
 
             <li class="exercise-item">
+              <span class="badge-num">2</span>
+              <div class="exercise-meta">
+                <a href="./code/viewer.html?file=6.5.2.c">Sort Three Integer Input</a>
+                <span class="exercise-tagline">Use comparator pointers to change ordering.</span>
+              </div>
+              <i class="fa-solid fa-sort code-icon"></i>
+            </li>
+
+            <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.3.c">Array of Function Pointers (Menu)</a>
-                <span class="exercise-tagline">Implement a menu-driven program with function pointer array.</span>
+                <a href="./code/viewer.html?file=6.5.3.c">Element is Present in the Inputted Array</a>
+                <span class="exercise-tagline">Use callbacks for comparison routines.</span>
               </div>
-              <i class="fa-solid fa-list-ul code-icon"></i>
+              <i class="fa-solid fa-check code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">4</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.4.c">Callback using Function Pointer</a>
-                <span class="exercise-tagline">Pass function as argument to another function.</span>
+                <a href="./code/viewer.html?file=6.5.4.c">Convert Hours &amp; Minutes</a>
+                <span class="exercise-tagline">Utility functions exposed via pointers.</span>
               </div>
-              <i class="fa-solid fa-reply-all code-icon"></i>
+              <i class="fa-solid fa-clock code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">5</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.5.c">Sort Array using Custom Compare Function</a>
-                <span class="exercise-tagline">Mimic <code>qsort</code>-style callback for sorting.</span>
+                <a href="./code/viewer.html?file=6.5.5.c">Function Pointer for Arithmetic Operation</a>
+                <span class="exercise-tagline">Invoke arithmetic via selected pointer.</span>
               </div>
-              <i class="fa-solid fa-arrow-down-short-wide code-icon"></i>
+              <i class="fa-solid fa-hand-pointer code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">6</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.6.c">State Machine using Function Pointers</a>
-                <span class="exercise-tagline">Model different states as separate handler functions.</span>
+                <a href="./code/viewer.html?file=6.5.6.c">Array of Function Pointers</a>
+                <span class="exercise-tagline">Table-driven dispatch for clean code paths.</span>
               </div>
-              <i class="fa-solid fa-diagram-next code-icon"></i>
+              <i class="fa-solid fa-table-list code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">7</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.7.c">Timer Simulation with Callback</a>
-                <span class="exercise-tagline">Invoke a callback after a simulated delay or condition.</span>
+                <a href="./code/viewer.html?file=6.5.7.c">Passing Function Pointer to Another Function</a>
+                <span class="exercise-tagline">Higher-order functions mimicability in C.</span>
               </div>
-              <i class="fa-solid fa-stopwatch code-icon"></i>
+              <i class="fa-solid fa-share-nodes code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">8</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.8.c">Function Pointer as Return Value</a>
-                <span class="exercise-tagline">Return different function implementations based on input.</span>
+                <a href="./code/viewer.html?file=6.5.8.c">Function Pointer with Comparator (Min/Max)</a>
+                <span class="exercise-tagline">Custom comparator injection using pointers.</span>
               </div>
-              <i class="fa-solid fa-share-from-square code-icon"></i>
+              <i class="fa-solid fa-scale code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">9</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.9.c">Logger with Function Pointer Hooks</a>
-                <span class="exercise-tagline">Allow user to plug in custom log handler function.</span>
+                <a href="./code/viewer.html?file=6.5.9.c">Array Sorting Using Comparator Function Pointer</a>
+                <span class="exercise-tagline">Use comparator pointer to sort with different rules.</span>
               </div>
-              <i class="fa-solid fa-bullhorn code-icon"></i>
+              <i class="fa-solid fa-sort-alpha-up code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">10</span>
               <div class="exercise-meta">
-                <a href="./code/viewer.html?file=6.5.10.c">Math Library Router using Function Pointers</a>
-                <span class="exercise-tagline">Route to different math operations based on user choice.</span>
+                <a href="./code/viewer.html?file=6.5.10.c">Comparison Operations using Function Pointers</a>
+                <span class="exercise-tagline">Build flexible comparators with function pointers.</span>
               </div>
-              <i class="fa-solid fa-square-root-variable code-icon"></i>
+              <i class="fa-solid fa-list-check code-icon"></i>
             </li>
           </ul>
         </div>
 
         <!-- Module Test -->
         <div id="module-test">
-          <h2 class="section-title">
+          <h2 class="section-title mt-4">
             <i class="fa-solid fa-flask"></i>
-            Module Test – Real-World Pointer Projects
+            Module Test - Real-World Projects
           </h2>
           <ul class="exercise-list">
             <li class="exercise-item">
               <span class="badge-num">1</span>
               <div class="exercise-meta">
                 <a href="./code/viewer.html?file=6.6.1.c">Patient Temperature Tracker</a>
-                <span class="exercise-tagline">
-                  Dynamically store marks of N students and compute class statistics.
-                </span>
+                <span class="exercise-tagline">Combine DMA + pointers for a small tracker program.</span>
               </div>
-              <i class="fa-solid fa-users-line code-icon"></i>
+              <i class="fa-solid fa-heart-pulse code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">2</span>
               <div class="exercise-meta">
                 <a href="./code/viewer.html?file=6.6.2.c">Dynamic Student Name Organizer</a>
-                <span class="exercise-tagline">
-                  Manage items (id, name, quantity, price) using dynamic memory and pointer-based functions.
-                </span>
+                <span class="exercise-tagline">Manage student names dynamically using DMA.</span>
               </div>
-              <i class="fa-solid fa-boxes-stacked code-icon"></i>
+              <i class="fa-solid fa-user-graduate code-icon"></i>
             </li>
 
             <li class="exercise-item">
               <span class="badge-num">3</span>
               <div class="exercise-meta">
                 <a href="./code/viewer.html?file=6.6.3.c">Pointer-Based Function Dispatcher</a>
-                <span class="exercise-tagline">
-                  Count words, lines and character categories using char pointers.
-                </span>
+                <span class="exercise-tagline">Build a dispatcher using arrays of function pointers.</span>
               </div>
-              <i class="fa-solid fa-file-lines code-icon"></i>
+              <i class="fa-solid fa-project-diagram code-icon"></i>
             </li>
           </ul>
         </div>
@@ -1078,59 +894,79 @@
     </div>
 
     <!-- Footer -->
-    <script src="../assets/js/site-footer.js" defer></script>
-    <site-footer
-      module="6"
-      updated="November 2025"
-      course="Pointers & Memory Basics in C · Module 6"
-      author-name="Param Vishwakarma"
-      author-github="https://github.com/pramdevgan"
-      author-linkedin="https://www.linkedin.com/in/vpramatma/"
-      author-img1="https://avatars.githubusercontent.com/u/61196674?v=4"
-      author-img2="https://i.ibb.co/d0rhZgNQ/Me1.jpg"
-      maint-name="Devansh Tiwari"
-      maint-github="https://github.com/mrinfotech369-sys"
-      maint-img1="https://avatars.githubusercontent.com/u/227535288?v=4"
-      maint-img2="https://i.ibb.co/8DP02FV3/Devansh-2.png"
-    ></site-footer>
+    <!-- ===== Module 6 Footer (Updated to Module-7 style) ===== -->
+    <footer class="site-footer module6-footer" role="contentinfo">
+
+      <div class="footer-people">
+
+        <!-- Author -->
+        <a class="person-card" href="https://github.com/pramdevgan" target="_blank" 
+          title="Author: Param Vishwakarma (GitHub)">
+          <div class="avatar">
+            <img src="https://avatars.githubusercontent.com/u/61196674?v=4" 
+                alt="Param base" class="img-base">
+            <img src="https://i.ibb.co/d0rhZgNQ/Me1.jpg" 
+                alt="Param hover" class="img-hover">
+          </div>
+          <div class="person-meta">
+            <div class="person-name">Param Vishwakarma</div>
+            <div class="person-role">Author</div>
+          </div>
+        </a>
+
+        <!-- Maintainer -->
+        <a class="person-card" href="https://github.com/mrinfotech369-sys" target="_blank" 
+          title="Maintainer: Devansh Tiwari (GitHub)">
+          <div class="avatar">
+            <img src="https://avatars.githubusercontent.com/u/227535288?v=4" 
+                alt="Devansh base" class="img-base">
+            <img src="https://i.ibb.co/8DP02FV3/Devansh-2.png" 
+                alt="Devansh hover" class="img-hover">
+          </div>
+          <div class="person-meta">
+            <div class="person-name">Devansh Tiwari</div>
+            <div class="person-role">Maintainer & Contributor</div>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Info Section -->
+      <div class="footer-info">
+
+        <div class="title">
+          <i class="fa-solid fa-heart"></i> Crafted with passion for C learners
+        </div>
+
+        <div class="sub">
+          Last updated: <strong>November 2025</strong>  
+          · Pointers & Memory Basics in C · Module 6
+        </div>
+
+        <div class="footer-links">
+          <a class="link-pill" href="https://www.linkedin.com/in/vpramatma/" target="_blank">
+            <i class="fa-brands fa-linkedin"></i> Author LinkedIn
+          </a>
+          <a class="link-pill" href="https://github.com/pramdevgan" target="_blank">
+            <i class="fa-brands fa-github"></i> Author GitHub
+          </a>
+          <a class="link-pill" href="https://github.com/mrinfotech369-sys" target="_blank">
+            <i class="fa-brands fa-github"></i> Maintainer GitHub
+          </a>
+        </div>
+
+      </div>
+
+    </footer>
+
+    
+
   </main>
 
   <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Progress tracker (same pattern as Module 2 & 5) -->
-  <script src="../assets/js/progress-tracker.js"></script>
-
   <!-- Shared JS for search + quick nav -->
   <script src="../assets/js/module-common.js"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Progress tracker hook (Module 2-style)
-      if (typeof initModuleProgressTracker === 'function') {
-        initModuleProgressTracker({
-          storageKey: 'c_course_module6_all',
-          itemSelector: '.exercise-item',
-          linkSelector: '.exercise-meta a, .file-list',
-          progressTextSelector: '#progressText',
-          progressBarSelector: '#progressBar',
-          resetButtonSelector: '#progressReset'
-        });
-      }
-
-      // Search filter
-      var input = document.getElementById('exerciseSearch');
-      if (input) {
-        input.addEventListener('input', function () {
-          var q = this.value.trim().toLowerCase();
-          document.querySelectorAll('.exercise-list .exercise-item').forEach(function (li) {
-            var text = li.innerText.toLowerCase();
-            li.style.display = q === '' || text.includes(q) ? '' : 'none';
-          });
-        });
-      }
-    });
-  </script>
-
 </body>
 </html>

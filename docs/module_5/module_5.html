@@ -215,13 +215,51 @@
       background: var(--code);
       border-radius: 14px;
       border: 1px solid rgba(55, 65, 81, 0.9);
-      transition: all 0.25s ease;
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        opacity 0.25s ease;
       box-shadow: 0 5px 18px rgba(124,58,237,0.35);
       display: flex;
       align-items: flex-start;
       gap: 12px;
       color: #e5e7eb;
       flex-wrap: wrap;
+      position: relative;       /* needed for "Done" pill */
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: fadeUp 0.35s ease forwards;
+    }
+
+    /* Staggered animation */
+    li.exercise-item:nth-child(1)  { animation-delay: 0.03s; }
+    li.exercise-item:nth-child(2)  { animation-delay: 0.06s; }
+    li.exercise-item:nth-child(3)  { animation-delay: 0.09s; }
+    li.exercise-item:nth-child(4)  { animation-delay: 0.12s; }
+    li.exercise-item:nth-child(5)  { animation-delay: 0.15s; }
+    li.exercise-item:nth-child(6)  { animation-delay: 0.18s; }
+    li.exercise-item:nth-child(7)  { animation-delay: 0.21s; }
+    li.exercise-item:nth-child(8)  { animation-delay: 0.24s; }
+    li.exercise-item:nth-child(9)  { animation-delay: 0.27s; }
+    li.exercise-item:nth-child(10) { animation-delay: 0.30s; }
+
+    li.exercise-item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        120deg,
+        rgba(124,58,237,0.25),
+        rgba(236,72,153,0.3),
+        transparent 70%
+      );
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
     }
 
     li.exercise-item:hover {
@@ -229,6 +267,10 @@
       box-shadow: 0 22px 44px rgba(236,72,153,0.5);
       border-color: var(--accent);
       background: radial-gradient(circle at top left, rgba(236,72,153,0.22), #020617);
+    }
+
+    li.exercise-item:hover::before {
+      opacity: 1;
     }
 
     .badge-num {
@@ -279,6 +321,7 @@
       font-size: 1.1rem;
       color: #f97316;
       opacity: 0.85;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
     li.exercise-item:hover .code-icon {
@@ -376,33 +419,111 @@
       margin-top: 0.3rem;
     }
 
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      padding: 2.5rem 1rem;
-      background: linear-gradient(135deg, #7c3aed, #ec4899);
-      color: white;
-      border-radius: 18px;
-      font-size: 0.95rem;
-      max-width: 1200px;
-      margin-inline: auto;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+    /* PROGRESS TRACKER (Module 2-style) */
+    .progress-wrapper {
+      margin-top: 0.5rem;
+      margin-bottom: 1.2rem;
     }
 
-    footer a {
-      color: #fee2ff;
-      text-decoration: none;
-      font-weight: 600;
+    .progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: #cbd5f5;
+      margin-bottom: 0.35rem;
     }
 
-    footer a:hover {
-      text-decoration: underline;
+    #progressText {
+      font-weight: 500;
+      color: #e5e7eb;
     }
 
-    .footer-small {
-      margin-top: 10px;
-      color: #fce7f3;
+    #progressText i {
+      color: #a3e635;
+      margin-right: 5px;
+    }
+
+    #progressReset {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
       font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15,23,42,0.85);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      visibility: hidden; /* toggled by JS */
+    }
+
+    #progressReset i {
+      font-size: 0.8rem;
+    }
+
+    #progressReset:hover {
+      background: rgba(248,113,113,0.14);
+      border-color: rgba(248,113,113,0.85);
+      transform: translateY(-1px);
+      color: #fecaca;
+    }
+
+    .progress-bar-shell {
+      width: 100%;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(31,41,55,1);
+      overflow: hidden;
+    }
+
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #7c3aed, #ec4899, #f97316);
+      box-shadow: 0 0 12px rgba(236,72,153,0.85);
+      transition: width 0.25s ease;
+    }
+
+    /* VISITED STATE (from tracker, like Module 2) */
+    li.exercise-item.is-viewed {
+      border-color: rgba(124,58,237,0.95);
+      background: radial-gradient(circle at top left, rgba(129,140,248,0.16), #020617);
+      opacity: 0.98;
+    }
+
+    li.exercise-item.is-viewed .exercise-tagline {
+      color: #e9d5ff;
+    }
+
+    li.exercise-item.is-viewed .badge-num {
+      background: radial-gradient(circle at top, #22c55e, #16a34a);
+      box-shadow: 0 0 14px rgba(22,163,74,0.9);
+    }
+
+    li.exercise-item.is-viewed::after {
+      content: "Done";
+      position: absolute;
+      bottom: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(22,163,74,0.22);
+      border: 1px solid rgba(34,197,94,0.9);
+      color: #bbf7d0;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -512,6 +633,23 @@
       </div>
 
       <section class="card-shell">
+
+        <!-- PROGRESS TRACKER (Module 2 style) -->
+        <div class="progress-wrapper">
+          <div class="progress-header">
+            <span id="progressText">
+              <i class="fa-solid fa-circle-dot"></i>
+              You've viewed 0/53 solutions
+            </span>
+            <span id="progressReset" title="Reset your progress">
+              <i class="fa-solid fa-rotate-left"></i>
+              Reset
+            </span>
+          </div>
+          <div class="progress-bar-shell" aria-hidden="true">
+            <div id="progressBar"></div>
+          </div>
+        </div>
 
         <!-- Introduction to Functions -->
         <div id="intro-functions">
@@ -1082,27 +1220,58 @@
     </div>
 
     <!-- Footer -->
-    <footer>
-      <p style="margin-bottom: 6px;">
-        Made with ❤️ for C Programming Learners<br>
-        <strong>Author:</strong> Param Vishwakarma
-      </p>
-      <p>
-        <strong>LinkedIn:</strong>
-        <a href="https://www.linkedin.com/in/vpramatma/" target="_blank">
-          Pramatma Vishwakarma ↗
-        </a>
-      </p>
-      <p class="footer-small">
-        Last updated: November 2025 · Module 5 · Practice Solutions
-      </p>
-    </footer>
+    <script src="../assets/js/site-footer.js" defer></script>
+    <site-footer
+      module="5"
+      updated="November 2025"
+      course="Functions & Recursion in C · Module 5"
+      author-name="Param Vishwakarma"
+      author-github="https://github.com/pramdevgan"
+      author-linkedin="https://www.linkedin.com/in/vpramatma/"
+      author-img1="https://avatars.githubusercontent.com/u/61196674?v=4"
+      author-img2="https://i.ibb.co/d0rhZgNQ/Me1.jpg"
+      maint-name="Devansh Tiwari"
+      maint-github="https://github.com/mrinfotech369-sys"
+      maint-img1="https://avatars.githubusercontent.com/u/227535288?v=4"
+      maint-img2="https://i.ibb.co/8DP02FV3/Devansh-2.png"
+    ></site-footer>
   </main>
 
   <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Shared JS for search + quick nav -->
+  <!-- Shared progress tracker (same as Module 2) -->
+  <script src="../assets/js/progress-tracker.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof initModuleProgressTracker === 'function') {
+        initModuleProgressTracker({
+          storageKey: 'c_course_module5_all',
+          itemSelector: '.exercise-item',
+          linkSelector: '.exercise-meta a, .file-list',
+          progressTextSelector: '#progressText',
+          progressBarSelector: '#progressBar',
+          resetButtonSelector: '#progressReset'
+        });
+      }
+
+      // Simple inline search (fallback if module-common.js doesn't handle it)
+      var searchInput = document.getElementById('exerciseSearch');
+      if (searchInput) {
+        searchInput.addEventListener('input', function () {
+          var term = this.value.toLowerCase().trim();
+          var items = document.querySelectorAll('.exercise-item');
+
+          items.forEach(function (item) {
+            var text = item.innerText.toLowerCase();
+            item.style.display = text.indexOf(term) !== -1 ? '' : 'none';
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Shared JS for quick nav etc. -->
   <script src="../assets/js/module-common.js"></script>
 </body>
 </html>
